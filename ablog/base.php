@@ -14,6 +14,8 @@ $funpath = $nowpath.'function'.DIRECTORY_SEPARATOR;
 require_once $funpath . 'common.php';
 require_once $funpath . 'opreate.php';
 require_once 'debug.php';
+require_once 'debug.php';
+
 
 
 #系统预处理

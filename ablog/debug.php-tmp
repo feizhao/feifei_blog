@@ -1898,12 +1898,6 @@ Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
-
-Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
-
-Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
-
-Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 <?php
 /**
  * 错误调试
@@ -2123,9 +2117,6 @@ class ZBlogException {
 	 * 清除错误信息
 	 */
 	static public function ClearErrorHook() {
-		#set_error_handler(create_function('', ''));
-		#set_exception_handler(create_function('', ''));
-		#register_shutdown_function(create_function('', ''));
 		self::$isdisable = true;
 	}
 

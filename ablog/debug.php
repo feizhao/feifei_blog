@@ -182,9 +182,6 @@ class ZBlogException {
 	* 清除错误信息
 	*/
 	static public function ClearErrorHook() {
-		#set_error_handler(create_function('', ''));
-		#set_exception_handler(create_function('', ''));
-		#register_shutdown_function(create_function('', ''));
 		self::$isdisable = true;
 	}
 
