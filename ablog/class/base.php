@@ -1,9 +1,8 @@
 <?php
 /**
- * 数据操作基类
- *
- * @package Z-BlogPHP
- * @subpackage ClassLib 类库
+ * @descrition 数据操作基类
+ * @package a-blog
+ * @subpackage base 作为操作父类
  */
 class Base {
 
@@ -30,7 +29,7 @@ class Base {
 	* @param array $datainfo 数据表结构信息
 	*/
 	function __construct(&$table,&$datainfo){
-			global $zbp;
+			global $ablog;
 
 			$this->table=&$table;
 			$this->datainfo=&$datainfo;
@@ -103,14 +102,13 @@ class Base {
 	* @return bool
 	*/
 	function LoadInfoByID($id){
-		global $zbp;
+		global $ablog;
 
 		$id=(int)$id;
 		$id_field=reset($this->datainfo);
 		$id_field=$id_field[0];
-		$s = $zbp->db->sql->Select($this->table,array('*'),array(array('=',$id_field,$id)),null,null,null);
-
-		$array = $zbp->db->Query($s);
+		$s = $ablog->db->sql->Select($this->table,array('*'),array(array('=',$id_field,$id)),null,null,null);
+		$array = $ablog->db->Query($s);
 		if (count($array)>0) {
 			$this->LoadInfoByAssoc($array[0]);
 			return true;
@@ -125,7 +123,7 @@ class Base {
 	* @return bool
 	*/
 	function LoadInfoByAssoc($array){
-		global $zbp;
+		global $ablog;
 
 		foreach ($this->datainfo as $key => $value) {
 			if(!isset($array[$value[0]]))continue;
@@ -135,7 +133,7 @@ class Base {
 				if($key=='Meta'){
 					$this->data[$key]=$array[$value[0]];
 				}else{
-					$this->data[$key]=str_replace('{#ZC_BLOG_HOST#}',$zbp->host,$array[$value[0]]);
+					$this->data[$key]=str_replace('{#ZC_BLOG_HOST#}',$ablog->host,$array[$value[0]]);
 				}
 			}else{
 				$this->data[$key]=$array[$value[0]];
@@ -151,7 +149,7 @@ class Base {
 	* @return bool
 	*/
 	function LoadInfoByArray($array){
-		global $zbp;
+		global $ablog;
 
 		$i = 0;
 		foreach ($this->datainfo as $key => $value) {
@@ -162,7 +160,7 @@ class Base {
 				if($key=='Meta'){
 					$this->data[$key]=$array[$i];
 				}else{
-					$this->data[$key]=str_replace('{#ZC_BLOG_HOST#}',$zbp->host,$array[$i]);
+					$this->data[$key]=str_replace('{#ZC_BLOG_HOST#}',$ablog->host,$array[$i]);
 				}
 			}else{
 				$this->data[$key]=$array[$i];
@@ -176,11 +174,11 @@ class Base {
 	/**
 	* 保存数据
 	*
-	* 保存实例数据到$zbp及数据库中
+	* 保存实例数据到$ablog及数据库中
 	* @return bool
 	*/
 	function Save(){
-		global $zbp;
+		global $ablog;
 
 		if(isset($this->data['Meta']))$this->data['Meta'] = $this->Metas->Serialize();
 
@@ -205,7 +203,7 @@ class Base {
 				if($key=='Meta'){
 					$keyvalue[$value[0]]=$this->data[$key];
 				}else{
-					$keyvalue[$value[0]]=str_replace($zbp->host,'{#ZC_BLOG_HOST#}',$this->data[$key]);
+					$keyvalue[$value[0]]=str_replace($ablog->host,'{#ZC_BLOG_HOST#}',$this->data[$key]);
 				}
 			}else{
 				$keyvalue[$value[0]]=$this->data[$key];
@@ -218,12 +216,12 @@ class Base {
 		$id_field=$id_field[0];
 		
 		if ($this->$id_name  ==  0) {
-			$sql = $zbp->db->sql->Insert($this->table,$keyvalue);
-			$this->$id_name = $zbp->db->Insert($sql);
+			$sql = $ablog->db->sql->Insert($this->table,$keyvalue);
+			$this->$id_name = $ablog->db->Insert($sql);
 		} else {
 
-			$sql = $zbp->db->sql->Update($this->table,$keyvalue,array(array('=',$id_field,$this->$id_name)));
-			return $zbp->db->Update($sql);
+			$sql = $ablog->db->sql->Update($this->table,$keyvalue,array(array('=',$id_field,$this->$id_name)));
+			return $ablog->db->Update($sql);
 		}
 
 		return true;
@@ -232,16 +230,16 @@ class Base {
 	/**
 	* 删除数据
 	*
-	* 从$zbp及数据库中删除该实例数据
+	* 从$ablog及数据库中删除该实例数据
 	* @return bool
 	*/
 	function Del(){
-		global $zbp;
+		global $ablog;
 		$id_field=reset($this->datainfo);
 		$id_name=key($this->datainfo);
 		$id_field=$id_field[0];
-		$sql = $zbp->db->sql->Delete($this->table,array(array('=',$id_field,$this->$id_name)));
-		$zbp->db->Delete($sql);
+		$sql = $ablog->db->sql->Delete($this->table,array(array('=',$id_field,$this->$id_name)));
+		$ablog->db->Delete($sql);
 		return true;
 	}
 

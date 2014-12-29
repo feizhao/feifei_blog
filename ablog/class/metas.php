@@ -73,12 +73,12 @@ class Metas {
 	 * @return string 返回序列化的值
 	 */
 	public function Serialize(){
-		global $zbp;
+		global $ablog;
 		if(count($this->Data)==0)return '';
 		$data=$this->Data;
 		foreach ($data as $key => $value) {
 			if(is_string($value)){
-				$data[$key]=str_replace(($zbp->option['ZC_PERMANENT_DOMAIN_ENABLE']==false?$zbp->host:$zbp->option['ZC_BLOG_HOST']),'{#ZC_BLOG_HOST#}',$value);
+				$data[$key]=str_replace(($ablog->option['ZC_PERMANENT_DOMAIN_ENABLE']==false?$ablog->host:$ablog->option['ZC_BLOG_HOST']),'{#ZC_BLOG_HOST#}',$value);
 			}
 		}
 		//return json_encode($data);
@@ -91,7 +91,7 @@ class Metas {
 	 * @return bool
 	 */
 	public function Unserialize($s){
-		global $zbp;
+		global $ablog;
 		if($s=='')return false;
 		//if(strpos($s,'{')===0){
 			//$this->Data=json_decode($s,true);
@@ -108,7 +108,7 @@ class Metas {
 		}
 		foreach ($this->Data as $key => $value) {
 			if(is_string($value)){
-				$this->Data[$key]=str_replace('{#ZC_BLOG_HOST#}',($zbp->option['ZC_PERMANENT_DOMAIN_ENABLE']==false?$zbp->host:$zbp->option['ZC_BLOG_HOST']),$value);
+				$this->Data[$key]=str_replace('{#ZC_BLOG_HOST#}',$ablog->host,$value);
 			}
 		}
 		return true;

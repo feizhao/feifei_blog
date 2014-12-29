@@ -17,10 +17,10 @@ class Member extends Base {
 	 */
 	function __construct()
 	{
-		global $zbp;
-		parent::__construct($zbp->table['Member'],$zbp->datainfo['Member']);
+		global $ablog;
+		parent::__construct($ablog->table['Member'],$ablog->datainfo['Member']);
 
-		$this->Name = $zbp->lang['msg']['anonymous'];
+		$this->Name = $ablog->lang['msg']['anonymous'];
 	}
 
 	/**
@@ -45,9 +45,9 @@ class Member extends Base {
 	 */
 	public function __set($name, $value)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='Url') {
-			$u = new UrlRule($zbp->option['ZC_AUTHOR_REGEX']);
+			$u = new UrlRule($ablog->option['ZC_AUTHOR_REGEX']);
 			$u->Rules['{%id%}']=$this->ID;
 			$u->Rules['{%alias%}']=$this->Alias==''?urlencode($this->Name):$this->Alias;
 			return $u->Make();
@@ -65,7 +65,7 @@ class Member extends Base {
 			return null;
 		}
 		if ($name=='Template') {
-			if($value==$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'])$value='';
+			if($value==$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'])$value='';
 			return $this->data[$name]  =  $value;
 		}
 		parent::__set($name, $value);
@@ -77,9 +77,9 @@ class Member extends Base {
 	 */
 	public function __get($name)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='Url') {
-			$u = new UrlRule($zbp->option['ZC_AUTHOR_REGEX']);
+			$u = new UrlRule($ablog->option['ZC_AUTHOR_REGEX']);
 			$u->Rules['{%id%}']=$this->ID;
 			$u->Rules['{%alias%}']=$this->Alias==''?urlencode($this->Name):$this->Alias;
 			return $u->Make();
@@ -90,16 +90,16 @@ class Member extends Base {
 				if($fpreturn){$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
 			}
 			if($this->_avatar)return $this->_avatar;
-			$s=$zbp->usersdir . 'avatar/' . $this->ID . '.png';
+			$s=$ablog->usersdir . 'avatar/' . $this->ID . '.png';
 			if(is_readable($s)){
-				$this->_avatar = $zbp->host . 'feifeis/avatar/' . $this->ID . '.png';
+				$this->_avatar = $ablog->host . 'feifeis/avatar/' . $this->ID . '.png';
 				return $this->_avatar;
 			}
-			$this->_avatar = $zbp->host . 'feifeis/avatar/0.png';
+			$this->_avatar = $ablog->host . 'feifeis/avatar/0.png';
 			return $this->_avatar;
 		}
 		if ($name=='LevelName') {
-			return $zbp->lang['user_level_name'][$this->Level];
+			return $ablog->lang['user_level_name'][$this->Level];
 		}
 		if ($name=='EmailMD5') {
 			return md5($this->Email);
@@ -110,7 +110,7 @@ class Member extends Base {
 		}
 		if ($name=='Template') {
 			$value=$this->data[$name];
-			if($value=='')$value=$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'];
+			if($value=='')$value=$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'];
 			return $value;
 		}
 		return parent::__get($name);
@@ -133,8 +133,8 @@ class Member extends Base {
 	 * @return bool
 	 */
 	function Save(){
-		global $zbp;
-		if($this->Template==$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'])$this->data['Template'] = '';
+		global $ablog;
+		if($this->Template==$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'])$this->data['Template'] = '';
 		foreach ($GLOBALS['Filter_Plugin_Member_Save'] as $fpname => &$fpsignal) {
 			$fpreturn=$fpname($this);
 			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}

@@ -12,8 +12,8 @@ class Module extends Base{
 	 */
 	function __construct()
 	{
-		global $zbp;
-		parent::__construct($zbp->table['Module'],$zbp->datainfo['Module']);
+		global $ablog;
+		parent::__construct($ablog->table['Module'],$ablog->datainfo['Module']);
 	}
 
 	/**
@@ -24,19 +24,19 @@ class Module extends Base{
 	 */
 	public function __set($name, $value)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='SourceType') {
 			return null;
 		}
 		if ($name=='NoRefresh') {
 			$n='module_norefresh_' . $this->FileName;
 			if($value==true){
-				$zbp->cache->$n=true;
-				$zbp->SaveCache();
+				$ablog->cache->$n=true;
+				$ablog->SaveCache();
 			}else{
-				if($zbp->cache->HasKey($n)==true){
-					$zbp->cache->Del($n);
-					$zbp->SaveCache();
+				if($ablog->cache->HasKey($n)==true){
+					$ablog->cache->Del($n);
+					$ablog->SaveCache();
 				}
 			}
 			return null;
@@ -51,7 +51,7 @@ class Module extends Base{
 	 */
 	public function __get($name)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='SourceType') {
 			if($this->Source=='system'){
 				return 'system';
@@ -59,7 +59,7 @@ class Module extends Base{
 				return 'user';
 			}elseif($this->Source=='theme'){
 				return 'theme';
-			}elseif($this->Source=='plugin_' . $zbp->theme){
+			}elseif($this->Source=='plugin_' . $ablog->theme){
 				return 'theme';
 			}else{
 				return 'plugin';
@@ -67,7 +67,7 @@ class Module extends Base{
 		}
 		if ($name=='NoRefresh') {
 			$n='module_norefresh_' . $this->FileName;
-			if($zbp->cache->HasKey($n)==true){
+			if($ablog->cache->HasKey($n)==true){
 				return true;
 			}else{
 				return false;

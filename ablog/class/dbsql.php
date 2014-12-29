@@ -1,69 +1,21 @@
 <?php
 /**
- * 数据库操作接口
- *
- * @package Z-BlogPHP
- * @subpackage Interface/DataBase 类库
+ * @author zhaofei
+ * @package class
+ * @subpackage 数据库接口操作类
  */
-interface iDataBase {
-
-	/**
-	* @param $array
-	* @return mixed
-	*/
-	public function Open($array);
-	/**
-	* @return mixed
-	*/
-	public function Close();
-	/**
-	* @param $query
-	* @return mixed
-	*/
-	public function Query($query);
-	/**
-	* @param $query
-	* @return mixed
-	*/
-	public function Insert($query);
-	/**
-	* @param $query
-	* @return mixed
-	*/
-	public function Update($query);
-
-	/**
-	* @param $query
-	* @return mixed
-	*/
-	public function Delete($query);
-	/**
-	* @param $s
-	* @return mixed
-	*/
-	public function QueryMulit($s);
-	/**
-	* @param $s
-	* @return mixed
-	*/
-	public function EscapeString($s);
-
-	/**
-	* @param $table
-	* @param $datainfo
-	* @return mixed
-	*/
-	public function CreateTable($table,$datainfo);
-	/**
-	* @param $table
-	* @return mixed
-	*/
-	public function DelTable($table);
-	/**
-	* @param $table
-	* @return mixed
-	*/
-	public function ExistTable($table);
+interface interfaceDB {
+	public function open($array);
+	public function close();
+	public function query($query);
+	public function insert($query);
+	public function update($query);
+	public function delete($query);
+	public function queryMulit($s);
+	public function escapeString($s);
+	public function createTable($table,$datainfo);
+	public function delTable($table);
+	public function existTable($table);
 }
 
 
@@ -73,7 +25,7 @@ interface iDataBase {
  * @package Z-BlogPHP
  * @subpackage ClassLib/DataBase
 */
-class DbSql #extends AnotherClass 
+class DbSql 
 {
 	/**
 	* @var null|string
@@ -106,7 +58,6 @@ class DbSql #extends AnotherClass
 	*/
 	public function DelTable($table){
 		$this->ReplacePre($table);
-
 		$s='';
 		$s="DROP TABLE $table";
 		return $s;
@@ -119,7 +70,6 @@ class DbSql #extends AnotherClass
 	*/
 	public function ExistTable($table,$dbname=''){
 		$this->ReplacePre($table);
-
 		$s='';
 		if($this->type=='DbSQLite'||$this->type=='DbSQLite3'){
 			$s="SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table'";
@@ -617,10 +567,6 @@ class DbSql #extends AnotherClass
 	*/
 	public function Filter($sql){
 		$_SERVER['_query_count'] = $_SERVER['_query_count'] + 1;
-		
-		foreach ($GLOBALS['Filter_Plugin_DbSql_Filter'] as $fpname => &$fpsignal) {
-			$fpname($sql);
-		}
 		//Logs($sql);
 		return $sql;
 	}

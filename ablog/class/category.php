@@ -17,10 +17,10 @@ class Category extends Base {
 	*/
 	function __construct()
 	{
-		global $zbp;
-		parent::__construct($zbp->table['Category'],$zbp->datainfo['Category']);
+		global $ablog;
+		parent::__construct($ablog->table['Category'],$ablog->datainfo['Category']);
 
-		$this->Name	= $zbp->lang['msg']['unnamed'];
+		$this->Name	= $ablog->lang['msg']['unnamed'];
 	}
 
 	/**
@@ -44,7 +44,7 @@ class Category extends Base {
 	*/
 	public function __set($name, $value)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='Url') {
 			return null;
 		}
@@ -61,11 +61,11 @@ class Category extends Base {
 			return null;
 		}		
 		if ($name=='Template') {
-			if($value==$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'])$value='';
+			if($value==$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'])$value='';
 			return $this->data[$name]  =  $value;
 		}
 		if ($name=='LogTemplate') {
-			if($value==$zbp->option['ZC_POST_DEFAULT_TEMPLATE'])$value='';
+			if($value==$ablog->option['ZC_POST_DEFAULT_TEMPLATE'])$value='';
 			return $this->data[$name]  =  $value;
 		}
 		parent::__set($name, $value);
@@ -77,9 +77,9 @@ class Category extends Base {
 	*/
 	public function __get($name)
 	{
-		global $zbp;
+		global $ablog;
 		if ($name=='Url') {
-			$u = new UrlRule($zbp->option['ZC_CATEGORY_REGEX']);
+			$u = new UrlRule($ablog->option['ZC_CATEGORY_REGEX']);
 			$u->Rules['{%id%}']=$this->ID;
 			$u->Rules['{%alias%}'] = $this->Alias==''?urlencode($this->Name):$this->Alias;
 			return $u->Make();
@@ -104,16 +104,16 @@ class Category extends Base {
 				$this->RootID=0;
 				return 0;
 			}
-			if($zbp->categorys[$this->ParentID]->ParentID==0){
+			if($ablog->categorys[$this->ParentID]->ParentID==0){
 				$this->RootID=$this->ParentID;
 				return 1;
 			}
-			if($zbp->categorys[$zbp->categorys[$this->ParentID]->ParentID]->ParentID==0){
-				$this->RootID=$zbp->categorys[$this->ParentID]->ParentID;
+			if($ablog->categorys[$ablog->categorys[$this->ParentID]->ParentID]->ParentID==0){
+				$this->RootID=$ablog->categorys[$this->ParentID]->ParentID;
 				return 2;
 			}
-			if($zbp->categorys[$zbp->categorys[$zbp->categorys[$this->ParentID]->ParentID]->ParentID]->ParentID==0){
-				$this->RootID=$zbp->categorys[$zbp->categorys[$this->ParentID]->ParentID]->ParentID;				
+			if($ablog->categorys[$ablog->categorys[$ablog->categorys[$this->ParentID]->ParentID]->ParentID]->ParentID==0){
+				$this->RootID=$ablog->categorys[$ablog->categorys[$this->ParentID]->ParentID]->ParentID;				
 				return 3;
 			}
 
@@ -126,17 +126,17 @@ class Category extends Base {
 			if($this->ParentID==0){
 				return null;
 			}else{
-				return $zbp->categorys[$this->ParentID];
+				return $ablog->categorys[$this->ParentID];
 			}
 		}	
 		if ($name=='Template') {
 			$value=$this->data[$name];
-			if($value=='')$value=$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'];
+			if($value=='')$value=$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'];
 			return $value;
 		}
 		if ($name=='LogTemplate') {
 			$value=$this->data[$name];
-			if($value=='')$value=$zbp->option['ZC_POST_DEFAULT_TEMPLATE'];
+			if($value=='')$value=$ablog->option['ZC_POST_DEFAULT_TEMPLATE'];
 			return $value;
 		}
 		return parent::__get($name);
@@ -147,9 +147,9 @@ class Category extends Base {
 	* @return bool
 	*/
 	function Save(){
-		global $zbp;
-		if($this->Template==$zbp->option['ZC_INDEX_DEFAULT_TEMPLATE'])$this->data['Template'] = '';
-		if($this->LogTemplate==$zbp->option['ZC_POST_DEFAULT_TEMPLATE'])$this->data['LogTemplate'] = '';
+		global $ablog;
+		if($this->Template==$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'])$this->data['Template'] = '';
+		if($this->LogTemplate==$ablog->option['ZC_POST_DEFAULT_TEMPLATE'])$this->data['LogTemplate'] = '';
 		foreach ($GLOBALS['Filter_Plugin_Category_Save'] as $fpname => &$fpsignal) {
 			$fpreturn=$fpname($this);
 			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
