@@ -5,165 +5,22 @@
 error_reporting(E_ALL);
 
 class ABlog {
-
 	private static $_blog=null;
-	/**
-	 * @var null|string 版本号
-	 */
 	public $version=null;
-	/**
-	 * @var null 数据库
-	 */
 	public $db = null;
-	/**
-	 * @var array 配置选项
-	 */
-	public $option = array();
-	/**
-	 * @var array 语言
-	 */
+	public $config = array();
 	public $lang = array();
-	/**
-	 * @var null|string 路径
-	 */
-	public $path = null;
-	/**
-	 * @var null|string 域名
-	 */
 	public $host = null;
-	/**
-	 * @var null cookie作用域
-	 */
 	public $cookiespath=null;
-	/**
-	 * @var null guid
-	 */
-	public $guid=null;
-	/**
-	 * @var null|string 当前链接
-	 */
 	public $currenturl=null;
-	/**
-	 * @var null|string 用户目录
-	 */
-	public $usersdir = null;
-	/**
-	 * @var null 验证码地址
-	 */
 	public $validcodeurl = null;
-	/**
-	 * @var null
-	 */
-	public $feedurl = null;
-	/**
-	 * @var null
-	 */
-	public $searchurl = null;
-	/**
-	 * @var null
-	 */
-	public $ajaxurl = null;
-
-	/**
-	 * @var array 用户数组
-	 */
-	public $members=array();
-	/**
-	 * @var array 用户数组（以用户名为键）
-	 */
-	public $membersbyname=array();
-	/**
-	 * @var array 分类数组
-	 */
-	public $categorys=array();
-	/**
-	 * @var array 分类数组（已排序）
-	 */
-	public $categorysbyorder=array();
-	/**
-	 * @var int 分类最大层数
-	 */
-	public $categorylayer=0;
-	/**
-	 * @var array 模块数组
-	 */
-	public $modules=array();
-	/**
-	 * @var array 模块数组（以文件名为键）
-	 */
-	public $modulesbyfilename=array();
-	/**
-	 * @var array 配置选项
-	 */
 	public $configs=array();
-	/**
-	 * @var array 标签数组
-	 */
-	public $tags=array();
-	/**
-	 * @var array 标签数组（以标签名为键）
-	 */
-	public $tagsbyname=array();
-	/**
-	 * @var array 评论数组
-	 */
-	public $comments = array();
-	/**
-	 * @var array 文章列表数组
-	 */
-	public $posts=array();
-
-	/**
-	 * @var null|string 当前页面标题
-	 */
 	public $title=null;
-	/**
-	 * @var null 网站名
-	 */
 	public $name=null;
-	/**
-	 * @var null 网站子标题
-	 */
 	public $subname=null;
-	/**
-	 * @var null 当前主题
-	 */
-	public $theme = null;
-	/**
-	 * @var null 当前主题风格
-	 */
-	public $style = null;
-
-	/**
-	 * @var null 当前用户
-	 */
+	public $blogpath;
+	public $userdir;
 	public $user=null;
-	/**
-	 * @var Metas|null 缓存
-	 */
-	public $cache=null;
-
-	private $readymodules=array(); #模块
-	private $readymodules_function=array(); #模块函数
-	private $readymodules_parameters=array(); #模块函数的参数
-
-	/**
-	 * @var array|null 数据表
-	 */
-	public $table=null;
-	/**
-	 * @var array|null 数据表信息
-	 */
-	public $datainfo=null;
-	/**
-	 * @var array|null 操作列表
-	 */
-	public $actions=null;
-	/**
-	 * @var mixed|null|string 当前操作
-	 */
-	public $action=null;
-
 	private $isinitialize=false; #是否初始化成功
 	private $isconnect=false; #是否连接成功
 	private $isload=false; #是否载入
@@ -171,82 +28,14 @@ class ABlog {
 	public $ismanage=false; #是否管理员
 	private $isgzip=false; #是否开启gzip
 	private $isgziped=false; #是否已经过gzip压缩
-
-	  
-	/**
-	 * @var null 社会化评论
-	 */
-	public $socialcomment = null;
-	/**
-	 * @var null 模板头部
-	 */
-	public $header = null;
-	/**
-	 * @var null 模板尾部
-	 */
-	public $footer = null;
-
-	/**
-	 * @var array 主题列表
-	 */
-	public $themes = array();
-	/**
-	 * @var array 插件列表
-	 */
-	public $plugins = array();
-	/**
-	 * @var array 激活的插件列表
-	 */
-	public $activeapps = array();
-
-	/**
-	 * @var int 管理页面显示条数
-	 */
-	public $managecount = 50;
-	/**
-	 * @var int 页码显示条数
-	 */
-	public $pagebarcount = 10;
-	/**
-	 * @var int 搜索返回条数
-	 */
-	public $searchcount = 10;
-	/**
-	 * @var int 文章列表显示条数
-	 */
-	public $displaycount = 10;
-	/**
-	 * @var int 评论显示数量
-	 */
-	public $commentdisplaycount = 10;
-
-	/**
-	 * @var array 默认侧栏
-	 */
-	public $sidebar =array();
-	/**
-	 * @var array 侧栏2
-	 */
-	public $sidebar2=array();
-	/**
-	 * @var array 侧栏3
-	 */
-	public $sidebar3=array();
-	/**
-	 * @var array 侧栏4
-	 */
-	public $sidebar4=array();
-	/**
-	 * @var array 侧栏5
-	 */
-	public $sidebar5=array();
-
+ 
+	
 
 	/**
 	 * 获取唯一实例
 	 * @return null|ABlog
 	 */
-	static public function GetInstance(){
+	static public function getInstance(){
 		if(!isset(self::$_blog)){
 			self::$_blog=new ABlog;
 		}
@@ -257,40 +46,19 @@ class ABlog {
 	 * 构造函数，加载基本配置到$blog
 	 */
 	function __construct() {
-
-		global $config,$lang,$blogpath,$bloghost,$cookiespath,$usersdir,$table,$datainfo,$actions,$action;
-		global $blogversion,$blogtitle,$blogname,$blogsubname,$blogtheme,$blogstyle,$currenturl,$activeapps;
-
+		global $config,$lang, $blogpath,$userdir,$bloghost,$cookiespath;
+		global $blogtitle,$blogname,$blogsubname,$currenturl;
 		//基本配置加载到$blog内
-		$this->version = &$blogversion;
-		$this->option = &$config;
+		$this->config = &$config;
+		$this->blogpath = &$blogpath;
+		$this->userdir = &$userdir;
 		$this->lang = &$lang;
-		$this->path = &$blogpath;
 		$this->host = &$bloghost;
 		$this->cookiespath = &$cookiespath;
-		$this->usersdir = &$usersdir;
-
-		$this->table = &$table;
-		$this->datainfo = &$datainfo;
-		$this->actions = &$actions;
 		$this->currenturl = &$currenturl;
-		$this->action = &$action;
-		$this->activeapps = &$activeapps;
-		  
-
 		$this->title = &$blogtitle;
 		$this->name = &$blogname;
 		$this->subname = &$blogsubname;
-		$this->theme = &$blogtheme;
-		$this->style = &$blogstyle;
-
-		$this->managecount = &$this->option['A_MANAGE_COUNT'];
-		$this->pagebarcount = &$this->option['A_PAGEBAR_COUNT'];
-		$this->searchcount = &$this->option['A_SEARCH_COUNT'];
-		$this->displaycount = &$this->option['A_DISPLAY_COUNT'];
-		$this->commentdisplaycount = &$this->option['A_COMMENTS_DISPLAY_COUNT'];
-		$this->cache = new Metas;
-
 	}
 
 
@@ -298,7 +66,7 @@ class ABlog {
 	 *析构函数，释放资源
 	 */
 	function __destruct(){
-		$this->Terminate();
+		$this->terminate();
 	}
 
 	/**
@@ -327,48 +95,26 @@ class ABlog {
 	  //
 	}
 
-#初始化
 
 	/**
 	 * 初始化$blog
 	 * @return bool
 	 */
-	public function Initialize(){
-		$oldzone=$this->option['A_TIME_ZONE_NAME'];
+	public function initialize(){
+		$oldzone=$this->config['A_TIME_ZONE_NAME'];
 		date_default_timezone_set($oldzone);
-		$oldlang=$this->option['A_BLOG_LANGUAGEPACK'];
-		$this->lang = require($this->path . 'myblog/language/' . $oldlang . '.php');
-
-		if($this->option['A_SITE_TURNOFF']==true){
-			Http503();
-			$this->ShowError(82,__FILE__,__LINE__);
-			return false;
+		$oldlang=$this->config['A_BLOG_LANGUAGEPACK'];
+		$this->lang = require($this->blogpath . 'myblog/language/' . $oldlang . '.php');
+		if(!$this->openConnect())
+		{
+			exit('数据库连接失败');
 		}
-		if(!$this->OpenConnect())return false;
 
 		$this->LoadConfigs();
 		$this->LoadCache();
 		$this->LoadOption();
-
-		if($oldlang!=$this->option['A_BLOG_LANGUAGEPACK']){
-			$this->lang = require($this->path . 'feifei/language/' . $this->option['A_BLOG_LANGUAGEPACK'] . '.php');
-		}
-
-	 
-        $this->option['A_BLOG_HOST']=$this->host;
-		 
-		if($oldzone!=$this->option['A_TIME_ZONE_NAME']){
-			date_default_timezone_set($this->option['A_TIME_ZONE_NAME']);
-		}
-
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
-		$this->feedurl=$this->host . 'feed.php';
-		$this->searchurl=$this->host . 'search.php';
-		$this->ajaxurl=$this->host . 'system/cmd.php?act=ajax&src=';
-
-		#创建User类
-		$this->user=new Member();
-
+		$this->user= get_current_user();
 		$this->isinitialize=true;
 
 	}
@@ -382,62 +128,18 @@ class ABlog {
 		if(!$this->isinitialize)return false;
 		if($this->isload)return false;
 		$this->StartGzip();
-
-		header('Content-type: text/html; charset=utf-8');
-
-		$this->LoadMembers();
-
-		$this->LoadCategorys();
-		$this->LoadTags();
-		$this->LoadModules();
-
-		$this->Verify();
-
-		$this->RegBuildModule('catalog','BuildModule_catalog');
-
-		$this->RegBuildModule('calendar','BuildModule_calendar');
-
-		$this->RegBuildModule('comments','BuildModule_comments');
-
-		$this->RegBuildModule('previous','BuildModule_previous');
-
-		$this->RegBuildModule('archives','BuildModule_archives');
-
-		$this->RegBuildModule('navbar','BuildModule_navbar');
-
-		$this->RegBuildModule('tags','BuildModule_tags');
-
-		$this->RegBuildModule('statistics','BuildModule_statistics');
-
-		$this->RegBuildModule('authors','BuildModule_authors');
-
-		   
-		if($this->ismanage) $this->LoadManage();
-
+  
 		$this->isload=true;
 
 		return true;
 	}
 
-	/**
-	 * 载入管理
-	 */
-	public function LoadManage(){
-		$this->CheckTemplate();
-
-		if(GetVars('dishtml5','COOKIE')){
-			$this->option['A_ADMIN_HTML5_ENABLE']=false;
-		}else{
-			$this->option['A_ADMIN_HTML5_ENABLE']=true;
-		}
-
-
-	}
+	 
 
 	/**
 	 *终止连接，释放资源
 	 */
-	public function Terminate(){
+	public function terminate(){
 		if($this->isinitialize){
 			$this->CloseConnect();
 			unset($this->db);
@@ -451,7 +153,7 @@ class ABlog {
 	 * @param string $type 数据连接类型
 	 * @return bool
 	 */
-	public function InitializeDB($type){
+	public function initializeDB($type){
 		if(!trim($type))return false;
 		$newtype='Db'.trim($type);
 		$this->db=new $newtype();
@@ -462,39 +164,24 @@ class ABlog {
 	 * @return bool
 	 * @throws Exception
 	 */
-	public function OpenConnect(){
-
+	public function openConnect(){
 		if($this->isconnect)return false;
-		if(!$this->option['A_DATABASE_TYPE'])return false;
-		switch ($this->option['A_DATABASE_TYPE']) {
-			case 'sqlite':
-			case 'sqlite3':
-				try {
-					$this->InitializeDB($this->option['A_DATABASE_TYPE']);
-					if($this->db->Open(array(
-							$this->usersdir . 'data/' . $this->option['A_SQLITE_NAME'],
-							$this->option['A_SQLITE_PRE']
-						))==false){
-						$this->ShowError(69,__FILE__,__LINE__);
-					}
-				} catch (Exception $e) {
-					throw new Exception("SQLite DateBase Connection Error.");
-				}
-				break;
+		if(!$this->config['A_DATABASE_TYPE'])return false;
+		switch ($this->config['A_DATABASE_TYPE']) {
 			case 'mysql':
 			case 'mysqli':
 			case 'pdo_mysql':
 			default:
 				try {
-					$this->InitializeDB($this->option['A_DATABASE_TYPE']);
+					$this->initializeDB($this->config['A_DATABASE_TYPE']);
 					if($this->db->Open(array(
-							$this->option['A_MYSQL_SERVER'],
-							$this->option['A_MYSQL_USERNAME'],
-							$this->option['A_MYSQL_PASSWORD'],
-							$this->option['A_MYSQL_NAME'],
-							$this->option['A_MYSQL_PRE'],
-							$this->option['A_MYSQL_PORT'],
-							$this->option['A_MYSQL_PERSISTENT']
+							$this->config['A_MYSQL_SERVER'],
+							$this->config['A_MYSQL_USERNAME'],
+							$this->config['A_MYSQL_PASSWORD'],
+							$this->config['A_MYSQL_NAME'],
+							$this->config['A_MYSQL_PRE'],
+							$this->config['A_MYSQL_PORT'],
+							$this->config['A_MYSQL_PERSISTENT']
 						))==false){
 						$this->ShowError(67,__FILE__,__LINE__);
 					}
@@ -543,7 +230,6 @@ class ABlog {
 		return true;
 	}
 
-################################################################################################################
 #插件用Configs表相关设置函数
 
 	/**
@@ -552,7 +238,7 @@ class ABlog {
 	public function LoadConfigs(){
 
 		$this->configs=array();
-		$sql = $this->db->sql->Select($this->table['Config'],array('*'),'','','','');
+		$sql = $this->db->sql->Select('config',array('*'),'','','','');
 		$array=$this->db->Query($sql);
 		foreach ($array as $c) {
 			$m=new Metas;
@@ -610,7 +296,6 @@ class ABlog {
 		return $this->configs[$name];
 	}
 
-################################################################################################################
 #Cache相关
 
 	/**
@@ -649,17 +334,17 @@ class ABlog {
 	 */
 	public function SaveOption(){
 
-		$this->option['A_BLOG_CLSID']=$this->guid;
+		$this->config['A_BLOG_CLSID']=$this->guid;
 
-		if( strpos('|SAE|BAE2|ACE|TXY|', '|'.$this->option['A_YUN_SITE'].'|')===false ){
+		if( strpos('|SAE|BAE2|ACE|TXY|', '|'.$this->config['A_YUN_SITE'].'|')===false ){
 			$s="<?php\r\n";
 			$s.="return ";
-			$s.=var_export($this->option,true);
+			$s.=var_export($this->config,true);
 			$s.="\r\n?>";
 			@file_put_contents($this->usersdir . 'c_option.php',$s);
 		}
 
-		foreach ($this->option as $key => $value) {
+		foreach ($this->config as $key => $value) {
 			$this->Config('system')->$key = $value;
 		}
 		$this->SaveConfig('system');
@@ -696,12 +381,12 @@ class ABlog {
 			if($key=='A_MYSQL_PORT')continue;
 			if($key=='A_MYSQL_PERSISTENT')continue;
 			if($key=='A_SITE_TURNOFF')continue;			
-			$this->option[$key]=$value;
+			$this->config[$key]=$value;
 		}
 		return true;
 	}
 
-################################################################################################################
+ 
 #权限及验证类
 
 	/**
@@ -1565,7 +1250,7 @@ class ABlog {
 	 * @return bool
 	 */
 	function CheckPlugin($name){
-		//$s=$this->option['A_BLOG_THEME'] . '|' . $this->option['A_USING_PLUGIN_LIST'];
+		//$s=$this->config['A_BLOG_THEME'] . '|' . $this->config['A_USING_PLUGIN_LIST'];
 		//return HasNameInString($s,$name);
 		return in_array($name,$this->activeapps);
 	}
@@ -1790,7 +1475,7 @@ class ABlog {
 	function StartGzip(){
 		if($this->isgziped)return false;
 
-		if(!headers_sent()&&$this->isgzip&&isset($this->option['A_GZIP_ENABLE'])&&$this->option['A_GZIP_ENABLE']){
+		if(!headers_sent()&&$this->isgzip&&isset($this->config['A_GZIP_ENABLE'])&&$this->config['A_GZIP_ENABLE']){
 			if(ini_get('output_handler'))return false;
 			$a=ob_list_handlers();
 			if(in_array('ob_gzhandler',$a) || in_array('zlib output compression',$a))return false;
@@ -1812,9 +1497,9 @@ class ABlog {
 	 */
 	// function  RedirectInstall($yun=false){
 	// 	if(!$yun){
-	// 		if(!$this->option['A_DATABASE_TYPE']){Redirect('./zb_install/index.php');}
+	// 		if(!$this->config['A_DATABASE_TYPE']){Redirect('./zb_install/index.php');}
 	// 	}else{
-	// 		if($this->option['A_YUN_SITE']){
+	// 		if($this->config['A_YUN_SITE']){
 	// 			if($this->Config('system')->CountItem()==0){Redirect('./zb_install/index.php');}
 	// 		}
 	// 	}

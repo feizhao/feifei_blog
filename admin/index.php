@@ -66,8 +66,7 @@ switch ($action) {
 		$blogtitle=$lang['msg']['dashboard'];
 		break;
 	default:
-		$ablog->ShowError(6,__FILE__,__LINE__);
-		die();
+		die('操作错误');
 		break;
 }
 
@@ -77,6 +76,7 @@ require $blogpath . 'admin/template/top.php';
 ?>
 <div id="divMain">
 <?php
+exit($f);
 $f();
 ?>
 </div>

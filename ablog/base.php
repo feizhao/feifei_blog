@@ -66,10 +66,6 @@ $cookiespath = null;
 $bloghost = GetCurrentHost($blogpath,$cookiespath);
 #定义命令
 $actions= require_once($blogpath.'ablog/defend/action.php');
-$tab = require_once($blogpath.'ablog/defend/table.php');
-$table=$tab['table'];
-$datainfo=$tab['tableinfo'];
-
 #加载zbp 数据库类 基础对象
 AutoloadClass('ABLOG');
 AutoloadClass('DbSql');

@@ -48,7 +48,6 @@ class DbSql
 	* @return string
 	*/
 	public function ReplacePre(&$s){
-		$s=str_replace('%pre%', $this->db->dbpre, $s);
 		return $s;
 	}
 	
