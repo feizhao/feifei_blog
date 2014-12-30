@@ -14,11 +14,6 @@ $action=GetVars('act','GET');
 
 if(($action=='')||($action==null)){$action='admin';}
 
-foreach ($GLOBALS['Filter_Plugin_Admin_Begin'] as $fpname => &$fpsignal) {
-	$fpname();
-}
-
-if (!$ablog->CheckRights($action)) {$ablog->ShowError(6,__FILE__,__LINE__);die();}
 
 $f=null;
 switch ($action) {
@@ -76,8 +71,8 @@ switch ($action) {
 		break;
 }
 
-require $blogpath . 'system/admin/admin_header.php';
-require $blogpath . 'system/admin/admin_top.php';
+require $blogpath . 'admin/template/header.php';
+require $blogpath . 'admin/template/top.php';
 
 ?>
 <div id="divMain">
@@ -86,7 +81,7 @@ $f();
 ?>
 </div>
 <?php
-require $blogpath . 'system/admin/admin_footer.php';
+require $blogpath . 'admin/template/footer.php';
 
 
 RunTime();

@@ -421,44 +421,11 @@ function CreateOptionsOfLang($default){
  * 后台管理显示网站信息
  */
 function Admin_SiteInfo(){
-
 	global $ablog;
-
-	echo '<div class="divHeader">' . $ablog->lang['msg']['info_intro'] . '</div>';
-	echo '<div class="SubMenu">';
-	foreach ($GLOBALS['Filter_Plugin_Admin_SiteInfo_SubMenu'] as $fpname => &$fpsignal) {
-		$fpname();
-	}
-	echo '</div>';
-	echo '<div id="divMain2">';
-
-	echo '<table class="tableFull tableBorder" id="tbStatistic"><tr><th colspan="4"  scope="col">&nbsp;' . $ablog->lang['msg']['site_analyze'] . '&nbsp;<a href="javascript:statistic(\'?act=misc&amp;type=statistic\');" id="statistic">[' . $ablog->lang['msg']['refresh_cache'] . ']</a> <img id="statloading" style="display:none" src="../image/admin/loading.gif" alt=""/></th></tr>';
-
-	if((time()-(int)$ablog->cache->reload_statistic_time) > (23*60*60) && $ablog->CheckRights('root')){
-		echo '<script type="text/javascript">$(document).ready(function(){ statistic(\'?act=misc&type=statistic\'); });</script>';
-	}else{
-		$r=$ablog->cache->reload_statistic;
-		$r=str_replace('{$ablog->user->Name}', $ablog->user->Name, $r);
-		echo $r;
-	}
-
-	echo '</table>';
-
-	echo '<table class="tableFull tableBorder" id="tbUpdateInfo"><tr><th>&nbsp;' . $ablog->lang['msg']['latest_news'] . '&nbsp;<a href="javascript:updateinfo(\'?act=misc&amp;type=updateinfo\');">[' . $ablog->lang['msg']['refresh'] . ']</a> <img id="infoloading" style="display:none" src="../image/admin/loading.gif" alt=""/></th></tr>';
-
-	if((time()-(int)$ablog->cache->reload_updateinfo_time) > (23*60*60) && $ablog->CheckRights('root')){
-		echo '<script type="text/javascript">$(document).ready(function(){ updateinfo(\'?act=misc&type=updateinfo\'); });</script>';
-	}else{
-		echo $ablog->cache->reload_updateinfo;
-	}
-
-	echo '</table>';
-
-	echo '</div>';
-	include $ablog->path . "system/defend/thanks.html";
-	echo '<script type="text/javascript">ActiveTopMenu("topmenu1");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/home_32.png' . '");</script>';
-
+	$dir = dirname(__FILE__);
+	 echo  $ablog->blogpath;
+	 exit(var_dump($ablog));
+	require_once '';
 }
 
 

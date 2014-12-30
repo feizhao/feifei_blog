@@ -172,18 +172,7 @@ class ABlog {
 	private $isgzip=false; #是否开启gzip
 	private $isgziped=false; #是否已经过gzip压缩
 
-	/**
-	 * @var null 当前模板
-	 */
-	public $template = null;
-	/**
-	 * @var array 模板列表
-	 */
-	public $templates = array();
-	/**
-	 * @var array 模板标签
-	 */
-	public $templatetags = array();
+	  
 	/**
 	 * @var null 社会化评论
 	 */
@@ -300,10 +289,7 @@ class ABlog {
 		$this->searchcount = &$this->option['A_SEARCH_COUNT'];
 		$this->displaycount = &$this->option['A_DISPLAY_COUNT'];
 		$this->commentdisplaycount = &$this->option['A_COMMENTS_DISPLAY_COUNT'];
-
 		$this->cache = new Metas;
-		// var_dump($this);
-		// exit();
 
 	}
 
@@ -321,8 +307,6 @@ class ABlog {
 	 * @return mixed
 	 */
 	function __call($method, $args) {
-	 
-		if($this->option['A_DEBUG_MODE']==true) $this->ShowError(81,__FILE__,__LINE__);
 	}
 
 	/**
@@ -332,7 +316,6 @@ class ABlog {
 	 * @return mixed
 	 */
 	function __set($name, $value){
-		if($this->option['A_DEBUG_MODE']==true) $this->ShowError(81,__FILE__,__LINE__);
 	}
 
 	/**
@@ -341,14 +324,9 @@ class ABlog {
 	 * @return mixed
 	 */
 	function __get($name){
-		foreach ($GLOBALS['Filter_Plugin_blog_Get'] as $fpname => &$fpsignal) {
-			$fpreturn=$fpname($name);
-			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
-		}
-		if($this->option['A_DEBUG_MODE']==true) $this->ShowError(81,__FILE__,__LINE__);
+	  //
 	}
 
-################################################################################################################
 #初始化
 
 	/**
@@ -376,12 +354,7 @@ class ABlog {
 			$this->lang = require($this->path . 'feifei/language/' . $this->option['A_BLOG_LANGUAGEPACK'] . '.php');
 		}
 
-		if(isset($this->option['A_DEBUG_MODE_STRICT'])){
-			ZBlogException::$isstrict = (bool)$this->option['A_DEBUG_MODE_STRICT'];
-		}
-		if(isset($this->option['A_DEBUG_MODE_WARNING'])){
-			ZBlogException::$iswarning = (bool)$this->option['A_DEBUG_MODE_WARNING'];
-		}
+	 
         $this->option['A_BLOG_HOST']=$this->host;
 		 
 		if($oldzone!=$this->option['A_TIME_ZONE_NAME']){
@@ -415,7 +388,7 @@ class ABlog {
 		$this->LoadMembers();
 
 		$this->LoadCategorys();
-		#$this->LoadTags();
+		$this->LoadTags();
 		$this->LoadModules();
 
 		$this->Verify();
@@ -438,11 +411,7 @@ class ABlog {
 
 		$this->RegBuildModule('authors','BuildModule_authors');
 
-		$this->LoadTemplate();
-
-		$this->MakeTemplatetags();
-
-		$this->template=$this->PrepareTemplate();
+		   
 		if($this->ismanage) $this->LoadManage();
 
 		$this->isload=true;
@@ -454,10 +423,6 @@ class ABlog {
 	 * 载入管理
 	 */
 	public function LoadManage(){
-
-		if($this->user->Status==A_MEMBER_STATUS_AUDITING) $this->ShowError(79,__FILE__,__LINE__);
-		if($this->user->Status==A_MEMBER_STATUS_LOCKED) $this->ShowError(80,__FILE__,__LINE__);
-
 		$this->CheckTemplate();
 
 		if(GetVars('dishtml5','COOKIE')){
@@ -1051,258 +1016,7 @@ class ABlog {
 		}
 
 	}
-
-	/**
-	 *载入插件列表
-	 */
-	public function LoadPlugins(){
-		$dirs=GetDirsInDir($this->usersdir . 'plugin/');
-
-		foreach ($dirs as $id) {
-			$app = new App;
-			if($app->LoadInfoByXml('plugin',$id)==true){
-				$this->plugins[]=$app;
-			}
-		}
-
-	}
-
-	/**
-	 * 载入应用列表
-	 * @param string $type 应用类型
-	 * @param string $id 应用ID
-	 * @return App
-	 */
-	public function LoadApp($type,$id){
-		$app = new App;
-		$app->LoadInfoByXml($type,$id);
-		return $app;
-	}
-
-################################################################################################################
-#模板相关函数
-
-	/**
-	 *解析模板标签
-	 */
-	public function MakeTemplatetags(){
-
-		$this->templatetags=array();
-
-		$option=$this->option;
-		unset($option['A_BLOG_CLSID']);
-		unset($option['A_SQLITE_NAME']);
-		unset($option['A_SQLITE3_NAME']);
-		unset($option['A_MYSQL_USERNAME']);
-		unset($option['A_MYSQL_PASSWORD']);
-		unset($option['A_MYSQL_NAME']);
-
-		$this->templatetags['blog']=&$this;
-		$this->templatetags['user']=&$this->user;
-		$this->templatetags['option']=&$option;
-		$this->templatetags['lang']=&$this->lang;
-		$this->templatetags['version']=&$this->version;
-		$this->templatetags['categorys']=&$this->categorys;
-		$this->templatetags['modules']=&$this->modulesbyfilename;
-		$this->templatetags['title']=htmlspecialchars($this->title);
-		$this->templatetags['host']=&$this->host;
-		$this->templatetags['path']=&$this->path;
-		$this->templatetags['cookiespath']=&$this->cookiespath;
-		$this->templatetags['name']=htmlspecialchars($this->name);
-		$this->templatetags['subname']=htmlspecialchars($this->subname);
-		$this->templatetags['theme']=&$this->theme;
-		$this->templatetags['style']=&$this->style;
-		$this->templatetags['language']=$this->option['A_BLOG_LANGUAGE'];
-		$this->templatetags['copyright']=$this->option['A_BLOG_COPYRIGHT'];
-		$this->templatetags['ABlog']=$this->option['A_BLOG_PRODUCT_FULL'];
-		$this->templatetags['ABloghtml']=$this->option['A_BLOG_PRODUCT_FULLHTML'];
-		$this->templatetags['ABlogabbrhtml']=$this->option['A_BLOG_PRODUCT_HTML'];
-		$this->templatetags['type']='';
-		$this->templatetags['page']='';
-		$this->templatetags['socialcomment']=&$this->socialcomment;
-		$this->templatetags['header']=&$this->header;
-		$this->templatetags['footer']=&$this->footer;
-		$this->templatetags['validcodeurl']=&$this->validcodeurl;
-		$this->templatetags['feedurl']=&$this->feedurl;
-		$this->templatetags['searchurl']=&$this->searchurl;
-		$this->templatetags['ajaxurl']=&$this->ajaxurl;
-		$s=array(
-			$option['A_SIDEBAR_ORDER'],
-			$option['A_SIDEBAR2_ORDER'],
-			$option['A_SIDEBAR3_ORDER'],
-			$option['A_SIDEBAR4_ORDER'],
-			$option['A_SIDEBAR5_ORDER']
-		);
-		foreach ($s as $k =>$v) {
-			$a=explode('|', $v);
-			$ms=array();
-			foreach ($a as $v2) {
-				if(isset($this->modulesbyfilename[$v2])){
-					$m=$this->modulesbyfilename[$v2];
-					$ms[]=$m;
-				}
-			}
-			//reset($ms);
-			$s='sidebar' . ($k==0?'':$k+1);
-			$this->$s=$ms;
-			$ms=null;
-		}
-		$this->templatetags['sidebar']=&$this->sidebar;
-		$this->templatetags['sidebar2']=&$this->sidebar2;
-		$this->templatetags['sidebar3']=&$this->sidebar3;
-		$this->templatetags['sidebar4']=&$this->sidebar4;
-		$this->templatetags['sidebar5']=&$this->sidebar5;
-
-
-	}
-
-	/**
-	 * 预加载模板
-	 * @return Template
-	 */
-	public function PrepareTemplate(){
-		//创建模板类
-		$template = new Template();
-		$template->SetPath($this->usersdir . 'theme/'. $this->theme .'/compile/');
-		$template->SetTagsAll($this->templatetags);
- 
-		return $template;
-	}
-
-	/**
-	 *载入模板
-	 */
-	public function LoadTemplate(){
-
-		$this->templates=array();
-
-		#先读默认的
-		$dir=$this->path .'system/defend/default/';
-		$files=GetFilesInDir($dir,'php');
-		foreach ($files as $sortname => $fullname) {
-			$this->templates[$sortname]=file_get_contents($fullname);
-		}
-		#再读当前的
-		$dir=$this->usersdir .'theme/' . $this->theme . '/template/';
-		$files=GetFilesInDir($dir,'php');
-		foreach ($files as $sortname => $fullname) {
-			$this->templates[$sortname]=file_get_contents($fullname);
-		}
-		if(!isset($this->templates['sidebar2'])){
-			$this->templates['sidebar2']=str_replace('$sidebar', '$sidebar2', $this->templates['sidebar']);
-		}
-		if(!isset($this->templates['sidebar3'])){
-			$this->templates['sidebar3']=str_replace('$sidebar', '$sidebar3', $this->templates['sidebar']);
-		}
-		if(!isset($this->templates['sidebar4'])){
-			$this->templates['sidebar4']=str_replace('$sidebar', '$sidebar4', $this->templates['sidebar']);
-		}
-		if(!isset($this->templates['sidebar5'])){
-			$this->templates['sidebar5']=str_replace('$sidebar', '$sidebar5', $this->templates['sidebar']);
-		}
-
-		 
-	}
-
-	/**
-	 * 模板解析
-	 * @return bool
-	 */
-	public function BuildTemplate(){
-
-		if( strpos('|SAE|BAE2|ACE|TXY|', '|'.$this->option['A_YUN_SITE'].'|')!==false )return false;
-		//初始化模板
-		$this->LoadTemplate();
-
-		if(strpos($this->templates['comments'], 'AjaxCommentBegin')===false)
-			$this->templates['comments']='<label id="AjaxCommentBegin"></label>' . $this->templates['comments'];
-
-		if(strpos($this->templates['comments'], 'AjaxCommentEnd')===false)
-			$this->templates['comments']=$this->templates['comments'] . '<label id="AjaxCommentEnd"></label>';
-
-		if(strpos($this->templates['comment'], 'id="cmt{$comment->ID}"')===false&&strpos($this->templates['comment'], 'id=\'cmt{$comment->ID}\'')===false){
-			$this->templates['comment']='<label id="cmt{$comment->ID}"></label>'. $this->templates['comment'];
-		}
-
-		if(strpos($this->templates['commentpost'], 'inpVerify')===false){
-			$verify='{if $option[\'A_COMMENT_VERIFY_ENABLE\'] && !$user.ID}<p><input type="text" name="inpVerify" id="inpVerify" class="text" value="" size="28" tabindex="4" /> <label for="inpVerify">'.$this->lang['msg']['validcode'].'(*)</label><img style="width:{$option[\'A_VERIFYCODE_WIDTH\']}px;height:{$option[\'A_VERIFYCODE_HEIGHT\']}px;cursor:pointer;" src="{$article.ValidCodeUrl}" alt="" title="" onclick="javascript:this.src=\'{$article.ValidCodeUrl}&amp;tm=\'+Math.random();"/></p>{/if}';
-
-			if(strpos($this->templates['commentpost'], '<!--verify-->')!==false){
-				$this->templates['commentpost']=str_replace('<!--verify-->',$verify,$this->templates['commentpost']);
-			}elseif(strpos($this->templates['commentpost'], '</form>')!==false){
-				$this->templates['commentpost']=str_replace('</form>',$verify.'</form>',$this->templates['commentpost']);
-			}
-			else{
-				$this->templates['commentpost'] .= $verify;
-			}
-		}
-
-		if(strpos($this->templates['header'], '{$header}')===false){
-			if(strpos($this->templates['header'], '</head>')!==false){
-				$this->templates['header']=str_replace('</head>','</head>' . '{$header}',$this->templates['header']);
-			}elseif(strpos($this->templates['header'], '</ head>')!==false){
-				$this->templates['header']=str_replace('</ head>','</ head>' . '{$header}',$this->templates['header']);
-			}else{
-				$this->templates['header'] .= '{$header}';
-			}
-		}
-
-		if(strpos($this->templates['footer'], '{$footer}')===false){
-			if(strpos($this->templates['footer'], '</body>')!==false){
-				$this->templates['footer']=str_replace('</body>','{$footer}' . '</body>',$this->templates['footer']);
-			}elseif(strpos($this->templates['footer'], '</ body>')!==false){
-				$this->templates['footer']=str_replace('</ body>','{$footer}' . '</ body>',$this->templates['footer']);
-			}elseif(strpos($this->templates['footer'], '</html>')!==false){
-				$this->templates['footer']=str_replace('</html>','{$footer}' . '</html>',$this->templates['footer']);
-			}elseif(strpos($this->templates['footer'], '</ html>')!==false){
-				$this->templates['footer']=str_replace('</ html>','{$footer}' . '</ html>',$this->templates['footer']);
-			}else{
-				$this->templates['footer'] = '{$footer}' . $this->templates['footer'];
-			}
-		}
-
-		$dir=$this->usersdir . 'theme/'. $this->theme .'/compile/';
-
-		if(!file_exists($dir)){
-			@mkdir($dir,0755,true);
-		}
-
-		$files2=array();
-		foreach ($this->templates as $name=>$file) {
-			$files2[]=$dir . $name . '.php';
-		}
-
-		//清空目标目录
-		$files = GetFilesInDir($dir,'php');
-
-		$files3 = array_diff($files,$files2);
-
-		foreach ($files3 as $fullname) {
-			@unlink($fullname);
-		}
-
-		//创建模板类
-		$template = new Template();
-		$template->SetPath($dir);
-
-		 
-
-		$template->CompileFiles($this->templates);
-
-	}
-
-	/**
-	 *更新模板缓存
-	 */
-	public function CheckTemplate(){
-		$s=implode($this->templates);
-		$md5=md5($s);
-		if($md5!=$this->cache->templates_md5){
-			$this->BuildTemplate();
-			$this->cache->templates_md5=$md5;
-			$this->SaveCache();
-		}
-	}
+  
 
 ################################################################################################################
 #加载数据对像List函数
@@ -1998,14 +1712,7 @@ class ABlog {
 			Http404();
 		}
 
-		ZBlogException::$error_id=(int)$idortext;
-		ZBlogException::$error_file=$file;
-		ZBlogException::$error_line=$line;
-
-		if(is_numeric($idortext))$idortext=$this->lang['error'][$idortext];
-
-		 
-
+	 
 		throw new Exception($idortext);
 	}
 

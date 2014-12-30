@@ -31,10 +31,7 @@ class Member extends Base {
 	 * @return mixed
 	 */
 	function __call($method, $args) {
-		foreach ($GLOBALS['Filter_Plugin_Member_Call'] as $fpname => &$fpsignal) {
-			$fpreturn=$fpname($this,$method, $args);
-			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
-		}
+		 
 	}
 
 	/**
@@ -135,10 +132,7 @@ class Member extends Base {
 	function Save(){
 		global $ablog;
 		if($this->Template==$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'])$this->data['Template'] = '';
-		foreach ($GLOBALS['Filter_Plugin_Member_Save'] as $fpname => &$fpsignal) {
-			$fpreturn=$fpname($this);
-			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
-		}
+		 
 		return parent::Save();
 	}
 
