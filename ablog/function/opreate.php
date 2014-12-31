@@ -12,7 +12,8 @@
  * @return mixed
  */
 function AutoloadClass($classname){
-	$file = APP_PATH.'ablog/class/'.strtolower($classname).'.php';
+	global $blogpath;
+	$file = $blogpath.'ablog/class/'.strtolower($classname).'.php';
 	if(is_readable($file)){
 		require $file;
 	}

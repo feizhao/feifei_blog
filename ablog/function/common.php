@@ -12,13 +12,7 @@
  * @param string $name 下标key
  * @return mixed
  */
-function GetValueInArray($array, $name) {
-	if (is_array($array)) {
-		if (array_key_exists($name, $array)) {
-			return $array[$name];
-		}
-	}
-}
+ 
 
 /**
  * 获取数组中的当前元素数据

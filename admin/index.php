@@ -5,7 +5,7 @@
  */
 error_reporting(E_ALL);
 ini_set('display_errors',1);
-require '../ablog/base.php';
+require '../ablog/run.php';
 require 'admin.php';
 
 $ablog->Load();
@@ -13,7 +13,6 @@ $ablog->Load();
 $action=GetVars('act','GET');
 
 if(($action=='')||($action==null)){$action='admin';}
-
 
 $f=null;
 switch ($action) {
@@ -76,7 +75,6 @@ require $blogpath . 'admin/template/top.php';
 ?>
 <div id="divMain">
 <?php
-exit($f);
 $f();
 ?>
 </div>
@@ -84,5 +82,4 @@ $f();
 require $blogpath . 'admin/template/footer.php';
 
 
-RunTime();
 ?>

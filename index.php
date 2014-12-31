@@ -5,5 +5,5 @@
  * @copyright 一个博客
  */
 ini_set('display_errors', 1);
-require 'ablog/base.php';
+require 'ablog/run.php';
 viewIndex();

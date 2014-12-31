@@ -7,11 +7,10 @@
 
 ob_start();
 $nowpath = dirname(__FILE__).DIRECTORY_SEPARATOR; 
-
-define('APP_PATH',str_replace('\\','/',realpath($nowpath . '..' . DIRECTORY_SEPARATOR)) . '/');
+$apppath = str_replace('\\','/',realpath($nowpath . '..' . DIRECTORY_SEPARATOR)) . '/';
 $funpath = $nowpath.'function'.DIRECTORY_SEPARATOR;
-require_once $funpath . 'common.php';
-require_once $funpath . 'opreate.php';
+require $funpath . 'common.php';
+require $funpath . 'opreate.php';
 #系统预处理
 spl_autoload_register('AutoloadClass');
 if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){
@@ -30,7 +29,6 @@ if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){
 	_stripslashes($_REQUEST);
 }
 
-
 #初始化统计信息
 $_SERVER['_start_time'] = microtime(true); //RunTime
 $_SERVER['_query_count'] = 0;
@@ -45,27 +43,27 @@ $ablog = null;
 $action = '';
 $currenturl = GetRequestUri();
 $lang = array();
-$blogpath = APP_PATH;
+$blogpath = $apppath;
 $usersdir = $blogpath . 'myblog/';
+$assets = $blogpath.'assets/';
 $config = null;
-$globalconf = require_once($blogpath . 'ablog/conf/global.php');
+$globalconf = require($blogpath . 'ablog/conf/global.php');
 if(is_readable($filename = $usersdir . 'config.php')){
 	$config = array_merge($globalconf,require($filename));
 }else{
-	$config = array_merge($globalconf,require_once($blogpath . 'ablog/conf/config.php'));
+	$config = array_merge($globalconf,require($blogpath . 'ablog/conf/config.php'));
 }
 unset($globalconf);
 $blogtitle = $config['A_BLOG_SUBNAME'];
 $blogname =  $config['A_BLOG_NAME'];
 $blogsubname = $config['A_BLOG_SUBNAME'];
-$blogtheme = $config['A_BLOG_THEME'];
-$blogstyle = $config['A_BLOG_CSS'];
 
 $cookiespath = null;
 
 $bloghost = GetCurrentHost($blogpath,$cookiespath);
+
 #定义命令
-$actions= require_once($blogpath.'ablog/defend/action.php');
+$actions= require($blogpath.'ablog/defend/action.php');
 #加载zbp 数据库类 基础对象
 AutoloadClass('ABLOG');
 AutoloadClass('DbSql');

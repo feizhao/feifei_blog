@@ -81,7 +81,7 @@ class Base {
 	}
 
 	/**
-	* 获取数据表
+	* 获取数据表 
 	* @return string
 	*/
 	function GetTable(){
@@ -219,7 +219,6 @@ class Base {
 			$sql = $ablog->db->sql->Insert($this->table,$keyvalue);
 			$this->$id_name = $ablog->db->Insert($sql);
 		} else {
-
 			$sql = $ablog->db->sql->Update($this->table,$keyvalue,array(array('=',$id_field,$this->$id_name)));
 			return $ablog->db->Update($sql);
 		}

@@ -14,7 +14,6 @@ class ABlog {
 	public $cookiespath=null;
 	public $currenturl=null;
 	public $validcodeurl = null;
-	public $configs=array();
 	public $title=null;
 	public $name=null;
 	public $subname=null;
@@ -110,7 +109,7 @@ class ABlog {
 			exit('数据库连接失败');
 		}
 
-		$this->LoadConfigs();
+		$this->Loadconfig();
 		$this->LoadCache();
 		$this->LoadOption();
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
@@ -128,7 +127,6 @@ class ABlog {
 		if(!$this->isinitialize)return false;
 		if($this->isload)return false;
 		$this->StartGzip();
-  
 		$this->isload=true;
 
 		return true;
@@ -230,26 +228,25 @@ class ABlog {
 		return true;
 	}
 
-#插件用Configs表相关设置函数
+#插件用config表相关设置函数
 
 	/**
-	 * 载入插件Configs表
+	 * 载入插件config表
 	 */
-	public function LoadConfigs(){
-
-		$this->configs=array();
-		$sql = $this->db->sql->Select('config',array('*'),'','','','');
+	public function Loadconfig(){
+		$this->config=array();
+		$sql = $this->db->sql->Select('feifei_config',array('*'),'','','','');
 		$array=$this->db->Query($sql);
 		foreach ($array as $c) {
 			$m=new Metas;
 			$m->Unserialize($c['conf_Value']);
-			$this->configs[$c['conf_Name']]=$m;
+			$this->config[$c['conf_Name']]=$m;
 		}
 	}
 
 	/**
-	 * 删除Configs表
-	 * @param string $name Configs表名
+	 * 删除config表
+	 * @param string $name config表名
 	 * @return bool
 	 */
 	public function DelConfig($name){
@@ -259,15 +256,15 @@ class ABlog {
 	}
 
 	/**
-	 * 保存Configs表
-	 * @param string $name Configs表名
+	 * 保存config表
+	 * @param string $name config表名
 	 * @return bool
 	 */
 	public function SaveConfig($name){
 
-		if(!isset($this->configs[$name]))return false;
+		if(!isset($this->config[$name]))return false;
 
-		$kv=array('conf_Name'=>$name,'conf_Value'=>$this->configs[$name]->Serialize());
+		$kv=array('conf_Name'=>$name,'conf_Value'=>$this->config[$name]->Serialize());
 		$sql = $this->db->sql->Select($this->table['Config'],array('*'),array(array('=','conf_Name',$name)),'','','');
 		$array=$this->db->Query($sql);
 
@@ -284,16 +281,16 @@ class ABlog {
 	}
 
 	/**
-	 * 获取Configs表值
-	 * @param string $name Configs表名
+	 * 获取config表值
+	 * @param string $name config表名
 	 * @return mixed
 	 */
 	public function Config($name){
-		if(!isset($this->configs[$name])){
+		if(!isset($this->config[$name])){
 			$m=new Metas;
-			$this->configs[$name]=$m;
+			$this->config[$name]=$m;
 		}
-		return $this->configs[$name];
+		return $this->config[$name];
 	}
 
 #Cache相关
@@ -306,7 +303,7 @@ class ABlog {
 		#$s=$this->usersdir . 'cache/' . $this->guid . '.cache';
 		#$c=serialize($this->cache);
 		#@file_put_contents($s, $c);
-		//$this->configs['cache']=$this->cache;
+		//$this->config['cache']=$this->cache;
 		$this->SaveConfig('cache');
 		return true;
 	}
@@ -1432,9 +1429,6 @@ class ABlog {
 	 * @return mixed
 	 */
 	function ShowValidCode($id=''){
-
-		 
-
 		$_vc = new ValidateCode();
 		$_vc->GetImg();
 		setcookie('blogvalidcode' . md5($this->guid . $id), md5( $this->guid . date("Ymd") . $_vc->GetCode() ), null,$this->cookiespath);

@@ -422,10 +422,7 @@ function CreateOptionsOfLang($default){
  */
 function Admin_SiteInfo(){
 	global $ablog;
-	$dir = dirname(__FILE__);
-	 echo  $ablog->blogpath;
-	 exit(var_dump($ablog));
-	require_once '';
+	require $ablog->blogpath.'admin/template/index.php';
 }
 
 
@@ -445,9 +442,7 @@ function Admin_ArticleMng(){
 
 	echo '<div class="divHeader">' . $ablog->lang['msg']['article_manage'] . '</div>';
 	echo '<div class="SubMenu">';
-	foreach ($GLOBALS['Filter_Plugin_Admin_ArticleMng_SubMenu'] as $fpname => &$fpsignal) {
-		$fpname();
-	}
+ 
 	echo '</div>';
 	echo '<div id="divMain2">';
 	echo '<form class="search" id="search" method="post" action="#">';
