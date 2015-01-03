@@ -11,6 +11,7 @@ $apppath = str_replace('\\','/',realpath($nowpath . '..' . DIRECTORY_SEPARATOR))
 $funpath = $nowpath.'function'.DIRECTORY_SEPARATOR;
 require $funpath . 'common.php';
 require $funpath . 'opreate.php';
+require $funpath . 'debug.php';
 #系统预处理
 spl_autoload_register('AutoloadClass');
 if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){
@@ -64,6 +65,7 @@ $bloghost = GetCurrentHost($blogpath,$cookiespath);
 
 #定义命令
 $actions= require($blogpath.'ablog/defend/action.php');
+
 #加载zbp 数据库类 基础对象
 AutoloadClass('ABLOG');
 AutoloadClass('DbSql');

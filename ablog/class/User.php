@@ -1,12 +1,10 @@
 <?php
 /**
- * 用户类
- *
- * @package Z-BlogPHP
- * @subpackage ClassLib 类库
+ * <decription>用户类
+ * @package ablog
+ * @subpackage User.php
  */
-class Member extends Base {
-
+class User extends Base {
 	/**
 	 * @var string 头像图片地址
 	 */

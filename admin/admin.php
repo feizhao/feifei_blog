@@ -1,9 +1,8 @@
 <?php
 /**
- * 后台管理相关
- * @package Z-BlogPHP
- * @subpackage System/Administrator 后台管理
- * @copyright (C) RainbowSoft Studio
+ * @package ablog
+ * @subpackage  后台管理相关函数
+ * @copyright zhaofei
  */
 
 $ablog->ismanage=true;

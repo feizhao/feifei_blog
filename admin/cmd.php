@@ -25,7 +25,7 @@ switch ($action) {
 		Redirect('admin/?act=admin');
 		break;
 	case 'verify':
-		if(VerifyLogin()){
+		if(verifyLogin()){
 			if ($zbp->user->ID>0 && GetVars('redirect','COOKIE')) {
 				Redirect(GetVars('redirect','COOKIE'));
 			}

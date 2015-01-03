@@ -63,9 +63,9 @@ function RunTime() {
  * 验证登录
  * @return bool
  */
-function VerifyLogin() {
+function verifyLogin() {
 	global $ablog;
-
+	exit('验证');
 	if (isset($ablog->membersbyname[GetVars('username', 'POST')])) {
 		if ($ablog->Verify_MD5(GetVars('username', 'POST'), GetVars('password', 'POST'))) {
 			$un = GetVars('username', 'POST');
@@ -93,7 +93,7 @@ function VerifyLogin() {
 /**
  * 注销登录
  */
-function Logout() {
+function logout() {
 	global $ablog;
 
 	setcookie('username', '', time() - 3600, $ablog->cookiespath);

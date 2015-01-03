@@ -20,6 +20,7 @@ class ABlog {
 	public $blogpath;
 	public $userdir;
 	public $user=null;
+	public $actions = array();
 	private $isinitialize=false; #是否初始化成功
 	private $isconnect=false; #是否连接成功
 	private $isload=false; #是否载入
@@ -46,9 +47,11 @@ class ABlog {
 	 */
 	function __construct() {
 		global $config,$lang, $blogpath,$userdir,$bloghost,$cookiespath;
-		global $blogtitle,$blogname,$blogsubname,$currenturl;
+		global $blogtitle,$blogname,$blogsubname,$currenturl,$actions;
+		ABlogException::SetErrorHook();
 		//基本配置加载到$blog内
 		$this->config = &$config;
+		$this->actions = &$actions;
 		$this->blogpath = &$blogpath;
 		$this->userdir = &$userdir;
 		$this->lang = &$lang;
@@ -113,7 +116,10 @@ class ABlog {
 		$this->LoadCache();
 		$this->LoadOption();
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
-		$this->user= get_current_user();
+		$this->feedurl=$this->host . 'feed.php';
+		$this->searchurl=$this->host . 'search.php';
+		$this->ajaxurl=$this->host . 'system/cmd.php?act=ajax&src=';
+		$this->user=new User();
 		$this->isinitialize=true;
 
 	}
@@ -181,7 +187,7 @@ class ABlog {
 							$this->config['A_MYSQL_PORT'],
 							$this->config['A_MYSQL_PERSISTENT']
 						))==false){
-						$this->ShowError(67,__FILE__,__LINE__);
+						$this->error(67,__FILE__,__LINE__);
 					}
 				} catch (Exception $e) {
 					throw new Exception("MySQL DateBase Connection Error.");
@@ -391,7 +397,7 @@ class ABlog {
 	 * @param string $action 操作
 	 * @return bool
 	 */
-	function CheckRights($action){
+	function checkAction($action){
 		if(!isset($this->actions[$action])){
 			if(is_numeric($action)){
 				if ($this->user->Level > $action) {
@@ -1381,20 +1387,30 @@ class ABlog {
 
 	/**
 	 * 显示错误信息
-	 * @api Filter_Plugin_blog_ShowError
+	 * @api Filter_Plugin_blog_error
 	 * @param $idortext
 	 * @param null $file
 	 * @param null $line
 	 * @return mixed
 	 * @throws Exception
 	 */
-	function ShowError($idortext,$file=null,$line=null){
+	function error($idortext,$file=null,$line=null){
 
 		if((int)$idortext==2){
 			Http404();
 		}
 
-	 
+		ABlogException::$error_id=(int)$idortext;
+		ABlogException::$error_file=$file;
+		ABlogException::$error_line=$line;
+
+		if(is_numeric($idortext))$idortext=$this->lang['error'][$idortext];
+
+		foreach ($GLOBALS['Filter_Plugin_Zbp_error'] as $fpname => &$fpsignal) {
+			$fpreturn=$fpname($idortext,$file,$line);
+			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
+		}
+
 		throw new Exception($idortext);
 	}
 
