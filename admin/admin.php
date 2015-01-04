@@ -33,7 +33,7 @@ function APP_Admin_Addcatesubmenu(){
  */
 function APP_Admin_Addmemsubmenu(){
 	global $ablog;
-	if($ablog->CheckRights('MemberNew')){
+	if($ablog->checkAction('MemberNew')){
 		echo '<a href="../cmd.php?act=MemberNew"><span class="m-left">' . $GLOBALS['lang']['msg']['new_member'] . '</span></a>';
 	}
 	
@@ -56,7 +56,7 @@ function APP_Admin_Addmodsubmenu(){
  */
 function APP_Admin_Addcmtsubmenu(){
 	global $ablog;
-	if($ablog->CheckRights('CommentAll')){
+	if($ablog->checkAction('CommentAll')){
 		$n=GetValueInArrayByCurrent($ablog->db->Query('SELECT COUNT(comm_ID) AS num FROM ' . $GLOBALS['table']['Comment'] . ' WHERE comm_Ischecking=1'),'num');
 		if($n!=0){$n=' ('.$n.')';}else{$n='';}
 		echo '<a href="../cmd.php?act=CommentMng&amp;ischecking=1"><span class="m-left '.(GetVars('ischecking')?'m-now':'').'">' . $GLOBALS['lang']['msg']['check_comment']  . $n . '</span></a>';
@@ -72,35 +72,25 @@ $leftmenus=array();
 
 /**
  * 后台管理左侧导航菜单
+ *makeleftMenu($requireAction,$strName,$strUrl,$class)
  */
-function ResponseAdmin_LeftMenu(){
+function adminLeftMenu(){
 
 	global $ablog;
 	global $leftmenus;
-
-	$leftmenus['nav_new']=MakeLeftMenu("ArticleEdt",$ablog->lang['msg']['new_article'],$ablog->host . "system/cmd.php?act=ArticleEdt","nav_new","aArticleEdt","");
-	$leftmenus['nav_article']=MakeLeftMenu("ArticleMng",$ablog->lang['msg']['article_manage'],$ablog->host . "system/cmd.php?act=ArticleMng","nav_article","aArticleMng","");
-	$leftmenus['nav_page']=MakeLeftMenu("PageMng",$ablog->lang['msg']['page_manage'],$ablog->host . "system/cmd.php?act=PageMng","nav_page","aPageMng","");
-
-	$leftmenus[]="<li class='split'><hr/></li>";
-
-
-	$leftmenus['nav_category']=MakeLeftMenu("CategoryMng",$ablog->lang['msg']['category_manage'],$ablog->host . "system/cmd.php?act=CategoryMng","nav_category","aCategoryMng","");
-	$leftmenus['nav_tags']=MakeLeftMenu("TagMng",$ablog->lang['msg']['tag_manage'],$ablog->host . "system/cmd.php?act=TagMng","nav_tags","aTagMng","");
-	$leftmenus['nav_comment1']=MakeLeftMenu("CommentMng",$ablog->lang['msg']['comment_manage'],$ablog->host . "system/cmd.php?act=CommentMng","nav_comment","aCommentMng","");
-	$leftmenus['nav_upload']=MakeLeftMenu("UploadMng",$ablog->lang['msg']['upload_manage'],$ablog->host . "system/cmd.php?act=UploadMng","nav_upload","aUploadMng","");
-	$leftmenus['nav_member']=MakeLeftMenu("MemberMng",$ablog->lang['msg']['member_manage'],$ablog->host . "system/cmd.php?act=MemberMng","nav_member","aMemberMng","");
-
-	$leftmenus[]="<li class='split'><hr/></li>";
-
-	$leftmenus['nav_theme']=MakeLeftMenu("ThemeMng",$ablog->lang['msg']['theme_manage'],$ablog->host . "system/cmd.php?act=ThemeMng","nav_theme","aThemeMng","");
-	$leftmenus['nav_module']=MakeLeftMenu("ModuleMng",$ablog->lang['msg']['module_manage'],$ablog->host . "system/cmd.php?act=ModuleMng","nav_module","aModuleMng","");
-	$leftmenus['nav_plugin']=MakeLeftMenu("PluginMng",$ablog->lang['msg']['plugin_manage'],$ablog->host . "system/cmd.php?act=PluginMng","nav_plugin","aPluginMng","");
-
-	foreach ($GLOBALS['Filter_Plugin_Admin_LeftMenu'] as $fpname => &$fpsignal) {
-		$fpname($leftmenus);
-	}
-
+	$leftmenus['nav_home']=makeleftMenu("Admin",$ablog->lang['msg']['admin'],$ablog->host . "admin/cmd.php?act=Admin","am-icon-home");
+	$leftmenus['nav_new']=makeleftMenu("ArticleEdt",$ablog->lang['msg']['new_article'],$ablog->host . "admin/cmd.php?act=ArticleEdt","am-icon-pencil-square-o");
+	$leftmenus['nav_article']=makeleftMenu("ArticleMng",$ablog->lang['msg']['article_manage'],$ablog->host . "admin/cmd.php?act=ArticleMng","am-icon-table");
+	$leftmenus['nav_page']=makeleftMenu("PageMng",$ablog->lang['msg']['page_manage'],$ablog->host . "admin/cmd.php?act=PageMng","am-icon-table");
+	$leftmenus['nav_category']=makeleftMenu("CategoryMng",$ablog->lang['msg']['category_manage'],$ablog->host . "admin/cmd.php?act=CategoryMng","am-icon-table");
+	$leftmenus['nav_tags']=makeleftMenu("TagMng",$ablog->lang['msg']['tag_manage'],$ablog->host . "admin/cmd.php?act=TagMng","am-icon-table");
+	$leftmenus['nav_comment1']=makeleftMenu("CommentMng",$ablog->lang['msg']['comment_manage'],$ablog->host . "admin/cmd.php?act=CommentMng","am-icon-table");
+	$leftmenus['nav_upload']=makeleftMenu("UploadMng",$ablog->lang['msg']['upload_manage'],$ablog->host . "admin/cmd.php?act=UploadMng","am-icon-table");
+	$leftmenus['nav_member']=makeleftMenu("MemberMng",$ablog->lang['msg']['member_manage'],$ablog->host . "admin/cmd.php?act=MemberMng","am-icon-table");
+	$leftmenus['nav_theme']=makeleftMenu("ThemeMng",$ablog->lang['msg']['theme_manage'],$ablog->host . "admin/cmd.php?act=ThemeMng","am-icon-table");
+	$leftmenus['nav_module']=makeleftMenu("ModuleMng",$ablog->lang['msg']['module_manage'],$ablog->host . "admin/cmd.php?act=ModuleMng","am-icon-table");
+	$leftmenus['nav_plugin']=makeleftMenu("PluginMng",$ablog->lang['msg']['plugin_manage'],$ablog->host . "admin/cmd.php?act=PluginMng","am-icon-table");
+ 
 	foreach ($leftmenus as $m) {
 		echo $m;
 	}
@@ -115,13 +105,8 @@ function ResponseAdmin_TopMenu(){
 	global $ablog;
 	global $topmenus;
 
-	$topmenus[]=MakeTopMenu("admin",$ablog->lang['msg']['dashboard'],$ablog->host . "system/cmd.php?act=admin","","");
-	$topmenus[]=MakeTopMenu("SettingMng",$ablog->lang['msg']['settings'],$ablog->host . "system/cmd.php?act=SettingMng","","");
-
-	foreach ($GLOBALS['Filter_Plugin_Admin_TopMenu'] as $fpname => &$fpsignal) {
-		$fpname($topmenus);
-	}
-
+	$topmenus[]=MakeTopMenu("admin",$ablog->lang['msg']['dashboard'],$ablog->host . "admin/cmd.php?act=admin","","");
+	$topmenus[]=MakeTopMenu("SettingMng",$ablog->lang['msg']['settings'],$ablog->host . "admin/cmd.php?act=SettingMng","","");
 	$topmenus[]=MakeTopMenu("misc",$ablog->lang['msg']['official_website'],"http://www.zblogcn.com/","_blank","");
 
 	foreach ($topmenus as $m) {
@@ -144,7 +129,7 @@ function MakeTopMenu($requireAction,$strName,$strUrl,$strTarget,$strLiId){
 	global $ablog;
 
 	static $AdminTopMenuCount=0;
-	if ($ablog->CheckRights($requireAction)==false) {
+	if ($ablog->checkAction($requireAction)==false) {
 		return null;
 	}
 
@@ -167,23 +152,17 @@ function MakeTopMenu($requireAction,$strName,$strUrl,$strTarget,$strLiId){
  * @param $strImgUrl
  * @return null|string
  */
-function MakeLeftMenu($requireAction,$strName,$strUrl,$strLiId,$strAId,$strImgUrl){
+function makeleftMenu($requireAction,$strName,$strUrl,$class){
 	global $ablog;
-
 	static $AdminLeftMenuCount=0;
-	if ($ablog->CheckRights($requireAction)==false) {
+	if ($ablog->checkAction($requireAction)==false) {
 		return null;
 	}
 
 	$AdminLeftMenuCount=$AdminLeftMenuCount+1;
 	$tmp=null;
-	if($strImgUrl!=""){
-		$tmp="<li id=\"" . $strLiId . "\"><a id=\"" . $strAId . "\" href=\"" . $strUrl . "\"><span style=\"background-image:url('" . $strImgUrl . "')\">" . $strName . "</span></a></li>";
-	}else{
-		$tmp="<li id=\"" . $strLiId . "\"><a id=\"" . $strAId . "\" href=\"" . $strUrl . "\"><span>" . $strName . "</span></a></li>";
-	}
+	$tmp="<li><a  href=\"" . $strUrl . "\"><span class=".$class.">" . $strName . "</span></a></li>"; 
 	return $tmp;
-
 }
 
 
@@ -256,7 +235,7 @@ function CreateOptoinsOfMemberLevel($default){
 	global $ablog;
 
 	$s=null;
-	if(!$ablog->CheckRights('MemberAll')){
+	if(!$ablog->checkAction('MemberAll')){
 		return '<option value="' . $default . '" selected="selected" >' . $ablog->lang['user_level_name'][$default] . '</option>';
 	}
 	for ($i=1; $i <7 ; $i++) {
@@ -275,12 +254,12 @@ function CreateOptoinsOfMember($default){
 	global $ablog;
 
 	$s=null;
-	if(!$ablog->CheckRights('ArticleAll')){
+	if(!$ablog->checkAction('ArticleAll')){
 		if(!isset($ablog->members[$default]))return '<option value="0" selected="selected" ></option>';
 		return '<option value="' . $default . '" selected="selected" >' . $ablog->members[$default]->Name . '</option>';
 	}
 	foreach ($ablog->members as $key => $value) {
-		if($ablog->CheckRightsByLevel($ablog->members[$key]->Level,'ArticleEdt')){
+		if($ablog->checkActionByLevel($ablog->members[$key]->Level,'ArticleEdt')){
 			$s .= '<option value="' . $key . '" ' . ($default==$key?'selected="selected"':'') . ' >' . $ablog->members[$key]->Name . '</option>';
 		}
 	}
@@ -297,15 +276,15 @@ function CreateOptoinsOfPostStatus($default){
 	global $ablog;
 
 	$s=null;
-	if(!$ablog->CheckRights('ArticlePub')&&$default==2){
+	if(!$ablog->checkAction('ArticlePub')&&$default==2){
 		return '<option value="2" ' . ($default==2?'selected="selected"':'') . ' >' . $ablog->lang['post_status_name']['2'] . '</option>';
 	}
-	if(!$ablog->CheckRights('ArticleAll')&&$default==2){
+	if(!$ablog->checkAction('ArticleAll')&&$default==2){
 		return '<option value="2" ' . ($default==2?'selected="selected"':'') . ' >' . $ablog->lang['post_status_name']['2'] . '</option>';
 	}
 	$s .= '<option value="0" ' . ($default==0?'selected="selected"':'') . ' >' . $ablog->lang['post_status_name']['0'] . '</option>';
 	$s .= '<option value="1" ' . ($default==1?'selected="selected"':'') . ' >' . $ablog->lang['post_status_name']['1'] . '</option>';
-	if($ablog->CheckRights('ArticleAll')){
+	if($ablog->checkAction('ArticleAll')){
 		$s .= '<option value="2" ' . ($default==2?'selected="selected"':'') . ' >' . $ablog->lang['post_status_name']['2'] . '</option>';
 	}
 	return $s;
@@ -417,9 +396,9 @@ function CreateOptionsOfLang($default){
 
 ################################################################################################################
 /**
- * 后台管理显示网站信息
+ * 后台管理主页
  */
-function Admin_SiteInfo(){
+function admin_index(){
 	global $ablog;
 	require $ablog->blogpath.'admin/template/index.php';
 }
@@ -466,7 +445,7 @@ function Admin_ArticleMng(){
 	<th></th>
 	</tr>';
 
-$p=new Pagebar('{%host%}system/cmd.php?act=ArticleMng{&page=%page%}{&status=%status%}{&istop=%istop%}{&category=%category%}{&search=%search%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=ArticleMng{&page=%page%}{&status=%status%}{&istop=%istop%}{&category=%category%}{&search=%search%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
@@ -477,7 +456,7 @@ $p->UrlRule->Rules['{%status%}']=GetVars('status');
 $p->UrlRule->Rules['{%istop%}']=(boolean)GetVars('istop');
 
 $w=array();
-if(!$ablog->CheckRights('ArticleAll')){
+if(!$ablog->checkAction('ArticleAll')){
 	$w[]=array('=','log_AuthorID',$ablog->user->ID);
 }
 if(GetVars('search')){
@@ -528,7 +507,7 @@ foreach ($p->buttons as $key => $value) {
 
 	echo '</p></div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aArticleMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/article_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/article_32.png' . '");</script>';
 
 }
 
@@ -567,13 +546,13 @@ function Admin_PageMng(){
 	<th></th>
 	</tr>';
 
-$p=new Pagebar('{%host%}system/cmd.php?act=PageMng{&page=%page%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=PageMng{&page=%page%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
 
 $w=array();
-if(!$ablog->CheckRights('PageAll')){
+if(!$ablog->checkAction('PageAll')){
 	$w[]=array('=','log_AuthorID',$ablog->user->ID);
 }
 
@@ -608,7 +587,7 @@ foreach ($p->buttons as $key => $value) {
 }
 	echo '</p></div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aPageMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/page_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/page_32.png' . '");</script>';
 
 }
 
@@ -662,7 +641,7 @@ foreach ($ablog->categorysbyorder as $category) {
 	echo '</table>';
 	echo '</div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aCategoryMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/category_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/category_32.png' . '");</script>';
 
 }
 
@@ -693,7 +672,7 @@ function Admin_CommentMng(){
 	echo '<form class="search" id="search" method="post" action="#">';
 	echo '<p>' . $ablog->lang['msg']['search'] . '&nbsp;&nbsp;&nbsp;&nbsp;<input name="search" style="width:450px;" type="text" value="" /> &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="button" value="' . $ablog->lang['msg']['submit'] . '"/></p>';
 	echo '</form>';
-	echo '<form method="post" action="'.$ablog->host.'system/cmd.php?act=CommentBat">';
+	echo '<form method="post" action="'.$ablog->host.'admin/cmd.php?act=CommentBat">';
 	echo '<table border="1" class="tableFull tableBorder tableBorder-thcenter">';
 	echo '<tr>
 	<th>' . $ablog->lang['msg']['id'] . '</th>
@@ -706,7 +685,7 @@ function Admin_CommentMng(){
 	<th><a href="" onclick="BatchSelectAll();return false;">' . $ablog->lang['msg']['select_all'] . '</a></th>
 	</tr>';
 
-$p=new Pagebar('{%host%}system/cmd.php?act=CommentMng{&page=%page%}{&ischecking=%ischecking%}{&search=%search%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=CommentMng{&page=%page%}{&ischecking=%ischecking%}{&search=%search%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
@@ -715,7 +694,7 @@ $p->UrlRule->Rules['{%search%}']=urlencode(GetVars('search'));
 $p->UrlRule->Rules['{%ischecking%}']=(boolean)GetVars('ischecking');
 
 $w=array();
-if(!$ablog->CheckRights('CommentAll')){
+if(!$ablog->checkAction('CommentAll')){
 	$w[]=array('=','comm_AuthorID',$ablog->user->ID);
 }
 if(GetVars('search')){
@@ -794,7 +773,7 @@ foreach ($p->buttons as $key => $value) {
 
 	echo '</div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aCommentMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/comments_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/comments_32.png' . '");</script>';
 }
 
 
@@ -832,14 +811,14 @@ function Admin_MemberMng(){
 	<th></th>
 	</tr>';
 
-$p=new Pagebar('{%host%}system/cmd.php?act=MemberMng{&page=%page%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=MemberMng{&page=%page%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
 
 
 $w=array();
-if(!$ablog->CheckRights('MemberAll')){
+if(!$ablog->checkAction('MemberAll')){
 	$w[]=array('=','mem_ID',$ablog->user->ID);
 }
 $array=$ablog->GetMemberList(
@@ -862,7 +841,7 @@ foreach ($array as $member) {
 	echo '<td class="td10">' . $member->Uploads . '</td>';
 	echo '<td class="td10 tdCenter">';
 	echo '<a href="../cmd.php?act=MemberEdt&amp;id='. $member->ID .'"><img src="../image/admin/user_edit.png" alt="'.$ablog->lang['msg']['edit'] .'" title="'.$ablog->lang['msg']['edit'] .'" width="16" /></a>';
-if($ablog->CheckRights('MemberDel')){
+if($ablog->checkAction('MemberDel')){
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;';
 	echo '<a onclick="return window.confirm(\''.$ablog->lang['msg']['confirm_operating'] .'\');" href="../cmd.php?act=MemberDel&amp;id='. $member->ID .'&amp;token='. $ablog->GetToken() .'"><img src="../image/admin/delete.png" alt="'.$ablog->lang['msg']['del'] .'" title="'.$ablog->lang['msg']['del'] .'" width="16" /></a>';
 }
@@ -877,7 +856,7 @@ foreach ($p->buttons as $key => $value) {
 }
 	echo '</p></div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aMemberMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/user_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/user_32.png' . '");</script>';
 }
 
 
@@ -923,11 +902,11 @@ function Admin_UploadMng(){
 	</tr>';
 
 $w=array();
-if(!$ablog->CheckRights('UploadAll')){
+if(!$ablog->checkAction('UploadAll')){
 	$w[]=array('=','ul_AuthorID',$ablog->user->ID);
 }
 
-$p=new Pagebar('{%host%}system/cmd.php?act=UploadMng{&page=%page%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=UploadMng{&page=%page%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
@@ -961,7 +940,7 @@ foreach ($p->buttons as $key => $value) {
 }
 	echo '</p></div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aUploadMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/accessories_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/accessories_32.png' . '");</script>';
 }
 
 
@@ -999,7 +978,7 @@ function Admin_TagMng(){
 	<th></th>
 	</tr>';
 
-$p=new Pagebar('{%host%}system/cmd.php?act=TagMng&page={%page%}',false);
+$p=new Pagebar('{%host%}admin/cmd.php?act=TagMng&page={%page%}',false);
 $p->PageCount=$ablog->managecount;
 $p->PageNow=(int)GetVars('page','GET')==0?1:(int)GetVars('page','GET');
 $p->PageBarCount=$ablog->pagebarcount;
@@ -1034,7 +1013,7 @@ foreach ($p->buttons as $key => $value) {
 	echo '</p></div>';
 
 	echo '<script type="text/javascript">ActiveLeftMenu("aTagMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/tag_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/tag_32.png' . '");</script>';
 }
 
 
@@ -1093,7 +1072,7 @@ echo '</div>';
 
 	echo '</form></div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aThemeMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/themes_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/themes_32.png' . '");</script>';
 
 }
 
@@ -1343,7 +1322,7 @@ foreach ($ablog->sidebar5 as $m) {
 
 </script>
 <?php
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/link_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/link_32.png' . '");</script>';
 }
 
 
@@ -1429,7 +1408,7 @@ foreach ($plugins as $plugin) {
 	echo '</table>';
 	echo '</div>';
 	echo '<script type="text/javascript">ActiveLeftMenu("aPluginMng");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/plugin_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/plugin_32.png' . '");</script>';
 
 }
 
@@ -1540,5 +1519,5 @@ function Admin_SettingMng(){
 <?php
 
 	echo '<script type="text/javascript">ActiveTopMenu("topmenu2");</script>';
-	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'system/image/common/setting_32.png' . '");</script>';
+	echo '<script type="text/javascript">AddHeaderIcon("'. $ablog->host . 'admin/image/common/setting_32.png' . '");</script>';
 }

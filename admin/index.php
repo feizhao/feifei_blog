@@ -23,7 +23,7 @@ switch ($action) {
 		break;
 
 	case 'admin':
-		$f='Admin_SiteInfo';
+		$f='admin_index';
 		$blogtitle=$lang['msg']['dashboard'];
 		break;
 	default:
@@ -33,7 +33,7 @@ switch ($action) {
 
 require $blogpath . 'admin/template/header.php';
 require $blogpath . 'admin/template/top.php';
-
+require $blogpath . 'admin/template/left.php';
 ?>
 <div id="divMain">
 <?php

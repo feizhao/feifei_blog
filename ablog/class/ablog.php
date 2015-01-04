@@ -3,7 +3,7 @@
  * blog全局操作类
  */
 error_reporting(E_ALL);
-
+ini_set('display_errors', 1);
 class ABlog {
 	private static $_blog=null;
 	public $version=null;
@@ -124,6 +124,7 @@ class ABlog {
 		$this->searchurl=$this->host . 'search.php';
 		$this->ajaxurl=$this->host . 'system/cmd.php?act=ajax&src=';
 		$this->user=new User();
+
 		$this->isinitialize=true;
 
 	}
@@ -402,6 +403,8 @@ class ABlog {
 	 * @return bool
 	 */
 	function checkAction($action){
+		// var_dump($this->user->Level);
+		// exit();
 		if(!isset($this->actions[$action])){
 			if(is_numeric($action)){
 				if ($this->user->Level > $action) {
