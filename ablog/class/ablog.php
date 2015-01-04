@@ -20,7 +20,9 @@ class ABlog {
 	public $blogpath;
 	public $userdir;
 	public $user=null;
+	public $assets;
 	public $actions = array();
+	public $datainfo = array();
 	private $isinitialize=false; #是否初始化成功
 	private $isconnect=false; #是否连接成功
 	private $isload=false; #是否载入
@@ -46,16 +48,18 @@ class ABlog {
 	 * 构造函数，加载基本配置到$blog
 	 */
 	function __construct() {
-		global $config,$lang, $blogpath,$userdir,$bloghost,$cookiespath;
-		global $blogtitle,$blogname,$blogsubname,$currenturl,$actions;
-		ABlogException::SetErrorHook();
+		global $config,$lang,$datainfo,$blogpath,$userdir,$bloghost,$cookiespath;
+		global $blogtitle,$blogname,$blogsubname,$currenturl,$actions,$assets;
+		ABlogException::setErrorHook();
 		//基本配置加载到$blog内
 		$this->config = &$config;
 		$this->actions = &$actions;
+		$this->datainfo = &$datainfo;
 		$this->blogpath = &$blogpath;
 		$this->userdir = &$userdir;
 		$this->lang = &$lang;
 		$this->host = &$bloghost;
+		$this->assets = &$assets;
 		$this->cookiespath = &$cookiespath;
 		$this->currenturl = &$currenturl;
 		$this->title = &$blogtitle;
@@ -112,9 +116,9 @@ class ABlog {
 			exit('数据库连接失败');
 		}
 
-		$this->Loadconfig();
-		$this->LoadCache();
-		$this->LoadOption();
+		// $this->Loadconfig();
+		// $this->LoadCache();
+		// $this->LoadOption();
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
 		$this->feedurl=$this->host . 'feed.php';
 		$this->searchurl=$this->host . 'search.php';

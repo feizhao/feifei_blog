@@ -20,12 +20,32 @@ Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
-<?php
-/**
- * @项目名 : a blog<一个博客>
- * @author zhaofei
- * @copyright 一个博客
- */
-ini_set('display_errors', 1);
-require 'ablog/run.php';
-viewIndex();
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+</div>
+
+<footer>
+  <hr>
+  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+</footer>
+
+<script src="<?php echo $ablog->assets;?>js/zepto.min.js"></script>
+<script src="<?php echo $ablog->assets;?>js/amazeui.min.js"></script>
+<script src="<?php echo $ablog->assets;?>js/app.js"></script>
+</body>
+</html>

@@ -50,5 +50,6 @@ return array(
   'A_SIDEBAR4_ORDER' => '',
   'A_SIDEBAR5_ORDER' => '',
   'A_GZIP_ENABLE' => false,
+  'A_DEBUG_MODE' => true,
   );
 ?>

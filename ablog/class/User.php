@@ -16,14 +16,12 @@ class User extends Base {
 	function __construct()
 	{
 		global $ablog;
-		parent::__construct($ablog->table['Member'],$ablog->datainfo['Member']);
-
+		parent::__construct('feifei_member');
 		$this->Name = $ablog->lang['msg']['anonymous'];
 	}
 
 	/**
 	 * 自定义函数
-	 * @api Filter_Plugin_Member_Call
 	 * @param $method
 	 * @param $args
 	 * @return mixed

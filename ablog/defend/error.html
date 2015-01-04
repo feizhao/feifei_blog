@@ -1,19 +1,15 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="Content-Language" content="<?php echo $GLOBALS['lang']['lang'];?>" />
 	<meta name="robots" content="noindex,nofollow"/>
-	<meta name="generator" content="<?php echo $GLOBALS['option']['ZC_BLOG_PRODUCT_FULL'];?>" />
+ 
 	<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 	<title><?php echo $GLOBALS['blogname'] . '-' . $GLOBALS['lang']['msg']['error']; ?></title>
-	<link rel="stylesheet" href="<?php echo $GLOBALS['bloghost'];?>system/css/admin.css" type="text/css" media="screen" />
-	<script type="text/javascript" src="<?php echo $GLOBALS['bloghost'];?>system/script/common.js"></script>
-<?php
-
-foreach ($GLOBALS['Filter_Plugin_Other_Header'] as $fpname => &$fpsignal) {$fpname();}
-
-?>
+ 
+ 
 </head>
 <body class="short">
 
@@ -27,13 +23,16 @@ foreach ($GLOBALS['Filter_Plugin_Other_Header'] as $fpname => &$fpsignal) {$fpna
 	 	<div><p><?php echo $GLOBALS['lang']['msg']['error_info']; ?></p><div>
 		<?php echo '(' . $this->type . ')' . $this->typeName . ' :     ' . htmlspecialchars($this->message); ?>
 		</div></div>
-	 	<?php if($GLOBALS['option']['ZC_DEBUG_MODE']){?>
+		
+
+	 	<?php if($GLOBALS['config']['A_DEBUG_MODE']){?>
 	 	<div><p><?php echo $GLOBALS['lang']['msg']['file_line']; ?></p><div>
 	 	<p><i><?php echo $this->file ?></i><br/></p>
 	 	<table style='width:100%'>
 	 	<tbody>
 		 	<?php
 		 		$aFile = $this->get_code($this->file,$this->line);
+
 		 		foreach ($aFile as $iInt => $sData) {
 		 	?>
 		 		<tr<?php echo($iInt+1 == $this->line?' style="background:#75BAFF"':'')?>>

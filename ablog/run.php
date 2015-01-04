@@ -46,7 +46,6 @@ $currenturl = GetRequestUri();
 $lang = array();
 $blogpath = $apppath;
 $usersdir = $blogpath . 'myblog/';
-$assets = $blogpath.'assets/';
 $config = null;
 $globalconf = require($blogpath . 'ablog/conf/global.php');
 if(is_readable($filename = $usersdir . 'config.php')){
@@ -62,11 +61,12 @@ $blogsubname = $config['A_BLOG_SUBNAME'];
 $cookiespath = null;
 
 $bloghost = GetCurrentHost($blogpath,$cookiespath);
-
+$assets = $bloghost.'assets/';
 #定义命令
 $actions= require($blogpath.'ablog/defend/action.php');
-
-#加载zbp 数据库类 基础对象
+#定义数据结构
+// $datainfo = require($blogpath.'ablog/model/model.php');
+#数据库类,基础对象
 AutoloadClass('ABLOG');
 AutoloadClass('DbSql');
 AutoloadClass('Base');

@@ -169,7 +169,7 @@ class ABlogException {
 	/**
 	* 设定错误处理函数
 	*/
-	static public function SetErrorHook() {
+	static public function setErrorHook() {
 		set_error_handler('AblogError');
 		set_exception_handler('AblogException');
 		register_shutdown_function('AblogShutdown');
