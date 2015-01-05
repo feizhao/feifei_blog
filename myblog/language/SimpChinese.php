@@ -217,11 +217,8 @@ return array(
 //User Level
 'user_level_name'=>array(
 '1'=>'管理员',
-'2'=>'网站编辑',
-'3'=>'作者',
-'4'=>'协作者',
-'5'=>'评论者',
-'6'=>'游客',
+'2'=>'评论者',
+'3'=>'游客',
 ),
 
 'user_status_name'=>array(

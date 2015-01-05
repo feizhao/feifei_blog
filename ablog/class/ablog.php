@@ -404,7 +404,7 @@ class ABlog {
 	 */
 	function checkAction($action){
 		// var_dump($this->user->Level);
-		// exit();
+		// exit($action);
 		if(!isset($this->actions[$action])){
 			if(is_numeric($action)){
 				if ($this->user->Level > $action) {
@@ -1412,12 +1412,6 @@ class ABlog {
 		ABlogException::$error_line=$line;
 
 		if(is_numeric($idortext))$idortext=$this->lang['error'][$idortext];
-
-		foreach ($GLOBALS['Filter_Plugin_Zbp_error'] as $fpname => &$fpsignal) {
-			$fpreturn=$fpname($idortext,$file,$line);
-			if ($fpsignal==PLUGIN_EXITSIGNAL_RETURN) {$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
-		}
-
 		throw new Exception($idortext);
 	}
 

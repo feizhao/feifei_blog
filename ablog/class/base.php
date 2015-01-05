@@ -10,20 +10,13 @@ class Base {
 	* @var string 数据表
 	*/
 	protected $table='';
-	/**
-	* @var array 表结构信息
-	*/
-	protected $datainfo = array();
+ 
 	/**
 	* @var array 数据
 	*/
 	protected $data = array();
 
-	/**
-	* @var Metas|null 扩展元数据
-	*/
-	public $Metas = null;
-
+ 
 	/**
 	* @param string $table 数据表
 	* @param array $datainfo 数据表结构信息
@@ -68,7 +61,7 @@ class Base {
 	* 获取数据库数据
 	* @return array
 	*/
-	function GetData(){
+	function getData(){
 		return $this->data;
 	}
 
@@ -76,7 +69,7 @@ class Base {
 	* 获取数据表 
 	* @return string
 	*/
-	function GetTable(){
+	function getTable(){
 		return $this->table;
 	}
 
@@ -84,8 +77,9 @@ class Base {
 	* 获取表结构
 	* @return array
 	*/
-	function GetDataInfo(){
-		return $this->datainfo;
+	function getDataInfo(){
+		global $ablog;
+		return $ablog->db->Query("desc ".$this->table);
 	}
 
 	/**
@@ -93,7 +87,7 @@ class Base {
 	* @param int $id 实例ID
 	* @return bool
 	*/
-	function LoadInfoByID($id){
+	function loadInfoByID($id){
 		global $ablog;
 
 		$id=(int)$id;
@@ -114,7 +108,7 @@ class Base {
 	* @param array $array 关联数组
 	* @return bool
 	*/
-	function LoadInfoByAssoc($array){
+	function loadInfoByAssoc($array){
 		global $ablog;
 
 		foreach ($this->datainfo as $key => $value) {
@@ -140,7 +134,7 @@ class Base {
 	* @param $array
 	* @return bool
 	*/
-	function LoadInfoByArray($array){
+	function loadInfoByArray($array){
 		global $ablog;
 
 		$i = 0;
@@ -169,7 +163,7 @@ class Base {
 	* 保存实例数据到$ablog及数据库中
 	* @return bool
 	*/
-	function Save(){
+	function save(){
 		global $ablog;
 
 		if(isset($this->data['Meta']))$this->data['Meta'] = $this->Metas->Serialize();
@@ -224,7 +218,7 @@ class Base {
 	* 从$ablog及数据库中删除该实例数据
 	* @return bool
 	*/
-	function Del(){
+	function del(){
 		global $ablog;
 		$id_field=reset($this->datainfo);
 		$id_name=key($this->datainfo);

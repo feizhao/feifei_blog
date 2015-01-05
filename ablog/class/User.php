@@ -17,7 +17,7 @@ class User extends Base {
 	{
 		global $ablog;
 		parent::__construct('feifei_member');
-		$this->Name = $ablog->lang['msg']['anonymous'];
+		$this->name = $ablog->lang['msg']['anonymous'];
 	}
 
 	/**

@@ -9,7 +9,6 @@ return array(
 		'login'=>3,
 		'logout'=>3,
 		'verify'=>3,
-		'admin'=>3,
 		'search'=>3,
 		'misc'=>3,
 		'feed'=>3,
@@ -45,7 +44,8 @@ return array(
 		'TagPst'=>2,
 		'TagDel'=>2,
 		'TagNew'=>2,
-
+		
+		'admin'=>1,
 		'PluginEnb'=>1,
 		'PluginDis'=>1,
 
