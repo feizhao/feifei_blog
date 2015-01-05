@@ -1,275 +1,275 @@
 <?php
-require './function/base.php';
-$zbp->Load();
-$action=GetVars('act','GET');
-if(!$zbp->CheckRights($action)){$zbp->ShowError(6,__FILE__,__LINE__);die();}
+require '../ablog/run.php';
+$ablog->Load();
+$action=getVars('act','GET');
+if(!$ablog->checkAction($action)){$ablog->ShowError(6,__FILE__,__LINE__);die();}
 
 switch ($action) {
 	case 'login':
-		if ($zbp->user->ID>0 && GetVars('redirect','GET')) {
-			Redirect(GetVars('redirect','GET'));
+		if ($ablog->user->id>0 && getVars('redirect','GET')) {
+			redirect(getVars('redirect','GET'));
 		}
-		if ($zbp->CheckRights('admin')) {
-			Redirect('cmd.php?act=admin');
+		if ($ablog->checkAction('admin')) {
+			redirect('cmd.php?act=admin');
 		}
-		if ($zbp->user->ID==0 && GetVars('redirect','GET')) {
-			setcookie("redirect", GetVars('redirect','GET'),0,$zbp->cookiespath);
+		if ($ablog->user->id==0 && getVars('redirect','GET')) {
+			setcookie("redirect", getVars('redirect','GET'),0,$ablog->cookiespath);
 		}
-		Redirect('login.php');
+		redirect('template/login.php');
 		break;
 	case 'logout':
-		Logout();
-		Redirect('../');
+		logout();
+		redirect('../');
 		break;
 	case 'admin':
-		Redirect('admin/?act=admin');
+		redirect('admin/?act=admin');
 		break;
 	case 'verify':
 		if(verifyLogin()){
-			if ($zbp->user->ID>0 && GetVars('redirect','COOKIE')) {
-				Redirect(GetVars('redirect','COOKIE'));
+			if ($ablog->user->ID>0 && getVars('redirect','COOKIE')) {
+				redirect(getVars('redirect','COOKIE'));
 			}
-			Redirect('admin/?act=admin');
+			redirect('admin/?act=admin');
 		}else{
-			Redirect('../');
+			redirect('../');
 		}
 		break;
 	case 'search':
-		$q=urlencode(trim(strip_tags(GetVars('q','POST'))));
-		Redirect($zbp->searchurl . '?q=' . $q);
+		$q=urlencode(trim(strip_tags(getVars('q','POST'))));
+		redirect($ablog->searchurl . '?q=' . $q);
 		break;
 	case 'misc':
 		require './function/misc.php';
 		break;
 	case 'cmt':
-		if(GetVars('isajax','POST')){
+		if(getVars('isajax','POST')){
 			Add_Filter_Plugin('Filter_Plugin_APP_ShowError','RespondError',PLUGIN_EXITSIGNAL_RETURN);
 		}
 		PostComment();
-		$zbp->BuildModule();
-		if(GetVars('isajax','POST')){
+		$ablog->BuildModule();
+		if(getVars('isajax','POST')){
 			die();
 		}else{
-			Redirect(GetVars('HTTP_REFERER','SERVER'));
+			redirect(getVars('HTTP_REFERER','SERVER'));
 		}
 		break;
 	case 'getcmt':
-		ViewComments((int)GetVars('postid','GET'),(int)GetVars('page','GET'));
+		ViewComments((int)getVars('postid','GET'),(int)getVars('page','GET'));
 		die();
 		break;
 	case 'ArticleEdt':
-		Redirect('admin/edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'ArticleDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelArticle();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=ArticleMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=ArticleMng');
 		break;
 	case 'ArticleMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'ArticlePst':
 		PostArticle();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=ArticleMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=ArticleMng');
 		break;
 	case 'PageEdt':
-		Redirect('admin/edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'PageDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelPage();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=PageMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=PageMng');
 		break;
 	case 'PageMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'PagePst':
 		PostPage();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=PageMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=PageMng');
 		break;
 	case 'CategoryMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'CategoryEdt':
-		Redirect('admin/category_edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/category_edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'CategoryPst':
 		PostCategory();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=CategoryMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=CategoryMng');
 		break;
 	case 'CategoryDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelCategory();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=CategoryMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=CategoryMng');
 		break;
 	case 'CommentDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelComment();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect($_SERVER["HTTP_REFERER"]);
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect($_SERVER["HTTP_REFERER"]);
 		break;
 	case 'CommentChk':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		CheckComment();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect($_SERVER["HTTP_REFERER"]);
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect($_SERVER["HTTP_REFERER"]);
 		break;
 	case 'CommentBat':
-		if(isset($_POST['id'])==false)Redirect($_SERVER["HTTP_REFERER"]);
+		if(isset($_POST['id'])==false)redirect($_SERVER["HTTP_REFERER"]);
 		BatchComment();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect($_SERVER["HTTP_REFERER"]);
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect($_SERVER["HTTP_REFERER"]);
 		break;
 	case 'CommentMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'MemberMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'MemberEdt':
-		Redirect('admin/member_edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/member_edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'MemberNew':
-		Redirect('admin/member_edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/member_edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'MemberPst':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		PostMember();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=MemberMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=MemberMng');
 		break;
 	case 'MemberDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		if(DelMember()){
-			$zbp->BuildModule();
-			$zbp->SetHint('good');
+			$ablog->BuildModule();
+			$ablog->SetHint('good');
 		}else{
-			$zbp->SetHint('bad');
+			$ablog->SetHint('bad');
 		}
-		Redirect('cmd.php?act=MemberMng');
+		redirect('cmd.php?act=MemberMng');
 		break;
 	case 'UploadMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'UploadPst':
 		PostUpload();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=UploadMng');
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=UploadMng');
 		break;
 	case 'UploadDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelUpload();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=UploadMng');
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=UploadMng');
 		break;
 	case 'TagMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'TagEdt':
-		Redirect('admin/tag_edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/tag_edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'TagPst':
 		PostTag();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=TagMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=TagMng');
 		break;
 	case 'TagDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelTag();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=TagMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=TagMng');
 		break;
 	case 'PluginMng':
-		if(GetVars('install','GET')){
-			InstallPlugin(GetVars('install','GET'));
-			$zbp->BuildModule();
+		if(getVars('install','GET')){
+			InstallPlugin(getVars('install','GET'));
+			$ablog->BuildModule();
 		}
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'PluginDis':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
-		UninstallPlugin(GetVars('name','GET'));
-		DisablePlugin(GetVars('name','GET'));
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=PluginMng');
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
+		UninstallPlugin(getVars('name','GET'));
+		DisablePlugin(getVars('name','GET'));
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=PluginMng');
 		break;
 	case 'PluginEnb':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		$install='&install=';
-		$install .= EnablePlugin(GetVars('name','GET'));
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=PluginMng' . $install);
+		$install .= EnablePlugin(getVars('name','GET'));
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=PluginMng' . $install);
 		break;
 	case 'ThemeMng':
-		if(GetVars('install','GET')){
-			InstallPlugin(GetVars('install','GET'));
+		if(getVars('install','GET')){
+			InstallPlugin(getVars('install','GET'));
 		}
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'ThemeSet':
 		$install='&install=';
-		$install .=SetTheme(GetVars('theme','POST'),GetVars('style','POST'));
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=ThemeMng' . $install);
+		$install .=SetTheme(getVars('theme','POST'),getVars('style','POST'));
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=ThemeMng' . $install);
 		break;
 	case 'SidebarSet':
 		SetSidebar();
-		$zbp->BuildModule();
+		$ablog->BuildModule();
 		break;
 	case 'ModuleEdt':
-		Redirect('admin/module_edit.php?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/module_edit.php?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'ModulePst':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		PostModule();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=ModuleMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=ModuleMng');
 		break;
 	case 'ModuleDel':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		DelModule();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=ModuleMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=ModuleMng');
 		break;
 	case 'ModuleMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'SettingMng':
-		Redirect('admin/?' . GetVars('QUERY_STRING','SERVER'));
+		redirect('admin/?' . getVars('QUERY_STRING','SERVER'));
 		break;
 	case 'SettingSav':
-		if(!$zbp->ValidToken(GetVars('token','GET'))){$zbp->ShowError(5,__FILE__,__LINE__);die();}
+		if(!$ablog->ValidToken(getVars('token','GET'))){$ablog->ShowError(5,__FILE__,__LINE__);die();}
 		SaveSetting();
-		$zbp->BuildModule();
-		$zbp->SetHint('good');
-		Redirect('cmd.php?act=SettingMng');
+		$ablog->BuildModule();
+		$ablog->SetHint('good');
+		redirect('cmd.php?act=SettingMng');
 		break;
 	case 'ajax':
 		foreach ($GLOBALS['Filter_Plugin_Cmd_Ajax'] as $fpname => &$fpsignal) {
-			$fpname(GetVars('src','GET'));
+			$fpname(getVars('src','GET'));
 		}
 		break;
 	default:

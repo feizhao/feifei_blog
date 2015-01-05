@@ -77,6 +77,9 @@ class User extends Base {
 			$u->Rules['{%alias%}']=$this->Alias==''?urlencode($this->Name):$this->Alias;
 			return $u->Make();
 		}
+		if($name=='level'){
+			$this->level = 3 ;
+		}
 		if ($name=='Avatar') {
 			foreach ($GLOBALS['Filter_Plugin_Mebmer_Avatar'] as $fpname => &$fpsignal) {
 				$fpreturn=$fpname($this);

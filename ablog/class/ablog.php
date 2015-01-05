@@ -407,14 +407,14 @@ class ABlog {
 		// exit($action);
 		if(!isset($this->actions[$action])){
 			if(is_numeric($action)){
-				if ($this->user->Level > $action) {
+				if ($this->user->level > $action) {
 					return false;
 				} else {
 					return true;
 				}
 			}
 		}else{
-			if ($this->user->Level > $this->actions[$action]) {
+			if ($this->user->level > $this->actions[$action]) {
 				return false;
 			} else {
 				return true;
