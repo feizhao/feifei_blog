@@ -42,7 +42,7 @@ if(function_exists('memory_get_usage')){
 #定义全局变量
 $ablog = null;
 // $action = '';
-$currenturl = GetRequestUri();
+$currenturl = getRequestUri();
 // $lang = array();
 // $blogpath = $apppath;
 // $usersdir = $blogpath . 'myblog/';

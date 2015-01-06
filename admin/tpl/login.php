@@ -1,6 +1,6 @@
 <?php
 require '../../ablog/run.php';
-$ablog->Load();
+$ablog->load();
 ?>
 <!DOCTYPE html>
 <html>

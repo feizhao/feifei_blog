@@ -10,7 +10,7 @@ class ABlog {
 	public $config = array();
 	public $lang = array();
 	public $host = null;
-	public $blogpath;
+	public $path = null;
 	public $cookiespath=null;
 	public $currenturl=null;
 	public $validcodeurl = null;
@@ -18,7 +18,6 @@ class ABlog {
 	public $title=null;
 	public $keyword = null;
 	public $description = null;
-
 	public $name=null;
 	public $subname=null;
 	public $userdir;
@@ -52,9 +51,10 @@ class ABlog {
 	 */
 	function __construct() {
 	 	global $blogpath,$currenturl,$bloghost,$cookiespath;
-		ABlogException::setErrorHook();
+		// ABlogException::setErrorHook();
 		//基本配置加载到$blog内
-		$this->blogpath = &$blogpath;
+		$this->path = &$blogpath;
+		$this->userdir = $this->path.'myblog/';
 		$this->host = &$bloghost;
 		$this->cookiespath = &$cookiespath;
 		$this->currenturl = &$currenturl;
@@ -101,22 +101,20 @@ class ABlog {
 	 * @return bool
 	 */
 	public function initialize(){
-		$this->loadconfig();
+		$this->loadConfig();
+		exit(var_dump($this->config));
+		$this->actions = require($this->path.'ablog/defend/action.php');
+		$this->assets = $this->host.'assets/';
 		$oldzone=$this->config['A_TIME_ZONE_NAME'];
 		date_default_timezone_set($oldzone);
 		$oldlang=$this->config['A_BLOG_LANGUAGEPACK'];
-		$this->lang = require($this->blogpath . 'myblog/language/' . $oldlang . '.php');
+		$this->lang = require($this->userdir . '/language/' . $oldlang . '.php');
 		if(!$this->openConnect())
 		{
 			exit('数据库连接失败');
 		}
-
-		// $this->LoadCache();
-		// $this->LoadOption();
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
-		$this->feedurl=$this->host . 'feed.php';
-		$this->searchurl=$this->host . 'search.php';
-		$this->ajaxurl=$this->host . 'system/cmd.php?act=ajax&src=';
+	 
 		$this->user=new User();
 		$this->isinitialize=true;
 
@@ -127,10 +125,10 @@ class ABlog {
 	 * 重建索引并载入
 	 * @return bool
 	 */
-	public function Load(){
+	public function load(){
 		if(!$this->isinitialize)return false;
 		if($this->isload)return false;
-		$this->StartGzip();
+		$this->startGzip();
 		$this->isload=true;
 		return true;
 	}
@@ -236,14 +234,20 @@ class ABlog {
 	/**
 	 * 载入插件config表
 	 */
-	public function Loadconfig(){
+	public function loadConfig(){
 		$this->config=array();
-		$sql = $this->db->sql->Select('feifei_config',array('*'),'','','','');
-		$array=$this->db->Query($sql);
-		foreach ($array as $c) {
-			$m=new Metas;
-			$m->Unserialize($c['conf_Value']);
-			$this->config[$c['conf_Name']]=$m;
+		// $sql = $this->db->sql->Select('feifei_config',array('*'),'','','','');
+		// $array=$this->db->Query($sql);
+		// if($array){
+		// 	var_dump($array);
+		// }else{
+
+		// }
+		$globalconf = require($this->path . 'ablog/conf/global.php');
+		if(is_readable($filename = $this->usersdir . 'config.php')){
+			$this->config = array_merge($globalconf,require($filename));
+		}else{
+			$this->config = array_merge($globalconf,require($this->path . 'ablog/conf/config.php'));
 		}
 	}
 
@@ -296,34 +300,7 @@ class ABlog {
 		return $this->config[$name];
 	}
 
-#Cache相关
-
-	/**
-	 * 保存缓存
-	 * @return bool
-	 */
-	public function SaveCache(){
-		#$s=$this->usersdir . 'cache/' . $this->guid . '.cache';
-		#$c=serialize($this->cache);
-		#@file_put_contents($s, $c);
-		//$this->config['cache']=$this->cache;
-		$this->SaveConfig('cache');
-		return true;
-	}
-
-	/**
-	 * 加载缓存
-	 * @return bool
-	 */
-	public function LoadCache(){
-		#$s=$this->usersdir . 'cache/' . $this->guid . '.cache';
-		#if (file_exists($s))
-		#{
-		#	$this->cache=unserialize(@file_get_contents($s));
-		#}
-		$this->cache=$this->Config('cache');
-		return true;
-	}
+ 
 
 ################################################################################################################
 #保存blog设置函数
@@ -352,39 +329,7 @@ class ABlog {
 	}
 
 
-	/**
-	 * 载入配置
-	 * @return bool
-	 */
-	public function LoadOption(){
-
-		$array=$this->Config('system')->Data;
-
-		if(empty($array))return false;
-		if(!is_array($array))return false;
-		foreach ($array as $key => $value) {
-			//if($key=='A_PERMANENT_DOMAIN_ENABLE')continue;
-			//if($key=='A_BLOG_HOST')continue;
-			//if($key=='A_BLOG_CLSID')continue;
-			//if($key=='A_BLOG_LANGUAGEPACK')continue;
-			if($key=='A_YUN_SITE')continue;
-			if($key=='A_DATABASE_TYPE')continue;
-			if($key=='A_SQLITE_NAME')continue;
-			if($key=='A_SQLITE_PRE')continue;
-			if($key=='A_MYSQL_SERVER')continue;
-			if($key=='A_MYSQL_USERNAME')continue;
-			if($key=='A_MYSQL_PASSWORD')continue;
-			if($key=='A_MYSQL_NAME')continue;
-			if($key=='A_MYSQL_CHARSET')continue;
-			if($key=='A_MYSQL_PRE')continue;
-			if($key=='A_MYSQL_ENGINE')continue;
-			if($key=='A_MYSQL_PORT')continue;
-			if($key=='A_MYSQL_PERSISTENT')continue;
-			if($key=='A_SITE_TURNOFF')continue;			
-			$this->config[$key]=$value;
-		}
-		return true;
-	}
+	 
 
  
 #权限及验证类
@@ -1475,7 +1420,7 @@ class ABlog {
 	/**
 	 * 启用Gzip
 	 */
-	function StartGzip(){
+	function startGzip(){
 		if($this->isgziped)return false;
 
 		if(!headers_sent()&&$this->isgzip&&isset($this->config['A_GZIP_ENABLE'])&&$this->config['A_GZIP_ENABLE']){

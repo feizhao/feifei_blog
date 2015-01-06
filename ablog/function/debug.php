@@ -88,7 +88,7 @@ function AblogShutdown() {
 		if( defined('E_DEPRECATED') && $error['type'] == E_DEPRECATED )return true;
 		if( defined('E_USER_DEPRECATED ') && $error['type'] == E_USER_DEPRECATED )return true;
 
-		$zbe = ABlogException::GetInstance();
+		$zbe = ABlogException::getInstance();
 		$zbe->ParseShutdown($error);
 		$zbe->Display();
 		die();
