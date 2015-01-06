@@ -81,10 +81,6 @@ class User extends Base {
 			$this->level = 3 ;
 		}
 		if ($name=='Avatar') {
-			foreach ($GLOBALS['Filter_Plugin_Mebmer_Avatar'] as $fpname => &$fpsignal) {
-				$fpreturn=$fpname($this);
-				if($fpreturn){$fpsignal=PLUGIN_EXITSIGNAL_NONE;return $fpreturn;}
-			}
 			if($this->_avatar)return $this->_avatar;
 			$s=$ablog->usersdir . 'avatar/' . $this->ID . '.png';
 			if(is_readable($s)){
@@ -104,11 +100,7 @@ class User extends Base {
 			if($this->Alias)return $this->Alias;
 			return $this->Name;
 		}
-		if ($name=='Template') {
-			$value=$this->data[$name];
-			if($value=='')$value=$ablog->option['ZC_INDEX_DEFAULT_TEMPLATE'];
-			return $value;
-		}
+ 
 		return parent::__get($name);
 	}
 

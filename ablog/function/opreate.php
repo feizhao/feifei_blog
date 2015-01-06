@@ -65,7 +65,6 @@ function RunTime() {
  */
 function verifyLogin() {
 	global $ablog;
-	exit('验证');
 	if (isset($ablog->membersbyname[GetVars('username', 'POST')])) {
 		if ($ablog->Verify_MD5(GetVars('username', 'POST'), GetVars('password', 'POST'))) {
 			$un = GetVars('username', 'POST');
@@ -74,11 +73,9 @@ function verifyLogin() {
 			if ( $sd == 0) {
 				setcookie("username", $un, 0, $ablog->cookiespath);
 				setcookie("password", $ps, 0, $ablog->cookiespath);
-				setcookie("dishtml5", GetVars('dishtml5', 'POST'), 0, $ablog->cookiespath);
 			} else {
 				setcookie("username", $un, time() + 3600 * 24 * $sd, $ablog->cookiespath);
 				setcookie("password", $ps, time() + 3600 * 24 * $sd, $ablog->cookiespath);
-				setcookie("dishtml5", GetVars('dishtml5', 'POST'), time() + 3600 * 24 * $sd, $ablog->cookiespath);
 			}
 
 			return true;

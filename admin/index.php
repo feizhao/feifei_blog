@@ -3,18 +3,16 @@
  * @author zhaofei
  * @copyright ablog
  */
-error_reporting(E_ALL);
 ini_set('display_errors',1);
 require '../ablog/run.php';
 require 'admin.php';
 
-$ablog->Load();
+$ablog->load();
 
 $action=GetVars('act','GET');
 
 if(($action=='')||($action==null)){$action='admin';}
 if (!$ablog->checkAction($action)) {$ablog->error(6,__FILE__,__LINE__);die();}
-
 $f=null;
 switch ($action) {
 	case 'ArticleMng':

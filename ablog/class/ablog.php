@@ -6,21 +6,24 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 class ABlog {
 	private static $_blog=null;
-	public $version=null;
 	public $db = null;
 	public $config = array();
 	public $lang = array();
 	public $host = null;
+	public $blogpath;
 	public $cookiespath=null;
 	public $currenturl=null;
 	public $validcodeurl = null;
+	/* html */
 	public $title=null;
+	public $keyword = null;
+	public $description = null;
+
 	public $name=null;
 	public $subname=null;
-	public $blogpath;
 	public $userdir;
 	public $user=null;
-	public $assets;
+	public $assets = null;
 	public $actions = array();
 	public $datainfo = array();
 	private $isinitialize=false; #是否初始化成功
@@ -48,23 +51,14 @@ class ABlog {
 	 * 构造函数，加载基本配置到$blog
 	 */
 	function __construct() {
-		global $config,$lang,$datainfo,$blogpath,$userdir,$bloghost,$cookiespath;
-		global $blogtitle,$blogname,$blogsubname,$currenturl,$actions,$assets;
+	 	global $blogpath,$currenturl,$bloghost,$cookiespath;
 		ABlogException::setErrorHook();
 		//基本配置加载到$blog内
-		$this->config = &$config;
-		$this->actions = &$actions;
-		$this->datainfo = &$datainfo;
 		$this->blogpath = &$blogpath;
-		$this->userdir = &$userdir;
-		$this->lang = &$lang;
 		$this->host = &$bloghost;
-		$this->assets = &$assets;
 		$this->cookiespath = &$cookiespath;
 		$this->currenturl = &$currenturl;
-		$this->title = &$blogtitle;
-		$this->name = &$blogname;
-		$this->subname = &$blogsubname;
+	
 	}
 
 
@@ -107,6 +101,7 @@ class ABlog {
 	 * @return bool
 	 */
 	public function initialize(){
+		$this->loadconfig();
 		$oldzone=$this->config['A_TIME_ZONE_NAME'];
 		date_default_timezone_set($oldzone);
 		$oldlang=$this->config['A_BLOG_LANGUAGEPACK'];
@@ -116,7 +111,6 @@ class ABlog {
 			exit('数据库连接失败');
 		}
 
-		// $this->Loadconfig();
 		// $this->LoadCache();
 		// $this->LoadOption();
 		$this->validcodeurl=$this->host . 'system/script/c_validcode.php';
@@ -124,7 +118,6 @@ class ABlog {
 		$this->searchurl=$this->host . 'search.php';
 		$this->ajaxurl=$this->host . 'system/cmd.php?act=ajax&src=';
 		$this->user=new User();
-
 		$this->isinitialize=true;
 
 	}
@@ -139,7 +132,6 @@ class ABlog {
 		if($this->isload)return false;
 		$this->StartGzip();
 		$this->isload=true;
-
 		return true;
 	}
 
