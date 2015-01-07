@@ -24,7 +24,8 @@ class ABlog {
 	public $user=null;
 	public $assets = null;
 	public $actions = array();
-	public $datainfo = array();
+	public $members = array();
+	public $membersbyname = array();
 	private $isinitialize=false; #是否初始化成功
 	private $isconnect=false; #是否连接成功
 	private $isload=false; #是否载入
@@ -102,6 +103,7 @@ class ABlog {
 	 */
 	public function initialize(){
 		$this->loadConfig();
+		$this->loadMembers();
 		$this->name=$this->config['A_BLOG_NAME'];
 		$this->subname=$this->config['A_BLOG_SUBNAME'];
 
@@ -532,9 +534,8 @@ class ABlog {
 	/**
 	 *载入用户列表
 	 */
-	public function LoadMembers(){
-
-		$array=$this->GetMemberList();
+	public function loadMembers(){
+		$array=$this->getMemberList();
 		foreach ($array as $m) {
 			$this->members[$m->ID]=$m;
 			$this->membersbyname[$m->Name]=&$this->members[$m->ID];
@@ -682,7 +683,7 @@ class ABlog {
 	 * @param $sql
 	 * @return array
 	 */
-	function GetList($type,$sql){
+	function getList($type,$sql){
 
 		$array=null;
 		$list=array();
@@ -693,6 +694,7 @@ class ABlog {
 			$l->LoadInfoByAssoc($a);
 			$list[]=$l;
 		}
+		exit(var_dump($list));
 		return $list;
 	}
 
@@ -793,11 +795,11 @@ class ABlog {
 	 * @param null $option
 	 * @return array
 	 */
-	function GetMemberList($select=null,$where=null,$order=null,$limit=null,$option=null){
+	function getMemberList($select=null,$where=null,$order=null,$limit=null,$option=null){
 
 		if(empty($select)){$select = array('*');}
-		$sql = $this->db->sql->Select($this->table['Member'],$select,$where,$order,$limit,$option);
-		return $this->GetList('Member',$sql);
+		$sql = $this->db->sql->Select('feifei_member',$select,$where,$order,$limit,$option);
+		return $this->getList('Member',$sql);
 
 	}
 

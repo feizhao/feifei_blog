@@ -65,7 +65,7 @@ function RunTime() {
  */
 function verifyLogin() {
 	global $ablog;
-	exit(GetVars('user','post'));
+	exit(getVars('user','post'));
 	if (isset($ablog->membersbyname[GetVars('username', 'POST')])) {
 		if ($ablog->Verify_MD5(GetVars('username', 'POST'), GetVars('password', 'POST'))) {
 			$un = GetVars('username', 'POST');
