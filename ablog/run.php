@@ -41,30 +41,9 @@ if(function_exists('memory_get_usage')){
  
 #定义全局变量
 $ablog = null;
-// $action = '';
 $currenturl = getRequestUri();
-// $lang = array();
-// $blogpath = $apppath;
-// $usersdir = $blogpath . 'myblog/';
-// $config = null;
-// $globalconf = require($blogpath . 'ablog/conf/global.php');
-// if(is_readable($filename = $usersdir . 'config.php')){
-// 	$config = array_merge($globalconf,require($filename));
-// }else{
-// 	$config = array_merge($globalconf,require($blogpath . 'ablog/conf/config.php'));
-// }
-// unset($globalconf);
-// $blogtitle = $config['A_BLOG_SUBNAME'];
-// $blogname =  $config['A_BLOG_NAME'];
-// $blogsubname = $config['A_BLOG_SUBNAME'];
-
 $cookiespath = null;
-$bloghost = GetCurrentHost($blogpath,$cookiespath);
-// $assets = $bloghost.'assets/';
-#定义命令
-// $actions= require($blogpath.'ablog/defend/action.php');
-#定义数据结构
-// $datainfo = require($blogpath.'ablog/model/model.php');
+$bloghost = getCurrentHost($blogpath,$cookiespath);
 #数据库类,基础对象
 AutoloadClass('ABLOG');
 AutoloadClass('DbSql');

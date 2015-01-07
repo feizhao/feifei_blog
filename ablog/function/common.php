@@ -287,7 +287,7 @@ function setHttpStatusCode($number) {
  * @param string $url 跳转链接
 */
 function redirect($url) {
-	setHttpStatusCode(302);
+	// setHttpStatusCode(302);
 	header('Location: ' . $url);
 	die();
 }

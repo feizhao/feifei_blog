@@ -51,7 +51,7 @@ class ABlog {
 	 */
 	function __construct() {
 	 	global $blogpath,$currenturl,$bloghost,$cookiespath;
-		// ABlogException::setErrorHook();
+		ABlogException::setErrorHook();
 		//基本配置加载到$blog内
 		$this->path = &$blogpath;
 		$this->userdir = $this->path.'myblog/';
@@ -102,7 +102,9 @@ class ABlog {
 	 */
 	public function initialize(){
 		$this->loadConfig();
-		exit(var_dump($this->config));
+		$this->name=$this->config['A_BLOG_NAME'];
+		$this->subname=$this->config['A_BLOG_SUBNAME'];
+
 		$this->actions = require($this->path.'ablog/defend/action.php');
 		$this->assets = $this->host.'assets/';
 		$oldzone=$this->config['A_TIME_ZONE_NAME'];
@@ -340,8 +342,8 @@ class ABlog {
 	 * @return bool
 	 */
 	function checkAction($action){
-		// var_dump($this->user->Level);
-		// exit($action);
+		// echo $this->actions[$action];
+		// exit();
 		if(!isset($this->actions[$action])){
 			if(is_numeric($action)){
 				if ($this->user->level > $action) {
@@ -349,12 +351,12 @@ class ABlog {
 				} else {
 					return true;
 				}
-			}
-		}else{
-			if ($this->user->level > $this->actions[$action]) {
-				return false;
-			} else {
-				return true;
+			}else{
+				if ($this->user->level > $this->actions[$action]) {
+					return false;
+				} else {
+					return true;
+				}
 			}
 		}
 	}
@@ -1197,8 +1199,6 @@ class ABlog {
 	 * @return bool
 	 */
 	function CheckPlugin($name){
-		//$s=$this->config['A_BLOG_THEME'] . '|' . $this->config['A_USING_PLUGIN_LIST'];
-		//return HasNameInString($s,$name);
 		return in_array($name,$this->activeapps);
 	}
 	

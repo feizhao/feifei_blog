@@ -2,8 +2,8 @@
 require '../ablog/run.php';
 $ablog->load();
 $action=getVars('act','GET');
-if(!$ablog->checkAction($action)){$ablog->ShowError(6,__FILE__,__LINE__);die();}
-
+if($ablog->checkAction($action)){$ablog->error(6,__FILE__,__LINE__);die();}
+// exit($action);
 switch ($action) {
 	case 'login':
 		if ($ablog->user->id>0 && getVars('redirect','GET')) {
@@ -15,6 +15,7 @@ switch ($action) {
 		if ($ablog->user->id==0 && getVars('redirect','GET')) {
 			setcookie("redirect", getVars('redirect','GET'),0,$ablog->cookiespath);
 		}
+
 		redirect('tpl/login.php');
 		break;
 	case 'logout':
