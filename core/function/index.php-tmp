@@ -42,10 +42,55 @@ Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 <?php
-require './core/run.php';
-$core->load();
-require $core->corePath.'function'.$core->limiter.'index.php';
-show('home.php');
-runTime();
+/**
+ * 前台页面函数
+ * @author zhaofei
+ */
+function show($name) {
+	global $core;
+	$file = $core->userDir.'index'.$core->limiter.$name;
+	if (is_readable($file)) {
+		include_once $file;
+	} else {
+		exit('没有此文件'.$file);
+	}
+
+}
 ?>
