@@ -1,8 +1,8 @@
 <?php
 /**
  * 数据库操作基类
- * @package db
- * @subpackage ClassLib/DataBase
+ * @package core
+ * @subpackage Class DbSql
 */
 class DbSql 
 {
@@ -26,8 +26,8 @@ class DbSql
 	* @param $tablename
 	* @return string
 	*/
-	public function ReplacePre(&$s){
-		$s=str_replace('%pre%', $this->db->dbpre, $s);
+	public function replacePre(&$s){
+		$s = $this->db->dbpre.$s;
 		return $s;
 	}
 	
@@ -35,9 +35,8 @@ class DbSql
 	* @param $table
 	* @return string
 	*/
-	public function DelTable($table){
-		$this->ReplacePre($table);
-
+	public function delTable($table){
+		$this->replacePre($table);
 		$s='';
 		$s="DROP TABLE $table";
 		return $s;
@@ -48,8 +47,8 @@ class DbSql
 	* @param string $dbname
 	* @return string
 	*/
-	public function ExistTable($table,$dbname=''){
-		$this->ReplacePre($table);
+	public function existTable($table,$dbname=''){
+		$this->replacePre($table);
 
 		$s='';
 		if($this->type=='DbSQLite'||$this->type=='DbSQLite3'){
@@ -67,7 +66,7 @@ class DbSql
 	* @param array $datainfo
 	* @return string
 	*/
-	public function CreateTable($table,$datainfo){
+	public function createTable($table,$datainfo){
 
 		$s='';
 
@@ -227,7 +226,7 @@ class DbSql
 			$s.=') ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;';
 		}
 
-		$this->ReplacePre($s);
+		$this->replacePre($s);
 		return $s;
 	}
 
@@ -237,7 +236,7 @@ class DbSql
 	* @param null $changewhere
 	* @return null|string
 	*/
-	public function ParseWhere($where,$changewhere=null){
+	public function parseWhere($where,$changewhere=null){
 
 		$sqlw=null;
 		if(empty($where))return null;
@@ -370,9 +369,8 @@ class DbSql
 	* @param array|null $option
 	* @return string
 	*/
-	public function Select($table,$select,$where,$order,$limit,$option=null){
-		$this->ReplacePre($table);
-	
+	public function select($table,$select,$where,$order,$limit,$option=null){
+		$this->replacePre($table);
 		$sqls='';
 		$sqlw='';
 		$sqlo='';
@@ -392,9 +390,9 @@ class DbSql
 		}
 
 		if(isset($option['changewhere'])){
-			$sqlw=$this->ParseWhere($where,$option['changewhere']);
+			$sqlw=$this->parseWhere($where,$option['changewhere']);
 		}else{
-			$sqlw=$this->ParseWhere($where);
+			$sqlw=$this->parseWhere($where);
 		}
 
 		if(!empty($order)){
@@ -443,8 +441,8 @@ class DbSql
 	* @param null $option
 	* @return string
 	*/
-	public function Count($table,$count,$where,$option=null){
-		$this->ReplacePre($table);
+	public function count($table,$count,$where,$option=null){
+		$this->replacePre($table);
 
 		$sqlc="SELECT ";
 
@@ -458,9 +456,9 @@ class DbSql
  		$sqlc.=" FROM $table ";
 
 		if(isset($option['changewhere'])){
-			$sqlw=$this->ParseWhere($where,$option['changewhere']);
+			$sqlw=$this->parseWhere($where,$option['changewhere']);
 		}else{
-			$sqlw=$this->ParseWhere($where);
+			$sqlw=$this->parseWhere($where);
 		}
 
 		return $sqlc . $sqlw;
@@ -473,8 +471,8 @@ class DbSql
 	* @param array|null $option
 	* @return string
 	*/
-	public function Update($table,$keyvalue,$where,$option=null){
-		$this->ReplacePre($table);
+	public function update($table,$keyvalue,$where,$option=null){
+		$this->replacePre($table);
 	
 		$sql="UPDATE $table SET ";
 
@@ -487,9 +485,9 @@ class DbSql
 		}
 
 		if(isset($option['changewhere'])){
-			$sql.=$this->ParseWhere($where,$option['changewhere']);
+			$sql.=$this->parseWhere($where,$option['changewhere']);
 		}else{
-			$sql.=$this->ParseWhere($where);
+			$sql.=$this->parseWhere($where);
 		}
 		return $sql;
 	}
@@ -499,8 +497,8 @@ class DbSql
 	* @param string $keyvalue
 	* @return string
 	*/
-	public function Insert($table,$keyvalue){
-		$this->ReplacePre($table);
+	public function insert($table,$keyvalue){
+		$this->replacePre($table);
 
 		$sql="INSERT INTO $table ";
 
@@ -530,14 +528,13 @@ class DbSql
 	* @param array|null $option
 	* @return string
 	*/
-	public function Delete($table,$where,$option=null){
-		$this->ReplacePre($table);
-
+	public function delete($table,$where,$option=null){
+		$this->replacePre($table);
 		$sql="DELETE FROM $table ";
 		if(isset($option['changewhere'])){
-			$sql.=$this->ParseWhere($where,$option['changewhere']);
+			$sql.=$this->parseWhere($where,$option['changewhere']);
 		}else{
-			$sql.=$this->ParseWhere($where);
+			$sql.=$this->parseWhere($where);
 		}
 		return $sql;
 	}
@@ -546,13 +543,9 @@ class DbSql
 	* @param $sql
 	* @return mixed
 	*/
-	public function Filter($sql){
+	public function filter($sql){
 		$_SERVER['_query_count'] = $_SERVER['_query_count'] + 1;
-		
-		foreach ($GLOBALS['Filter_Plugin_DbSql_Filter'] as $fpname => &$fpsignal) {
-			$fpname($sql);
-		}
-		//Logs($sql);
+		logs($sql);
 		return $sql;
 	}
 }

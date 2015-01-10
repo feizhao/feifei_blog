@@ -10,7 +10,7 @@ return array(
 	'MYSQL_PASSWORD' => 'zhaofei',
 	'MYSQL_NAME' => 'blog',
 	'MYSQL_CHARSET' => 'utf8',
-	'MYSQL_PRE' => 'feifei__',
+	'MYSQL_PRE' => 'feifei_',
 	'MYSQL_ENGINE' => 'MyISAM',
 	'MYSQL_PORT' => '3306',
 	'MYSQL_PERSISTENT' => false,

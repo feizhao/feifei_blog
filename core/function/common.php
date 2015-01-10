@@ -38,4 +38,44 @@ function getHost() {
 	$host .= $_SERVER['HTTP_HOST'];
 	return $host;
 }
+
+
+/**
+ * 记录日志
+ * @param string $s
+ */
+function logs($s) {
+	global $core;
+	$f = $core->userDir . 'logs/' . $core->guid . '-log' . date("Ymd") . '.txt';
+	$handle = @fopen($f, 'a+');
+	@fwrite($handle, "[" . date('c') . "~" . current(explode(" ", microtime())) . "]" . "\r\n" . $s . "\r\n");
+	@fclose($handle);
+}
+
+/**
+ * 页面运行时长
+ * @return array
+ */
+function runTime() {
+	global $core;
+
+	$rt=array();
+	$rt['time']=number_format(1000 * (microtime(1) - $_SERVER['_start_time']), 2);
+	$rt['query']=$_SERVER['_query_count'];
+	$rt['memory']=$_SERVER['_memory_usage'];
+	$rt['error']=$_SERVER['_error_count'];
+	if(function_exists('memory_get_usage')){
+		$rt['memory']=(int)((memory_get_usage()-$_SERVER['_memory_usage'])/1024);
+	}
+	
+	if(isset($core->option['ZC_RUNINFO_DISPLAY'])&&$core->option['ZC_RUNINFO_DISPLAY']==false)return $rt;
+
+	echo '<!--' . $rt['time'] . 'ms , ';
+	echo  $rt['query'] . ' query';
+	if(function_exists('memory_get_usage'))
+		echo ' , ' . $rt['memory'] . 'kb memory';
+	echo  ' , ' . $rt['error'] . ' error';
+	echo '-->';
+	return $rt;
+}
 ?>

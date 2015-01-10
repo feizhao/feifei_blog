@@ -35,7 +35,7 @@ class Dbmysql implements IdbBase {
 	* @param $s
 	* @return string
 	*/
-	public function EscapeString($s){
+	public function escapeString($s){
 		return addslashes($s);
 	}
 
@@ -69,7 +69,7 @@ class Dbmysql implements IdbBase {
 				$this->dbname=$array[3];
 				return true;
 			} else {
-				$this->Close();
+				$this->close();
 				return false;
 			}
 		}
@@ -83,12 +83,12 @@ class Dbmysql implements IdbBase {
 	* @param string $dbmysql_password
 	* @param string $dbmysql_name
 	*/
-	function CreateDB($dbmysql_server,$dbmysql_port,$dbmysql_username,$dbmysql_password,$dbmysql_name){
+	function createDB($dbmysql_server,$dbmysql_port,$dbmysql_username,$dbmysql_password,$dbmysql_name){
 		$db_link = @mysql_connect($dbmysql_server . ':' . $dbmysql_port, $dbmysql_username, $dbmysql_password);
 		$this->db = $db_link;
 		$this->dbname=$dbmysql_name;
 		$s="SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME='$dbmysql_name'";
-		$a=$this->Query($s);
+		$a=$this->query($s);
 		$c=0;
 		if(is_array($a)){
 			$b=current($a);
@@ -105,7 +105,7 @@ class Dbmysql implements IdbBase {
 	/**
 	* 关闭数据库连接
 	*/
-	function Close(){
+	function close(){
 		if(is_resource($this->db))
 			mysql_close($this->db);
 	}
@@ -114,7 +114,7 @@ class Dbmysql implements IdbBase {
 	* 拼接SQL语句
 	* @param $s 
 	*/
-	function QueryMulit($s){
+	function queryMulit($s){
 		//$a=explode(';',str_replace('%pre%', $this->dbpre,$s));
 		$a=explode(';',$s);
 		foreach ($a as $s) {
@@ -129,7 +129,7 @@ class Dbmysql implements IdbBase {
 	* @param $query
 	* @return array
 	*/
-	function Query($query){
+	function query($query){
 		//$query=str_replace('%pre%', $this->dbpre, $query);
 		$results = mysql_query($this->sql->Filter($query));
 		if(mysql_errno())trigger_error(mysql_error(),E_USER_NOTICE);
@@ -148,7 +148,7 @@ class Dbmysql implements IdbBase {
 	* @param $query
 	* @return resource
 	*/
-	function Update($query){
+	function update($query){
 		//$query=str_replace('%pre%', $this->dbpre, $query);
 		return mysql_query($this->sql->Filter($query));
 	}
@@ -158,7 +158,7 @@ class Dbmysql implements IdbBase {
 	* @param $query
 	* @return resource
 	*/
-	function Delete($query){
+	function delete($query){
 		//$query=str_replace('%pre%', $this->dbpre, $query);
 		return mysql_query($this->sql->Filter($query));
 	}
@@ -168,7 +168,7 @@ class Dbmysql implements IdbBase {
 	* @param $query
 	* @return int 返回ID序列号
 	*/
-	function Insert($query){
+	function insert($query){
 		//$query=str_replace('%pre%', $this->dbpre, $query);
 		mysql_query($this->sql->Filter($query));
 		return mysql_insert_id();
@@ -179,16 +179,16 @@ class Dbmysql implements IdbBase {
 	* @param string $tablename 表名
 	* @param string $datainfo 表结构
 	*/
-	function CreateTable($table,$datainfo){
-		$this->QueryMulit($this->sql->CreateTable($table,$datainfo));
+	function createTable($table,$datainfo){
+		$this->queryMulit($this->sql->CreateTable($table,$datainfo));
 	}
 
 	/**
 	* 删除表
 	* @param string $table 表名
 	*/
-	function DelTable($table){
-		$this->QueryMulit($this->sql->DelTable($table));
+	function delTable($table){
+		$this->queryMulit($this->sql->DelTable($table));
 	}
 
 	/**
@@ -196,9 +196,9 @@ class Dbmysql implements IdbBase {
 	* @param string $table 表名
 	* @return bool
 	*/
-	function ExistTable($table){
+	function existTable($table){
 
-		$a=$this->Query($this->sql->ExistTable($table,$this->dbname));
+		$a=$this->query($this->sql->existTable($table,$this->dbname));
 		if(!is_array($a))return false;
 		$b=current($a);
 		if(!is_array($b))return false;

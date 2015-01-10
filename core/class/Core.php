@@ -17,6 +17,7 @@ class Core{
 	public $subname = null;
 	public $actions = array();
 	public $limiter = '/';
+	public $guid = 'fangke';
 	private $isinit=false; #是否初始化成功
 	private $isconnect=false; #是否连接成功
 	private $isload=false; #是否载入
@@ -48,7 +49,12 @@ class Core{
 	public function init(){
 		$this->dbConnect();
 		$this->loadConfig();
+		date_default_timezone_set($this->config['TIME_ZONE_NAME']);
+		$this->lang = require($this->corePath . 'lang'.$this->limiter. $this->config['LANGUAGEPACK'] . '.php');
 		$this->user = new User;
+		$this->name = $this->config['BLOG_NAME'];
+		$this->subname = $this->config['BLOG_SUBNAME'];
+		$this->actions = require($this->corePath . 'conf'.$this->limiter. 'act.php');
 		$this->isinit = true;
 	}
 
@@ -102,16 +108,12 @@ class Core{
 	private function loadConfig(){
 		$this->config=array();
 		$global_c = require_once $this->corePath.'conf'.$this->limiter.'global.php';
+		// $sql = $this->db->sql->select('config',array('*'),'','','','');
+		// $array=$this->db->query($sql);
+		$user_c = require_once $this->corePath.'conf'.$this->limiter.'config.php';
+		$this->config = array_merge($global_c,$user_c);
+	}
 
-		$sql = $this->db->sql->select('config',array('*'),'','','','');
-		$array=$this->db->query($sql);
-		foreach ($array as $c) {
-			$m=new Metas;
-			$m->Unserialize($c['conf_Value']);
-			$this->configs[$c['conf_Name']]=$m;
-		}
-	 
-	} 
 
 
 

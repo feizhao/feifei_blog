@@ -44,8 +44,8 @@ $core = null;
 $host = getHost();
 #数据库类,基础对象
 autoloadClass('core');
-// AutoloadClass('DbSql');
-// AutoloadClass('Base');
+AutoloadClass('dbSql');
+AutoloadClass('base');
 
 
 #实例化一个blog
