@@ -1,4 +1,6 @@
 
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
   <!-- sidebar start -->
   <div class="admin-sidebar">
     <ul class="am-list admin-sidebar-list">

@@ -129,9 +129,9 @@ class User extends Base {
 	 * 保存用户数据
 	 * @return bool
 	 */
-	function Save(){
+	function save(){
 		global $core;
-		return parent::Save();
+		return parent::save();
 	}
 
 }

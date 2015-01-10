@@ -1,13 +1,21 @@
-
 </div>
-
 <footer>
   <hr>
-  <p class="am-padding-left">© 2014 AllMobilize, Inc. Licensed under MIT license.</p>
+  <p class="am-padding-left">© <?php echo $core->config['BLOG_COPYRIGHT'] ; ?></p>
 </footer>
 
-<script src="<?php echo $ablog->assets; ?>js/zepto.min.js"></script>
-<script src="<?php echo $ablog->assets; ?>js/amazeui.min.js"></script>
-<script src="<?php echo $ablog->assets; ?>js/app.js"></script>
+<!--[if lt IE 9]>
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="<?php echo $core->assets; ?>/js/polyfill/rem.min.js"></script>
+<script src="<?php echo $core->assets; ?>/js/polyfill/respond.min.js"></script>
+<script src="<?php echo $core->assets; ?>/js/amazeui.legacy.js"></script>
+<![endif]-->
+
+<!--[if (gte IE 9)|!(IE)]><!-->
+<script src="<?php echo $core->assets; ?>/js/jquery.min.js"></script>
+<script src="<?php echo $core->assets; ?>/js/amazeui.min.js"></script>
+<!--<![endif]-->
+<script src="<?php echo $core->assets; ?>/js/app.js"></script>
 </body>
 </html>

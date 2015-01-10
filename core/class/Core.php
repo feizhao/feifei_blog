@@ -171,6 +171,29 @@ class Core{
 		}
 	}
 
+	/**
+	 *验证是否能访问这个url
+	 *@param string $act
+	 *@return exit
+	 */
+	public function checkAction($act){
+		if(array_key_exists($act, $this->actions)){
+			if($this->user['level']>$this->actions[$act]){
+				$this->error('权限不足');
+			}
+		}else{
+			$this->error('没有这个url');
+		}
+	}
+	/**
+	 *错误信息显示
+	 *@param string $msg
+	 *@return null
+	 */
+	public function error($msg){
+		exit($msg);
+	}
+
 
 
 

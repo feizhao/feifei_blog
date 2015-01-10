@@ -78,14 +78,28 @@ Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 
 Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
 <?php
 /**
- * 前台页面函数
+ * 后台页面函数
  * @author zhaofei
+ */
+
+/**
+ * 显示
+ * @param string $name
+ * @return null;
  */
 function show($name) {
 	global $core;
-	$file = $core->userDir.'index'.$core->limiter.$name;
+	$file = $core->userDir.'admin'.$core->limiter.$name.'.php';
 	if (is_readable($file)) {
 		include_once $file;
 	} else {
