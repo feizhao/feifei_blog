@@ -11,7 +11,6 @@ $corePath = dirname(__FILE__).$limiter;
 $appPath = str_replace('\\','/',realpath($corePath . '..' . $limiter)) . '/';
 $funPath = $corePath.'function'.$limiter;
 require $funPath . 'common.php';
-require $funPath . 'opreate.php';
 #系统预处理
 spl_autoload_register('autoloadClass');
 if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()){

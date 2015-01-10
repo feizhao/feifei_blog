@@ -1,8 +1,7 @@
 <?php
 require './core/run.php';
-
-// $zbp->CheckGzip();
-// $zbp->Load();
-// ViewIndex(); 
-// RunTime();
+$core->load();
+require $core->corePath .'function'.$core->limiter.'index.php';
+showIndex(); 
+runTime();
 ?>

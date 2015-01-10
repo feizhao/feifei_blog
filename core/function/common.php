@@ -67,15 +67,26 @@ function runTime() {
 	if(function_exists('memory_get_usage')){
 		$rt['memory']=(int)((memory_get_usage()-$_SERVER['_memory_usage'])/1024);
 	}
-	
-	if(isset($core->option['ZC_RUNINFO_DISPLAY'])&&$core->option['ZC_RUNINFO_DISPLAY']==false)return $rt;
-
-	echo '<!--' . $rt['time'] . 'ms , ';
+		echo '<!--' . $rt['time'] . 'ms , ';
 	echo  $rt['query'] . ' query';
 	if(function_exists('memory_get_usage'))
 		echo ' , ' . $rt['memory'] . 'kb memory';
 	echo  ' , ' . $rt['error'] . ' error';
 	echo '-->';
 	return $rt;
+}
+ 
+/**
+ * 获取参数值
+ * @param string $name 数组key
+ * @param string $type 数组名
+ */
+function getVars($name,$type='REQUEST'){
+	$array = &$GLOBALS[strtoupper("_$type")];
+	if(isset($array[$name])){
+		return $array[$name];
+	}else{
+		return null;
+	}
 }
 ?>
