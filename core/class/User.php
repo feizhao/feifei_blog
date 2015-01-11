@@ -21,7 +21,10 @@ class User extends Base {
 		parent::__construct($table);
 		global $core;
 		$this->name = $core->lang['msg']['anonymous'];
+		$this->level = 4;
+		$this->id=0;
 	}
+
 
 	/**
 	 * 自定义函数

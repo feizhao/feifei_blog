@@ -8,7 +8,9 @@ return array(
 	'login'=>4,
 	'logout'=>4,
 	'verify'=>4,
-	'admin'=>4,
 	'search'=>4,
+	'admin'=>2,
+	'newArticle'=>2,
+	'saveCate'=>1,
 );
 ?>

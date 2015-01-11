@@ -1,11 +1,11 @@
-<!-- content start -->
+  <!-- content start -->
   <div class="admin-content">
 
     <div class="am-cf am-padding">
       <div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>一些常用模块</small></div>
     </div>
 
-    <ul class="sm-block-grid-1 md-block-grid-4 am-margin am-padding am-text-center admin-content-list ">
+    <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
       <li><a href="#" class="am-text-success"><span class="am-icon-btn am-icon-file-text"></span><br/>新增页面<br/>2300</a></li>
       <li><a href="#" class="am-text-warning"><span class="am-icon-btn am-icon-briefcase"></span><br/>成交订单<br/>308</a></li>
       <li><a href="#" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>昨日访问<br/>80082</a></li>
@@ -13,7 +13,7 @@
     </ul>
 
     <div class="am-g">
-      <div class="col-sm-12">
+      <div class="am-u-sm-12">
         <table class="am-table am-table-bd am-table-striped admin-content-table">
           <thead>
           <tr>
@@ -91,7 +91,7 @@
     </div>
 
     <div class="am-g">
-      <div class="col-md-6">
+      <div class="am-u-md-6">
         <div class="am-panel am-panel-default">
           <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-1'}">文件上传<span class="am-icon-chevron-down am-fr" ></span></div>
           <div class="am-panel-bd am-collapse am-in" id="collapse-panel-1">
@@ -125,27 +125,27 @@
                 <th>访问量</th>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="<?php echo $ablog->assets; ?>i/examples/admin-chrome.png" alt=""></td>
+                <td class="am-text-center"><img src="<?php echo $core->assets; ?>/i/examples/admin-chrome.png" alt=""></td>
                 <td>Google Chrome</td>
                 <td>3,005</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="<?php echo $ablog->assets; ?>i/examples/admin-firefox.png" alt=""></td>
+                <td class="am-text-center"><img src="<?php echo $core->assets; ?>/i/examples/admin-firefox.png" alt=""></td>
                 <td>Mozilla Firefox</td>
                 <td>2,505</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="<?php echo $ablog->assets; ?>i/examples/admin-ie.png" alt=""></td>
+                <td class="am-text-center"><img src="<?php echo $core->assets; ?>/i/examples/admin-ie.png" alt=""></td>
                 <td>Internet Explorer</td>
                 <td>1,405</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="<?php echo $ablog->assets; ?>i/examples/admin-opera.png" alt=""></td>
+                <td class="am-text-center"><img src="<?php echo $core->assets; ?>/i/examples/admin-opera.png" alt=""></td>
                 <td>Opera</td>
                 <td>4,005</td>
               </tr>
               <tr>
-                <td class="am-text-center"><img src="<?php echo $ablog->assets; ?>i/examples/admin-safari.png" alt=""></td>
+                <td class="am-text-center"><img src="<?php echo $core->assets; ?>/i/examples/admin-safari.png" alt=""></td>
                 <td>Safari</td>
                 <td>505</td>
               </tr>
@@ -155,7 +155,7 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="am-u-md-6">
         <div class="am-panel am-panel-default">
           <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel-4'}">任务 task<span class="am-icon-chevron-down am-fr" ></span></div>
           <div id="collapse-panel-4" class="am-panel-bd am-collapse am-in">
@@ -242,3 +242,5 @@
     </div>
   </div>
   <!-- content end -->
+
+

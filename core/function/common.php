@@ -89,4 +89,91 @@ function getVars($name,$type='REQUEST'){
 		return null;
 	}
 }
+
+
+/**
+ * 设置http状态头
+ * @param int $number HttpStatus
+ * @internal param string $status 成功获取状态码设置静态参数status
+ * @return bool
+ */
+function setHttpStatusCode($number) {
+	static $status = '';
+	if ($status != '')
+		return false;
+	switch ($number) {
+		case 200:
+			header("HTTP/1.1 200 OK");
+			break;
+		case 301:
+			header("HTTP/1.1 301 Moved Permanently");
+			break;
+		case 302:
+			header("HTTP/1.1 302 Found");
+			break;
+		case 304:
+			header("HTTP/1.1 304 Not Modified");
+			break;
+		case 404:
+			header('HTTP/1.1 404 Not Found');
+			break;
+		case 500:
+			header('HTTP/1.1 500 Internal Server Error');
+			break;
+		case 503:
+			header('HTTP/1.1 503 Service Unavailable');
+	}
+	$status = $number;
+
+	return true;
+}
+
+/**
+ * 302跳转
+ * @param string $url 跳转链接
+*/
+function redirect($url) {
+	setHttpStatusCode(302);
+	header('Location: ' . $url);
+	die();
+}
+
+/**
+ * 验证登录
+ * @return bool
+ */
+function verifyLogin() {
+	global $core;
+	if (getVars('username', 'POST')) {
+		if ($core->verify_MD5(getVars('username', 'POST'), md5(getVars('password', 'POST')))) {
+			$un = getVars('username', 'POST');
+			$ps = md5($core->user->password . $core->user->guid);
+			$sd = (int)getVars('savedate');
+			if ( $sd == 0) {
+				setcookie("username", $un, 0);
+				setcookie("password", $ps, 0);
+			} else {
+				setcookie("username", $un, time() + 3600 * 24 * $sd);
+				setcookie("password", $ps, time() + 3600 * 24 * $sd);
+			}
+
+			return true;
+		} else {
+			$core->error('登录失败');
+		}
+	} else {
+		$core->error('参数不全');
+	}
+}
+
+
+/**
+ * 注销登录
+ */
+function logout() {
+	global $core;
+	setcookie('username', '', time() - 3600);
+	setcookie('password', '', time() - 3600);
+}
+
 ?>

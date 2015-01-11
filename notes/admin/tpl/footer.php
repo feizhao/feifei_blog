@@ -1,4 +1,3 @@
-</div>
 <footer>
   <hr>
   <p class="am-padding-left">© <?php echo $core->config['BLOG_COPYRIGHT'] ; ?></p>

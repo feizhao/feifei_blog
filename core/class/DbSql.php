@@ -246,16 +246,14 @@ class DbSql
 		}else{
 			$sqlw .= ' WHERE ';
 		}
-		
 		if(!is_array($where))return $sqlw . $where;
-		
 		$comma = '';
 		foreach($where as $k => $w) {
 			$eq=strtoupper($w[0]);
 			if($eq=='='|$eq=='<'|$eq=='>'|$eq=='LIKE'|$eq=='<>'|$eq=='<='|$eq=='>='|$eq=='NOT LIKE'){
 				$x = (string)$w[1];
 				$y = (string)$w[2];
-				$y = $this->db->EscapeString($y);
+				$y = $this->db->escapeString($y);
 				$sqlw .= $comma . " $x $eq '$y' ";
 			}
 			if($eq=='EXISTS'|$eq=='NOT EXISTS'){

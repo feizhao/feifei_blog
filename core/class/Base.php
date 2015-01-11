@@ -19,8 +19,8 @@ class Base {
 	* @param string $table 数据表
 	*/
 	function __construct(&$table){
-			global $core;
-			$this->table=&$table;
+		global $core;
+		$this->table=&$table;
 	}
 
 	/**
@@ -124,7 +124,7 @@ class Base {
 
 		return true;
 	}
-
+ 
 	/**
 	* 删除数据
 	*

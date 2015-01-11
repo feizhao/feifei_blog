@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : local_dev
+Source Server         : localfei
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : blog
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-01-05 17:09:37
+Date: 2015-01-11 21:25:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,17 +24,14 @@ CREATE TABLE `feifei_category` (
   `name` varchar(50) NOT NULL DEFAULT '',
   `order` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0',
-  `alias` varchar(255) NOT NULL DEFAULT '',
   `intro` text NOT NULL,
-  `root_id` int(11) NOT NULL DEFAULT '0',
-  `parent_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of feifei_category
 -- ----------------------------
-INSERT INTO `feifei_category` VALUES ('1', '未分类', '0', '0', 'uncategorized', '', '0', '0');
+INSERT INTO `feifei_category` VALUES ('1', '未分类', '0', '0', '');
 
 -- ----------------------------
 -- Table structure for `feifei_comment`
@@ -101,36 +98,6 @@ CREATE TABLE `feifei_counter` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `feifei_member`
--- ----------------------------
-DROP TABLE IF EXISTS `feifei_member`;
-CREATE TABLE `feifei_member` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `guid` varchar(36) NOT NULL DEFAULT '',
-  `level` tinyint(4) NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `password` varchar(32) NOT NULL DEFAULT '',
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `home_page` varchar(255) NOT NULL DEFAULT '',
-  `ip` varchar(15) NOT NULL DEFAULT '',
-  `post_time` int(11) NOT NULL DEFAULT '0',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `intro` text NOT NULL,
-  `articles` int(11) NOT NULL DEFAULT '0',
-  `pages` int(11) NOT NULL DEFAULT '0',
-  `comments` int(11) NOT NULL DEFAULT '0',
-  `uploads` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `feifei_mem_Name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of feifei_member
--- ----------------------------
-INSERT INTO `feifei_member` VALUES ('1', '549975caa85ef473382715', '1', '0', 'zhaofei', 'ca7de370e15cada903cc42d821253547', '', '', '127.0.0.1', '1419343306', '', '', '0', '0', '0', '0');
-
--- ----------------------------
 -- Table structure for `feifei_module`
 -- ----------------------------
 DROP TABLE IF EXISTS `feifei_module`;
@@ -179,7 +146,7 @@ CREATE TABLE `feifei_post` (
   `type` tinyint(4) NOT NULL DEFAULT '0',
   `alias` varchar(255) NOT NULL DEFAULT '',
   `is_top` tinyint(1) NOT NULL DEFAULT '0',
-  `is_lock` tinyint(1) NOT NULL DEFAULT '0',
+  `is_recommend` tinyint(1) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL DEFAULT '',
   `intro` text NOT NULL,
   `content` longtext NOT NULL,
@@ -206,14 +173,13 @@ CREATE TABLE `feifei_tag` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `order` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `intro` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of feifei_tag
 -- ----------------------------
+INSERT INTO `feifei_tag` VALUES ('1', '生活', '1', '0');
 
 -- ----------------------------
 -- Table structure for `feifei_upload`
@@ -236,3 +202,33 @@ CREATE TABLE `feifei_upload` (
 -- ----------------------------
 -- Records of feifei_upload
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for `feifei_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `feifei_user`;
+CREATE TABLE `feifei_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `guid` varchar(36) NOT NULL DEFAULT '',
+  `level` tinyint(4) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `password` varchar(32) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `home_page` varchar(255) NOT NULL DEFAULT '',
+  `ip` varchar(15) NOT NULL DEFAULT '',
+  `post_time` int(11) NOT NULL DEFAULT '0',
+  `alias` varchar(255) NOT NULL DEFAULT '',
+  `intro` text NOT NULL,
+  `articles` int(11) NOT NULL DEFAULT '0',
+  `pages` int(11) NOT NULL DEFAULT '0',
+  `comments` int(11) NOT NULL DEFAULT '0',
+  `uploads` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `feifei_mem_Name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of feifei_user
+-- ----------------------------
+INSERT INTO `feifei_user` VALUES ('1', '549975caa85ef473382715', '1', '0', 'zhaofei', '54d0b0b95576f6864eac95b3bb418f4f', '', '', '127.0.0.1', '1419343306', '', '', '0', '0', '0', '0');

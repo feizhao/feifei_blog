@@ -51,7 +51,7 @@ class Core{
 		$this->loadConfig();
 		date_default_timezone_set($this->config['TIME_ZONE_NAME']);
 		$this->lang = require($this->corePath . 'lang'.$this->limiter. $this->config['LANGUAGEPACK'] . '.php');
-		$this->user = new User;
+		$this->user =  new User;
 		$this->name = $this->config['BLOG_NAME'];
 		$this->subname = $this->config['BLOG_SUBNAME'];
 		$this->actions = require($this->corePath . 'conf'.$this->limiter. 'act.php');
@@ -160,15 +160,17 @@ class Core{
 	 * @return bool
 	 */
 	public function verify_MD5Path($name,$ps_and_path){
-		if (isset($this->membersbyname[$name])){
-			$m=$this->membersbyname[$name];
-			if(md5($m->Password . $this->guid) == $ps_and_path){
-				$this->user=$m;
-				return true;
-			}else{
-				return false;
-			}
+		$rsName = $this->getList('user',null,array(array('=','name',$name)));
+		if(empty($rsName[0])){
+			return false;
 		}
+		$this->user = (object)$rsName[0];
+		if(md5($this->user->password . $this->user->guid) == $ps_and_path){
+			return true;
+		}else{
+			return false;
+		}
+	 
 	}
 
 	/**
@@ -178,7 +180,7 @@ class Core{
 	 */
 	public function checkAction($act){
 		if(array_key_exists($act, $this->actions)){
-			if($this->user['level']>$this->actions[$act]){
+			if($this->user->level>$this->actions[$act]){
 				$this->error('权限不足');
 			}
 		}else{
@@ -193,6 +195,79 @@ class Core{
 	public function error($msg){
 		exit($msg);
 	}
+	/**
+	 * 获取用户列表
+	 *@param array $filed 
+	 *@param array $where or string $where
+	 *@param string $order 
+	 *@param string $limit
+	 *@param string $table
+	 *@return array
+	 */
+	public function getList($table,$field=null,$where=null,$order=null,$limit=null){
+		$sql = $this->db->sql->select($table,$field,$where,$order,$limit);
+		// echo $sql;
+		$array=$this->db->query($sql);
+		return $array ;
+	}
+	/**
+	 * 验证用户登录（一次MD5密码）
+	 * @param string $name 用户名 （数据库中用户名必须唯一）
+	 * @param string $md5pw md5加密后的密码
+	 * @return bool  
+	 */
+	public function verify_MD5($name,$md5pw){
+		$rsName = $this->getList('user',null,array(array('=','name',$name)));
+		if(empty($rsName[0])){
+			return false;
+		}
+		$this->user = (object)$rsName[0];
+		return $this->verify_Final($name,md5($md5pw . $this->user->guid));
+	}
+
+	/**
+	 * 验证用户登录（加盐的密码）
+	 * @param string $name 用户名
+	 * @param string $originalpw 密码明文与Guid连接后的字符串
+	 * @return bool
+	 */
+	public function verify_Original($name,$originalpw){
+		return $this->verify_MD5($name,md5($originalpw));
+	}
+
+	/**
+	 * 验证用户登录
+	 * @param string $name 用户名
+	 * @param string $password 二次加密后的密码
+	 * @return bool
+	 */
+	public function verify_Final($name,$password){
+		if(strcasecmp ( $this->user->password ,  $password ) ==  0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	/**
+	 * 获取文章类别
+	 * @return array ;
+	 */
+	 public function getArtCate(){
+		$cates = $this->getList('category',null,null,"'order' ASC",null);
+		return $cates;
+	 }
+	 /**
+	 * 获取文章标签
+	 * @return array ;
+	 */
+	 public function getTags(){
+		$cates = $this->getList('tag',null,null,"'order' ASC",null);
+		return $cates;
+	 }
+
+
+
+
 
 
 
