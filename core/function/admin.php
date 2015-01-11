@@ -64,8 +64,19 @@ function getTags(){
  */
 function saveCate($name,$order,$intro,$id=null){
 	global $core;
-	$core->saveInfo();
-	 
+	if(empty($name) or empty($intro)){
+		exit('数据参数不足');
+	}
+	$data = array('name'=>$name,'order'=>(int)$order,'intro'=>$intro);
+	if($id){
+		$core->save('category',$data,$where);
+	}else{
+		if($rs = $core->add('category',$data)){
+			
+		}else{
+			echo '错误';
+		}
+	}
 }
 
 

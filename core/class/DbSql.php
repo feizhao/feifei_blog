@@ -498,13 +498,13 @@ class DbSql
 	public function insert($table,$keyvalue){
 		$this->replacePre($table);
 
-		$sql="INSERT INTO $table ";
+		$sql="INSERT INTO `$table` ";
 
 		$sql.='(';
 		$comma = '';
 		foreach($keyvalue as $k => $v) {
 			if(is_null($v))continue;
-			$sql.= $comma . "$k";
+			$sql.= $comma . "`$k`";
 			$comma = ',';
 		}
 		$sql.=')VALUES(';

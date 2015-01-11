@@ -430,3 +430,89 @@ SELECT * FROM feifei_category  ORDER BY 'order' ASC
 SELECT * FROM feifei_tag  ORDER BY 'order' ASC
 [2015-01-11T21:11:01+08:00~0.78791000]
 SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:37:49+08:00~0.20907100]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:37:51+08:00~0.53347500]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:37:51+08:00~0.54907500]
+SELECT * FROM feifei_category  ORDER BY 'order' ASC
+[2015-01-11T21:37:51+08:00~0.56467500]
+SELECT * FROM feifei_tag  ORDER BY 'order' ASC
+[2015-01-11T21:38:14+08:00~0.10111500]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:38:14+08:00~0.11671500]
+category
+[2015-01-11T21:40:24+08:00~0.66494500]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:40:24+08:00~0.66494500]
+category
+[2015-01-11T21:40:36+08:00~0.89536700]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:40:36+08:00~0.91096700]
+category
+[2015-01-11T21:41:41+08:00~0.29227900]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:41:46+08:00~0.70548900]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:41:46+08:00~0.72108900]
+category
+[2015-01-11T21:42:58+08:00~0.90241400]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:43:08+08:00~0.62123100]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:45:30+08:00~0.05107800]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:45:30+08:00~0.05107800]
+INSERT INTO feifei_category (name,order,intro)VALUES('php','1','hyper text profession')
+[2015-01-11T21:46:16+08:00~0.50795900]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:46:16+08:00~0.50795900]
+INSERT INTO feifei_category (name,order,intro)VALUES('php','1','hyper text profession')
+[2015-01-11T21:50:55+08:00~0.27898100]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:50:56+08:00~0.19938300]
+INSERT INTO feifei_category (,,)VALUES('php','1','hyper text profession')
+[2015-01-11T21:51:10+08:00~0.00540700]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:51:10+08:00~0.00540700]
+INSERT INTO feifei_category (`name`,`order`,`intro`)VALUES('php','1','hyper text profession')
+[2015-01-11T21:51:37+08:00~0.46145500]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:51:37+08:00~0.46145500]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php','1','hyper text profession')
+[2015-01-11T21:51:47+08:00~0.78867300]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:51:47+08:00~0.78867300]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php2','1','hyper text profession')
+[2015-01-11T21:52:49+08:00~0.87678100]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:52:49+08:00~0.87678100]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php2','1','hyper text profession')
+[2015-01-11T21:54:05+08:00~0.97371400]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:54:05+08:00~0.98931400]
+SELECT * FROM feifei_category  ORDER BY 'order' ASC
+[2015-01-11T21:54:05+08:00~0.98931400]
+SELECT * FROM feifei_tag  ORDER BY 'order' ASC
+[2015-01-11T21:56:03+08:00~0.31711800]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T21:56:03+08:00~0.31711800]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php23','1','hyper text profession')
+[2015-01-11T22:00:35+08:00~0.28659600]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T22:00:35+08:00~0.30219600]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php23','1','hyper text profession')
+[2015-01-11T22:00:35+08:00~0.30219600]
+SELECT id FROM feifei_category  WHERE  name = 'php23' AND order = '1' AND intro = 'hyper text profession' 
+[2015-01-11T22:01:14+08:00~0.41146400]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T22:01:14+08:00~0.42706400]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php23','1','hyper text profession')
+[2015-01-11T22:01:14+08:00~0.42706400]
+SELECT id FROM feifei_category  WHERE  name = 'php23' AND order = '1' AND intro = 'hyper text profession' 
+[2015-01-11T22:04:04+08:00~0.43616100]
+SELECT * FROM feifei_user  WHERE  name = 'zhaofei' 
+[2015-01-11T22:04:04+08:00~0.45176100]
+INSERT INTO `feifei_category` (`name`,`order`,`intro`)VALUES('php23','1','hyper text profession')
+[2015-01-11T22:04:04+08:00~0.46736100]
+SELECT id FROM feifei_category  WHERE  name = 'php23' AND order = '1' AND intro = 'hyper text profession' 

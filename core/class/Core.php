@@ -206,7 +206,6 @@ class Core{
 	 */
 	public function getList($table,$field=null,$where=null,$order=null,$limit=null){
 		$sql = $this->db->sql->select($table,$field,$where,$order,$limit);
-		// echo $sql;
 		$array=$this->db->query($sql);
 		return $array ;
 	}
@@ -256,13 +255,43 @@ class Core{
 		$cates = $this->getList('category',null,null,"'order' ASC",null);
 		return $cates;
 	 }
-	 /**
+	/**
 	 * 获取文章标签
 	 * @return array ;
 	 */
 	 public function getTags(){
 		$cates = $this->getList('tag',null,null,"'order' ASC",null);
 		return $cates;
+	 }
+	 /**
+	  *保存信息
+	  *@param $table string
+	  *@param $data array 
+	  *@return boolean
+	  */
+	 public function add($table,$data)
+	 {
+	 	if(is_array($data)){
+	 		$sqlAdd = $this->db->sql->insert($table,$data);
+			$addResult = $this->db->query($sqlAdd);
+	 		if($addResult){
+	 			$where = array();
+	 			foreach ($data as $key => $value) {
+	 				$where[] = array('=',$key,$value);
+	 			}
+	 			$ids = $this->getList('category','id',$where);
+var_dump($ids);
+	 		}else{
+	 			return false;
+	 		}
+	 	}else{
+	 		return false;
+	 	}
+	 }
+
+	 public function save($table,$data,$id)
+	 {
+
 	 }
 
 
