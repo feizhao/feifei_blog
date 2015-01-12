@@ -12,5 +12,8 @@ return array(
 	'admin'=>2,
 	'newArticle'=>2,
 	'saveCate'=>1,
+	'saveTag'=>1,
+	'saveActicle'=>2,
+
 );
 ?>

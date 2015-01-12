@@ -279,8 +279,8 @@ class Core{
 	 			foreach ($data as $key => $value) {
 	 				$where[] = array('=',$key,$value);
 	 			}
-	 			$ids = $this->getList('category','id',$where);
-var_dump($ids);
+	 			$ids = $this->getList($table,'id',$where);
+	 			return $ids[0]['id'];
 	 		}else{
 	 			return false;
 	 		}

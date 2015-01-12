@@ -254,7 +254,7 @@ class DbSql
 				$x = (string)$w[1];
 				$y = (string)$w[2];
 				$y = $this->db->escapeString($y);
-				$sqlw .= $comma . " $x $eq '$y' ";
+				$sqlw .= $comma . " `$x` $eq '$y' ";
 			}
 			if($eq=='EXISTS'|$eq=='NOT EXISTS'){
 				if(!isset($w[2])){
@@ -378,13 +378,13 @@ class DbSql
 			if(is_array($select)){
 				$selectstr=implode($select,',');
 				if(trim($selectstr)=='')$selectstr='*';
-				$sqls="SELECT $selectstr FROM $table ";
+				$sqls="SELECT $selectstr FROM `$table` ";
 			}else{
 				if(trim($sqls)=='')$sqls='*';
-				$sqls="SELECT $select FROM $table ";
+				$sqls="SELECT $select FROM `$table` ";
 			}
 		}else{
-				$sqls="SELECT * FROM $table ";
+				$sqls="SELECT * FROM `$table` ";
 		}
 
 		if(isset($option['changewhere'])){
