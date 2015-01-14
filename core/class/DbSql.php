@@ -367,7 +367,7 @@ class DbSql
 	* @param array|null $option
 	* @return string
 	*/
-	public function select($table,$select,$where,$order,$limit,$option=null){
+	public function select($table,$select,$where,$order,$limit){
 		$this->replacePre($table);
 		$sqls='';
 		$sqlw='';
@@ -418,17 +418,7 @@ class DbSql
 				}
 			}
 		}
-
-		if(!empty($option)){
-			if(isset($option['pagebar'])){
-				if($option['pagebar']->Count===null){
-					$s2 = $this->Count($table,array(array('COUNT','*','num')),$where);
-					$option['pagebar']->Count = GetValueInArrayByCurrent($this->db->Query($s2),'num');
-				}
-				$option['pagebar']->Count=(int)$option['pagebar']->Count;
-				$option['pagebar']->make();
-			}
-		}
+ 
 		return $sqls . $sqlw . $sqlo . $sqll;
 	}
 

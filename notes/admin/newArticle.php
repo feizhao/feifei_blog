@@ -57,7 +57,9 @@
           <div class="am-g am-margin-top">
           <div class="am-u-sm-2 am-text-right">所属类别</div>
           <div class="am-u-sm-8">
+          <select id=cate name=cate>
             <?php getArtCate(); ?>
+          </select>
           </div>
          <div class="am-u-sm-2"><a class="am-btn am-btn-link" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 400, height: 225}">新建类别</a></div>
         </div>
@@ -75,10 +77,10 @@
           <div class="am-u-sm-8">
             <div class="am-btn-group" data-am-button>
               <label class="am-btn am-btn-default am-btn-xs">
-                <input type="radio" name="status" id="option1"> 正常
+                <input type="radio" name="status" value="1" id="option1"> 正常
               </label>
               <label class="am-btn am-btn-default am-btn-xs">
-                <input type="radio" name="status" id="option2"> 不显示
+                <input type="radio" name="status" value="0" id="option2"> 不显示
               </label>
             </div>
           </div>
@@ -106,7 +108,7 @@
           <div class="am-u-sm-6">
               <div class="am-form-group am-form-icon">
                 <i class="am-icon-calendar"></i>
-                <input type="text" name="time" class="am-form-field am-input-sm" value="<?php echo date('Y-m-d:h:i:s',time()); ?>" placeholder="时间">
+                <input type="text" name="time" class="am-form-field am-input-sm" value="<?php echo date('Y-m-d',time()); ?>" placeholder="时间">
               </div>
           </div>
           <div class="am-u-sm-4">

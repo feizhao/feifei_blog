@@ -14,6 +14,7 @@ return array(
 	'saveCate'=>1,
 	'saveTag'=>1,
 	'saveActicle'=>2,
+	'ArticleMng'=>2,
 
 );
 ?>

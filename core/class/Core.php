@@ -196,7 +196,7 @@ class Core{
 		exit($msg);
 	}
 	/**
-	 * 获取用户列表
+	 * 获取列表
 	 *@param array $filed 
 	 *@param array $where or string $where
 	 *@param string $order 
@@ -206,8 +206,20 @@ class Core{
 	 */
 	public function getList($table,$field=null,$where=null,$order=null,$limit=null){
 		$sql = $this->db->sql->select($table,$field,$where,$order,$limit);
+		logs($sql);
 		$array=$this->db->query($sql);
 		return $array ;
+	}
+	/**
+	 * 获取数量
+	 *@param array $where or string $where
+	 *@param string $table
+	 *@return int
+	 */
+	public function getNum($table,$where=null){
+		$sql = $this->db->sql->select($table,null,$where,null,null);
+		$array=$this->db->query($sql);
+		return count($array) ;
 	}
 	/**
 	 * 验证用户登录（一次MD5密码）
@@ -273,6 +285,7 @@ class Core{
 	 {
 	 	if(is_array($data)){
 	 		$sqlAdd = $this->db->sql->insert($table,$data);
+
 			$addResult = $this->db->query($sqlAdd);
 	 		if($addResult){
 	 			$where = array();
@@ -293,6 +306,19 @@ class Core{
 	 {
 
 	 }
+
+	/**
+	 * 获取文章列表
+	 * @return array ;
+	 */
+	 public function getPostList($where,$limit){
+	 	//$field=null,$where=null,$order=null,$limit=null
+		$cates = $this->getList('post',null,$where,"'time' ASC",$limit);
+		return $cates;
+	 }
+
+
+
 
 
 

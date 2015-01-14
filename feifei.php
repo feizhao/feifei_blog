@@ -9,7 +9,7 @@ $core->checkAction($action);
 $f=null;
 switch ($action) {
 	case 'ArticleMng':
-		$act='Admin_ArticleMng';
+		$act='articleMng';
 		$blogtitle=$core->lang['msg']['article_manage'];
 		break;
 	case 'newArticle':

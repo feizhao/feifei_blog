@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localfei
+Source Server         : local_dev
 Source Server Version : 50528
 Source Host           : localhost:3306
 Source Database       : blog
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2015-01-11 21:25:10
+Date: 2015-01-14 15:31:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,12 +26,17 @@ CREATE TABLE `feifei_category` (
   `count` int(11) NOT NULL DEFAULT '0',
   `intro` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of feifei_category
 -- ----------------------------
-INSERT INTO `feifei_category` VALUES ('1', '未分类', '0', '0', '');
+INSERT INTO `feifei_category` VALUES ('25', '2015', '1', '0', 'new year get strong');
+INSERT INTO `feifei_category` VALUES ('26', '2015', '1', '0', 'new year get strong');
+INSERT INTO `feifei_category` VALUES ('27', '2015', '1', '0', 'new year get strong');
+INSERT INTO `feifei_category` VALUES ('28', '2014', '2', '0', 'old year');
+INSERT INTO `feifei_category` VALUES ('29', '没有', '3', '0', '哈哈');
+INSERT INTO `feifei_category` VALUES ('30', '你说', '21', '0', '好汪');
 
 -- ----------------------------
 -- Table structure for `feifei_comment`
@@ -140,11 +145,9 @@ DROP TABLE IF EXISTS `feifei_post`;
 CREATE TABLE `feifei_post` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cate_id` smallint(6) NOT NULL DEFAULT '0',
-  `author_id` int(11) NOT NULL DEFAULT '0',
-  `tag` varchar(255) NOT NULL DEFAULT '',
+  `author` varchar(40) NOT NULL DEFAULT '0',
+  `tag_ids` varchar(100) NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
-  `type` tinyint(4) NOT NULL DEFAULT '0',
-  `alias` varchar(255) NOT NULL DEFAULT '',
   `is_top` tinyint(1) NOT NULL DEFAULT '0',
   `is_recommend` tinyint(1) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -155,14 +158,15 @@ CREATE TABLE `feifei_post` (
   `view_nums` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `feifei_log_PT` (`post_time`),
-  KEY `feifei_log_TISC` (`type`,`is_top`,`status`,`cate_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  KEY `feifei_log_TISC` (`is_top`,`status`,`cate_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of feifei_post
 -- ----------------------------
-INSERT INTO `feifei_post` VALUES ('1', '1', '1', '', '0', '0', '', '0', '0', '欢迎使用Z-BlogPHP！', '<p>欢迎使用Z-Blog,这是程序自动生成的文章.您可以删除或是编辑它:)</p><p>系统总共生成了一个&quot;留言本&quot;页面,和一个&quot;欢迎使用Z-BlogPHP!&quot;文章,祝您使用愉快!</p>', '<p>欢迎使用Z-Blog,这是程序自动生成的文章.您可以删除或是编辑它:)</p><p>系统总共生成了一个&quot;留言本&quot;页面,和一个&quot;欢迎使用Z-BlogPHP!&quot;文章,祝您使用愉快!</p>', '1419343306', '0', '1');
-INSERT INTO `feifei_post` VALUES ('2', '0', '1', '', '0', '1', '', '0', '0', '留言本', '', '这是一个留言本,是由程序自动生成,您可以编辑修改.', '1419343306', '0', '7');
+INSERT INTO `feifei_post` VALUES ('3', '29', 'zhaofei', '1,4,5', '1', '1', '1', '大家好', '大家好', '大家好', '12345353', '0', '0');
+INSERT INTO `feifei_post` VALUES ('4', '25', 'zhaofei', '1,3', '1', '1', '1', '你好 world', '你好 world', '你好 world', '1421164800', '0', '0');
+INSERT INTO `feifei_post` VALUES ('5', '25', 'zhaofei', '1,3', '1', '1', '1', '你好 world', '你好 world', '你好 world', '1421164800', '0', '0');
 
 -- ----------------------------
 -- Table structure for `feifei_tag`
@@ -174,12 +178,16 @@ CREATE TABLE `feifei_tag` (
   `order` int(11) NOT NULL DEFAULT '0',
   `count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of feifei_tag
 -- ----------------------------
 INSERT INTO `feifei_tag` VALUES ('1', '生活', '1', '0');
+INSERT INTO `feifei_tag` VALUES ('2', '旅行', '1', '0');
+INSERT INTO `feifei_tag` VALUES ('3', '旅行', '1', '0');
+INSERT INTO `feifei_tag` VALUES ('4', 'life', '3', '0');
+INSERT INTO `feifei_tag` VALUES ('5', 'english', '1', '0');
 
 -- ----------------------------
 -- Table structure for `feifei_upload`
