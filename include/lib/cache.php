@@ -500,40 +500,70 @@ class Cache {
 		$cacheData = serialize($log_cache_alias);
 		$this->cacheWrite($cacheData, 'logalias');
 	}
-
+ 
 	/**
 	 * 写入缓存
 	 */
 	function cacheWrite ($cacheData, $cacheName) {
-		$cachefile = __ROOT__ . '/content/cache/' . $cacheName . '.php';
-		$cacheData = "<?php exit;//" . $cacheData;
-		@ $fp = fopen($cachefile, 'wb') OR emMsg('读取缓存失败。如果您使用的是Unix/Linux主机，请修改缓存目录 (content/cache) 下所有文件的权限为777。如果您使用的是Windows主机，请联系管理员，将该目录下所有文件设为可写');
-		@ $fw = fwrite($fp, $cacheData) OR emMsg('写入缓存失败，缓存目录 (content/cache) 不可写');
-		$this->{$cacheName.'_cache'} = null;
-		fclose($fp);
+		if(IS_SAE){
+			$memcache_obj = memcache_connect("localhost", 11211);
+			memcache_add($memcache_obj, $cacheName,$cacheData, false,0);
+			$this->{$cacheName.'_cache'} = memcache_get($cacheName);
+			memcache_close($memcache_obj);
+		}else{
+			$cachefile = __ROOT__ . '/content/cache/' . $cacheName . '.php';
+			$cacheData = "<?php exit;//" . $cacheData;
+			@ $fp = fopen($cachefile, 'wb') OR emMsg('读取缓存失败。如果您使用的是Unix/Linux主机，请修改缓存目录 (content/cache) 下所有文件的权限为777。如果您使用的是Windows主机，请联系管理员，将该目录下所有文件设为可写');
+			@ $fw = fwrite($fp, $cacheData) OR emMsg('写入缓存失败，缓存目录 (content/cache) 不可写');
+			$this->{$cacheName.'_cache'} = null;
+			fclose($fp);
+		}
+		
 	}
 
 	/**
 	 * 读取缓存文件
 	 */
 	function readCache($cacheName) {
-		if ($this->{$cacheName.'_cache'} != null) {
-			return $this->{$cacheName.'_cache'};
-		} else {
-			$cachefile = __ROOT__ . '/content/cache/' . $cacheName . '.php';
-			// 如果缓存文件不存在则自动生成缓存文件
-			if (!is_file($cachefile) || filesize($cachefile) <= 0) {
-				if (method_exists($this, 'mc_' . $cacheName)) {
-					call_user_func(array($this, 'mc_' . $cacheName));
+		if(IS_SAE){
+			$memcache_obj = memcache_connect("localhost", 11211);
+			if ($this->{$cacheName.'_cache'} != null) {
+				return $this->{$cacheName.'_cache'};
+			}else{
+				$cacheInfo = memcache_get($cacheName);
+				// 如果缓存不存在则自动生成缓存
+				if (!$cacheInfo) {
+					if (method_exists($this, 'mc_' . $cacheName)) {
+						call_user_func(array($this, 'mc_' . $cacheName));
+					}
+				}
+				if ($cacheInfo) {
+					$data = $cacheInfo;
+					memcache_add($memcache_obj, $cacheName,null, false,0);
+					$this->{$cacheName.'_cache'} = unserialize(str_replace("<?php exit;//", '', $data));
+					return $this->{$cacheName.'_cache'};
 				}
 			}
-			if ($fp = fopen($cachefile, 'r')) {
-				$data = fread($fp, filesize($cachefile));
-				fclose($fp);
-                clearstatcache();
-				$this->{$cacheName.'_cache'} = unserialize(str_replace("<?php exit;//", '', $data));
+			 
+		}else{
+			if ($this->{$cacheName.'_cache'} != null) {
 				return $this->{$cacheName.'_cache'};
-			}
+				} else {
+					$cachefile = __ROOT__ . '/content/cache/' . $cacheName . '.php';
+					// 如果缓存文件不存在则自动生成缓存文件
+					if (!is_file($cachefile) || filesize($cachefile) <= 0) {
+						if (method_exists($this, 'mc_' . $cacheName)) {
+							call_user_func(array($this, 'mc_' . $cacheName));
+						}
+					}
+					if ($fp = fopen($cachefile, 'r')) {
+						$data = fread($fp, filesize($cachefile));
+						fclose($fp);
+		                clearstatcache();
+						$this->{$cacheName.'_cache'} = unserialize(str_replace("<?php exit;//", '', $data));
+						return $this->{$cacheName.'_cache'};
+					}
+				}
 		}
 	}
 }

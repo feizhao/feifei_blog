@@ -1,4 +1,6 @@
 <?php
+//sae
+define('IS_SAE', true);
 //mysql database address
 define('DB_HOST','localhost');
 //mysql database user
