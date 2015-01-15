@@ -1,7 +1,7 @@
 <?php
 /**
  * 导航
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Navi_Model {

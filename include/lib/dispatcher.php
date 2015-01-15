@@ -1,7 +1,7 @@
 <?php
 /**
  * 路由分发器
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Dispatcher {

@@ -2,7 +2,7 @@
 /**
  * MySQL数据库操作类
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class MySql {
@@ -35,7 +35,7 @@ class MySql {
 		if (!function_exists('mysql_connect')) {
 			emMsg('服务器空间PHP不支持MySql数据库');
 		}
-		if (!$this->conn = @mysql_connect(DB_HOST, DB_USER, DB_PASSWD)) {
+		if (!$this->conn = @mysql_connect(DB_HOST.':'.DB_PORT, DB_USER, DB_PASSWD)) {
             switch ($this->geterrno()) {
                 case 2005:
                     emMsg("连接数据库失败，数据库地址错误或者数据库服务器不可用");

@@ -1,7 +1,7 @@
 <?php
 /**
  * 全局项加载
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 error_reporting(1);
@@ -12,10 +12,11 @@ define('__ROOT__', dirname(__FILE__));
 
 require_once __ROOT__.'/config.php';
 require_once __ROOT__.'/include/lib/function.base.php';
-spl_autoload_register('autoload');
+spl_autoload_register('aotoload');
 doStripslashes();
 
 $CACHE = Cache::getInstance();
+
 $userData = array();
 
 define('ISLOGIN',	LoginAuth::isLogin());

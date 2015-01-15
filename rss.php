@@ -1,7 +1,7 @@
 <?php
 /**
  * RSS输出
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once './init.php';

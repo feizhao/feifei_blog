@@ -1,7 +1,7 @@
 <?php
 /**
  * 微语回复管理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Reply_Model {

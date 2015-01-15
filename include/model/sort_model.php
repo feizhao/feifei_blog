@@ -1,7 +1,7 @@
 <?php
 /**
  * 文章分类
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Sort_Model {

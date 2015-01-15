@@ -1,7 +1,7 @@
 <?php
 /**
  * 视图控制
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class View {

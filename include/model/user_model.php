@@ -1,7 +1,7 @@
 <?php
 /**
  * 用户管理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class User_Model {

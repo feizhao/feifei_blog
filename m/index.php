@@ -2,7 +2,7 @@
 /**
  * 手机版本
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once '../init.php';

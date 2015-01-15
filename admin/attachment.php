@@ -2,7 +2,7 @@
 
 /**
  * 附件处理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 require_once 'globals.php';
 

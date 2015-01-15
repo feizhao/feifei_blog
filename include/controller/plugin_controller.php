@@ -2,7 +2,7 @@
 /**
  * 前台加载插件页面
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Plugin_Controller {

@@ -2,7 +2,7 @@
 /**
  * 数据库操作路由
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Database {

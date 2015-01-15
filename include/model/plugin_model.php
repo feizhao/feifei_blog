@@ -1,7 +1,7 @@
 <?php
 /**
  * 插件
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Plugin_Model {

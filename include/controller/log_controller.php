@@ -2,7 +2,7 @@
 /**
  * 显示首页、内容
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Log_Controller {

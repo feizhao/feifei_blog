@@ -1,7 +1,7 @@
 <?php
 /**
  * 显示撰写、编辑文章界面
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once 'globals.php';

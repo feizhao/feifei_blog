@@ -1,7 +1,7 @@
 <?php
 /**
  * 标签管理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Tag_Model {

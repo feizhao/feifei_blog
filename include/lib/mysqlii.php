@@ -2,7 +2,7 @@
 /**
  * MySQLi数据库操作类
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class MySqlii {

@@ -2,7 +2,7 @@
 /**
  * 发表评论
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Comment_Controller {

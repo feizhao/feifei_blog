@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 /**
  * 图片验证码生成
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 session_start();

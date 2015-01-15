@@ -2,7 +2,7 @@
 /**
  * 查看归档文章
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Record_Controller {

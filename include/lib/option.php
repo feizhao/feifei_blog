@@ -1,7 +1,7 @@
 <?php
 /**
  * 前端控制
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Option {

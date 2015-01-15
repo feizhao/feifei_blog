@@ -2,7 +2,7 @@
 /**
  * 搜索文章
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Search_Controller {

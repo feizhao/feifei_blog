@@ -2,7 +2,7 @@
 /**
  * xmlrpc服务接口
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 ob_start();

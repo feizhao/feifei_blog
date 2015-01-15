@@ -1,7 +1,7 @@
 <?php
 /**
  * 后台全局项加载
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once '../init.php';

@@ -2,9 +2,9 @@
 
 /**
  * 基础函数库
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
-function autoload($class) {
+function aotoload($class) {
 	$class = strtolower($class);
 	if (file_exists(__ROOT__ . '/include/model/' . $class . '.php')) {
 		require_once(__ROOT__ . '/include/model/' . $class . '.php');

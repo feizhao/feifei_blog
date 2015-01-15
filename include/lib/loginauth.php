@@ -1,7 +1,7 @@
 <?php
 /**
  * 登录验证
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class LoginAuth{

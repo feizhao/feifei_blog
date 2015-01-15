@@ -1,7 +1,7 @@
 <?php
 /**
  * URL处理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Url {

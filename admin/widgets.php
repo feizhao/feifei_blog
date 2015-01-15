@@ -1,7 +1,7 @@
 <?php
 /**
  * Widgets 侧边栏目管理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once 'globals.php';

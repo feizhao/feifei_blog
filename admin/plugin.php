@@ -1,7 +1,7 @@
 <?php
 /**
  * 插件管理
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 require_once 'globals.php';

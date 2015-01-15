@@ -1,7 +1,7 @@
 <?php
 /**
  * 友情链接
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Link_Model {

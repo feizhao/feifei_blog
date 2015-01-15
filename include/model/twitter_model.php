@@ -2,7 +2,7 @@
 /**
  * 微语
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Twitter_Model {

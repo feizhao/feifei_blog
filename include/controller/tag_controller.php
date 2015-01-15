@@ -2,7 +2,7 @@
 /**
  * 查看标签文章
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Tag_Controller {

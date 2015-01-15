@@ -2,7 +2,7 @@
 /**
  * 生成文本缓存类
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Cache {

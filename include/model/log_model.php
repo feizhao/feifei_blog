@@ -2,7 +2,7 @@
 /**
  * 文章、页面管理
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Log_Model {

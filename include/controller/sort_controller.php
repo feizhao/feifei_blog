@@ -2,7 +2,7 @@
 /**
  * 查看分类文章
  *
- * @copyright (c) 
+ * @copyright (c) feifei_blog
  */
 
 class Sort_Controller {
