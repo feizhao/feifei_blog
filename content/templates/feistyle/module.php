@@ -242,30 +242,35 @@ function blog_navi(){
         $value['url'] = $value['isdefault'] == 'y' ? BLOG_URL . $value['url'] : trim($value['url'], '/');
         $current_tab = BLOG_URL . trim(Dispatcher::setPath(), '/') == $value['url'] ? 'am-active' : '';
 		?>
-		<?php if (!empty($value['childnavi'])) { ?>
-		<li class="am-dropdown" data-am-dropdown>
-	    <?php }else{ ?>
-		<li class="<?php echo $current_tab;?>">
-	    <?php } ?>
+		<li class="item <?php echo $current_tab;?>">
 			<a href="<?php echo $value['url']; ?>" <?php echo $newtab;?>><?php echo $value['naviname']; ?></a>
-			<?php if (!empty($value['children'])) :?>
-            <ul class="am-dropdown-content">
-                <?php foreach ($value['children'] as $row){
-                        echo '<li><a href="'.Url::sort($row['sid']).'">'.$row['sortname'].'</a></li>';
-                }?>
-			</ul>
-            <?php endif;?>
-
-            <?php if (!empty($value['childnavi'])) :?>
-            <ul class="am-dropdown-content">
-                <?php foreach ($value['childnavi'] as $row){
-                        $newtab = $row['newtab'] == 'y' ? 'target="_blank"' : '';
-                        echo '<li><a href="' . $row['url'] . "\" $newtab >" . $row['naviname'].'</a></li>';
-                }?>
-			</ul>
-            <?php endif;?>
-
 		</li>
+		<?php if (!empty($value['children'])) :?>
+		<li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+          <?php echo $value['naviname']; ?><span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+          <?php foreach ($value['children'] as $row){
+                echo '<li><a href="'.Url::sort($row['sid']).'">'.$row['sortname'].'</a></li>';
+          }?>
+        </ul>
+        </li>
+         <?php endif;?>
+         <?php if (!empty($value['childnavi'])) :?>
+		<li class="am-dropdown" data-am-dropdown>
+        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+          <?php echo $value['naviname']; ?><span class="am-icon-caret-down"></span>
+        </a>
+        <ul class="am-dropdown-content">
+       <?php foreach ($value['childnavi'] as $row){
+	        $newtab = $row['newtab'] == 'y' ? 'target="_blank"' : '';
+	        echo '<li><a href="' . $row['url'] . "\" $newtab >" . $row['naviname'].'</a></li>';
+	    }?>
+        </ul>
+        </li>
+         <?php endif;?>
+		 
 	<?php endforeach; ?>
 	</ul>
 <?php }?>

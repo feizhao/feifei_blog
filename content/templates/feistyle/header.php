@@ -24,7 +24,7 @@ require_once View::getView('module');
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="<?php echo BLOG_URL; ?>xmlrpc.php?rsd" />
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="<?php echo BLOG_URL; ?>wlwmanifest.xml" />
 <link rel="alternate" type="application/rss+xml" title="RSS"  href="<?php echo BLOG_URL; ?>rss.php" />
-<link rel="alternate icon" type="image/png" href="<?php echo TEMPLATE_URL; ?>assets/i/favicon.png">
+<link rel="alternate icon" type="image/png" href="<?php echo TEMPLATE_URL; ?>assets/i/favicon.ico">
 <link rel="stylesheet" href="<?php echo TEMPLATE_URL; ?>assets/css/amazeui.min.css"/>
 <link href="<?php echo BLOG_URL; ?>admin/editor/plugins/code/prettify.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo BLOG_URL; ?>admin/editor/plugins/code/prettify.js" type="text/javascript"></script>
@@ -91,7 +91,9 @@ require_once View::getView('module');
           data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
       class="am-icon-bars"></span></button>
   <?php if(Option::get('topimg')): ?>
-  <div id="banner"><a href="<?php echo BLOG_URL; ?>"><img src="<?php echo BLOG_URL.Option::get('topimg'); ?>" class="am-img-thumbnail am-radius" width="100%" /></a></div>
+  <div id="banner">
+  <a href="<?php echo BLOG_URL; ?>"><img src="<?php echo BLOG_URL.Option::get('topimg'); ?>" class="am-img-thumbnail am-radius" width="100%"/></a>
+  </div>
   <?php endif;?>
 
   <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
