@@ -343,6 +343,7 @@ function neighbor_log($neighborLog){
 		 <a href="<?php echo Url::log($nextLog['gid']) ?>"><?php echo $nextLog['title'];?></a>&raquo;
 	<?php endif;?>
 <?php }?>
+
 <?php
 //blog：评论列表
 function blog_comments($comments){
@@ -357,16 +358,29 @@ function blog_comments($comments){
     $comment = $comments[$cid];
 	$comment['poster'] = $comment['url'] ? '<a href="'.$comment['url'].'" target="_blank">'.$comment['poster'].'</a>' : $comment['poster'];
 	?>
-	<div class="comment" id="comment-<?php echo $comment['cid']; ?>">
+	<ul class="am-comments-list" id="comment-<?php echo $comment['cid']; ?>">
 		<a name="<?php echo $comment['cid']; ?>"></a>
-		<?php if($isGravatar == 'y'): ?><div class="avatar"><img src="<?php echo getGravatar($comment['mail']); ?>" /></div><?php endif; ?>
-		<div class="comment-info">
-			<b><?php echo $comment['poster']; ?> </b><br /><span class="comment-time"><?php echo $comment['date']; ?></span>
-			<div class="comment-content"><?php echo $comment['content']; ?></div>
-			<div class="comment-reply"><a href="#comment-<?php echo $comment['cid']; ?>" onclick="commentReply(<?php echo $comment['cid']; ?>,this)">回复</a></div>
+	 <li class="am-comment">
+	   <?php if($isGravatar == 'y'): ?>
+		<a href="#link-to-user-home">
+		  <img width="48" height="48" class="am-comment-avatar" alt="" src="<?php echo getGravatar($comment['mail']); ?>">
+		</a>
+		<?php endif; ?>
+	    
+		<div class="am-comment-main">
+		  <header class="am-comment-hd">
+		    <div class="am-comment-meta">
+		      <a class="am-comment-author" href="#link-to-user"><?php echo $comment['poster']; ?></a> 评论于 <time title="<?php echo $comment['date']; ?>" datetime="<?php echo $comment['date']; ?>"><?php echo $comment['date']; ?></time>
+		    </div>
+		  </header>
+		  <div class="am-comment-bd">
+		    <p><?php echo $comment['content']; ?></p>
+		    <p><a href="#comment-<?php echo $comment['cid']; ?>" onclick="commentReply(<?php echo $comment['cid']; ?>,this)">回复</a></p>
+		    <?php blog_comments_children($comments, $comment['children']); ?>
+		  </div>
 		</div>
-		<?php blog_comments_children($comments, $comment['children']); ?>
-	</div>
+	 </li>
+	</ul>
 	<?php endforeach; ?>
     <div id="pagenavi">
 	    <?php echo $commentPageUrl;?>
@@ -380,16 +394,33 @@ function blog_comments_children($comments, $children){
 	$comment = $comments[$child];
 	$comment['poster'] = $comment['url'] ? '<a href="'.$comment['url'].'" target="_blank">'.$comment['poster'].'</a>' : $comment['poster'];
 	?>
-	<div class="comment comment-children" id="comment-<?php echo $comment['cid']; ?>">
+	<ul class="am-comments-list" id="comment-<?php echo $comment['cid']; ?>">
 		<a name="<?php echo $comment['cid']; ?>"></a>
-		<?php if($isGravatar == 'y'): ?><div class="avatar"><img src="<?php echo getGravatar($comment['mail']); ?>" /></div><?php endif; ?>
-		<div class="comment-info">
-			<b><?php echo $comment['poster']; ?> </b><br /><span class="comment-time"><?php echo $comment['date']; ?></span>
-			<div class="comment-content"><?php echo $comment['content']; ?></div>
-			<?php if($comment['level'] < 4): ?><div class="comment-reply"><a href="#comment-<?php echo $comment['cid']; ?>" onclick="commentReply(<?php echo $comment['cid']; ?>,this)">回复</a></div><?php endif; ?>
+		<li class="am-comment">
+	   <?php if($isGravatar == 'y'): ?>
+		<a href="#link-to-user-home">
+		  <img width="48" height="48" class="am-comment-avatar" alt="" src="<?php echo getGravatar($comment['mail']); ?>">
+		</a>
+		<?php endif; ?>
+	    <?php if($isGravatar == 'y'): ?>
+			<div class="avatar"></div>
+		<?php endif; ?>
+		<div class="am-comment-main">
+		  <header class="am-comment-hd">
+		    <div class="am-comment-meta">
+		      <a class="am-comment-author" href="#link-to-user"><?php echo $comment['poster']; ?></a> 回复于 <time title="<?php echo $comment['date']; ?>" datetime="<?php echo $comment['date']; ?>"><?php echo $comment['date']; ?></time>
+		    </div>
+		  </header>
+		  <div class="am-comment-bd">
+		    <p><?php echo $comment['content']; ?></p>
+			<?php if($comment['level'] < 4): ?>
+				<p class="comment-reply"><a href="#comment-<?php echo $comment['cid']; ?>" onclick="commentReply(<?php echo $comment['cid']; ?>,this)">回复</a></p>
+			<?php endif; ?>
+		    <?php blog_comments_children($comments, $comment['children']); ?>
+		  </div>
 		</div>
-		<?php blog_comments_children($comments, $comment['children']);?>
-	</div>
+	 </li>
+	</ul>
 	<?php endforeach; ?>
 <?php }?>
 <?php
@@ -400,7 +431,7 @@ function blog_comments_post($logid,$ckname,$ckmail,$ckurl,$verifyCode,$allow_rem
 	<div class="comment-post" id="comment-post">
 		<div class="cancel-reply" id="cancel-reply" style="display:none"><a href="javascript:void(0);" onclick="cancelReply()">取消回复</a></div>
 		<p class="comment-header"><b>发表评论：</b><a name="respond"></a></p>
-		<form method="post" name="commentform" action="<?php echo BLOG_URL; ?>index.php?action=addcom" id="commentform">
+		<form class="am-form" method="post" name="commentform" action="<?php echo BLOG_URL; ?>index.php?action=addcom" id="commentform">
 			<input type="hidden" name="gid" value="<?php echo $logid; ?>" />
 			<?php if(ROLE == ROLE_VISITOR): ?>
 			<p>
