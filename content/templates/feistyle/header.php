@@ -97,33 +97,11 @@ require_once View::getView('module');
   <?php endif;?>
 
   <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
-     
     <?php blog_navi();?>
-      
-     
-      <li class="am-dropdown" data-am-dropdown>
-        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-          菜单 <span class="am-icon-caret-down"></span>
-        </a>
-        <ul class="am-dropdown-content">
-          <li class="am-dropdown-header">标题</li>
-          <li><a href="#">关于我们</a></li>
-          <li><a href="#">关于字体</a></li>
-          <li><a href="#">TIPS</a></li>
-        </ul>
-      </li>
-  
-
-    <form class="am-topbar-form am-topbar-left am-form-inline am-topbar-right" role="search">
-      <div class="am-form-group">
-        <input type="text" class="am-form-field am-input-sm" placeholder="搜索文章">
-      </div>
-      <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
-    </form>
-
   </div>
 </header>
 
 <body>
-<div id="wrap">
+<!-- start left  right content -->
+<div class="am-g am-g-fixed blog-g-fixed">
     

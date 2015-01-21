@@ -4,7 +4,8 @@
  */
 if(!defined('__ROOT__')) {exit('error!');} 
 ?>
-<ul id="sidebar">
+<div class="am-u-md-4 blog-sidebar">
+  <div class="am-panel-group">
 <?php 
 $widgets = !empty($options_cache['widgets1']) ? unserialize($options_cache['widgets1']) : array();
 doAction('diff_side');
@@ -31,10 +32,12 @@ foreach ($widgets as $val)
 }
 ?>
 <?php if (Option::get('rss_output_num')):?>
-<li style="padding-left:0;background:none;">
-<div class="rss">
+<section class="am-panel am-panel-default">
+<div class="am-panel-hd">
 <a href="<?php echo BLOG_URL; ?>rss.php" title="RSS订阅"><img src="<?php echo TEMPLATE_URL; ?>images/rss.gif" alt="订阅Rss"/></a>
 </div>
-</li>
+</section>
+
 <?php endif;?>
-</ul><!--end #siderbar-->
+</div> <!--end am-panel-group -->
+</div><!--end #siderbar-->

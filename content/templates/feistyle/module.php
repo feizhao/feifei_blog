@@ -10,52 +10,51 @@ function widget_blogger($title){
 	global $CACHE;
 	$user_cache = $CACHE->readCache('user');
 	$name = $user_cache[1]['mail'] != '' ? "<a href=\"mailto:".$user_cache[1]['mail']."\">".$user_cache[1]['name']."</a>" : $user_cache[1]['name'];?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
-	<ul id="bloggerinfo">
-	<div id="bloggerinfoimg">
-	<?php if (!empty($user_cache[1]['photo']['src'])): ?>
+   <section class="am-panel am-panel-default">
+   <div class="am-panel-hd"><?php echo $title; ?></div>
+   <div class="am-panel-bd">
+   <p>
+    <?php if (!empty($user_cache[1]['photo']['src'])): ?>
 	<img src="<?php echo BLOG_URL.$user_cache[1]['photo']['src']; ?>" width="<?php echo $user_cache[1]['photo']['width']; ?>" height="<?php echo $user_cache[1]['photo']['height']; ?>" alt="blogger" />
 	<?php endif;?>
-	</div>
-	<p><b><?php echo $name; ?></b>
-	<?php echo $user_cache[1]['des']; ?></p>
-	</ul>
-	</li>
+   </p>
+   <p><b><?php echo $name; ?></b><?php echo $user_cache[1]['des']; ?></p>
+   </div>
+   </section>
 <?php }?>
 <?php
 //widget：日历
 function widget_calendar($title){ ?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
-	<div id="calendar">
+   <section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
+	<div  class="am-panel-bd" id="calendar">
 	</div>
 	<script>sendinfo('<?php echo Calendar::url(); ?>','calendar');</script>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：标签
 function widget_tag($title){
 	global $CACHE;
 	$tag_cache = $CACHE->readCache('tags');?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
-	<ul id="blogtags">
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
+	<div class="am-panel-hd" id="blogtags">
 	<?php foreach($tag_cache as $value): ?>
 		<span style="font-size:<?php echo $value['fontsize']; ?>pt; line-height:30px;">
 		<a href="<?php echo Url::tag($value['tagurl']); ?>" title="<?php echo $value['usenum']; ?> 篇文章"><?php echo $value['tagname']; ?></a></span>
 	<?php endforeach; ?>
-	</ul>
-	</li>
+	</div>
+	</section>
 <?php }?>
 <?php
 //widget：分类
 function widget_sort($title){
 	global $CACHE;
 	$sort_cache = $CACHE->readCache('sort'); ?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
-	<ul id="blogsort">
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
+	<ul class="am-list blog-list" id="blogsort">
 	<?php
 	foreach($sort_cache as $value):
 		if ($value['pid'] != 0) continue;
@@ -78,7 +77,7 @@ function widget_sort($title){
 	</li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：最新微语
@@ -87,8 +86,8 @@ function widget_twitter($title){
 	$newtws_cache = $CACHE->readCache('newtw');
 	$istwitter = Option::get('istwitter');
 	?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="twitter">
 	<?php foreach($newtws_cache as $value): ?>
 	<?php $img = empty($value['img']) ? "" : '<a title="查看图片" class="t_img" href="'.BLOG_URL.str_replace('thum-', '', $value['img']).'" target="_blank">&nbsp;</a>';?>
@@ -98,7 +97,7 @@ function widget_twitter($title){
 	<p><a href="<?php echo BLOG_URL . 't/'; ?>">更多&raquo;</a></p>
 	<?php endif;?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：最新评论
@@ -106,8 +105,8 @@ function widget_newcomm($title){
 	global $CACHE; 
 	$com_cache = $CACHE->readCache('comment');
 	?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="newcomment">
 	<?php
 	foreach($com_cache as $value):
@@ -117,7 +116,7 @@ function widget_newcomm($title){
 	<br /><a href="<?php echo $url; ?>"><?php echo $value['content']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：最新文章
@@ -125,14 +124,14 @@ function widget_newlog($title){
 	global $CACHE; 
 	$newLogs_cache = $CACHE->readCache('newlog');
 	?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="newlog">
 	<?php foreach($newLogs_cache as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：热门文章
@@ -140,14 +139,14 @@ function widget_hotlog($title){
 	$index_hotlognum = Option::get('index_hotlognum');
 	$Log_Model = new Log_Model();
 	$randLogs = $Log_Model->getHotLog($index_hotlognum);?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="hotlog">
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：随机文章
@@ -155,26 +154,29 @@ function widget_random_log($title){
 	$index_randlognum = Option::get('index_randlognum');
 	$Log_Model = new Log_Model();
 	$randLogs = $Log_Model->getRandLog($index_randlognum);?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="randlog">
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?>
 <?php
 //widget：搜索
 function widget_search($title){ ?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="logsearch">
-	<form name="keyform" method="get" action="<?php echo BLOG_URL; ?>index.php">
-	<input name="keyword" class="search" type="text" />
-	</form>
+	<form name="keyform" method="get" action="<?php echo BLOG_URL; ?>index.php"  role="search">
+      <div class="am-form-group">
+      <input name="keyword"   placeholder="搜索文章"  class="am-form-field am-input-sm" type="text" />
+      </div>
+      <button type="submit" class="am-btn am-btn-default am-btn-sm">搜索</button>
+    </form>
 	</ul>
-	</li>
+	</section>
 <?php } ?>
 <?php
 //widget：归档
@@ -182,24 +184,24 @@ function widget_archive($title){
 	global $CACHE; 
 	$record_cache = $CACHE->readCache('record');
 	?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="record">
 	<?php foreach($record_cache as $value): ?>
 	<li><a href="<?php echo Url::record($value['date']); ?>"><?php echo $value['record']; ?>(<?php echo $value['lognum']; ?>)</a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php } ?>
 <?php
 //widget：自定义组件
 function widget_custom_text($title, $content){ ?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul>
 	<?php echo $content; ?>
 	</ul>
-	</li>
+	</section>
 <?php } ?>
 <?php
 //widget：链接
@@ -208,14 +210,14 @@ function widget_link($title){
 	$link_cache = $CACHE->readCache('link');
     //if (!blog_tool_ishome()) return;#只在首页显示友链去掉双斜杠注释即可
 	?>
-	<li>
-	<h3><span><?php echo $title; ?></span></h3>
+	<section class="am-panel am-panel-default">
+	<div class="am-panel-hd"><?php echo $title; ?></div>
 	<ul id="link">
 	<?php foreach($link_cache as $value): ?>
 	<li><a href="<?php echo $value['url']; ?>" title="<?php echo $value['des']; ?>" target="_blank"><?php echo $value['link']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
-	</li>
+	</section>
 <?php }?> 
 <?php
 //blog：导航
@@ -242,34 +244,34 @@ function blog_navi(){
         $value['url'] = $value['isdefault'] == 'y' ? BLOG_URL . $value['url'] : trim($value['url'], '/');
         $current_tab = BLOG_URL . trim(Dispatcher::setPath(), '/') == $value['url'] ? 'am-active' : '';
 		?>
+		<?php if (empty($value['children']) && empty($value['childnavi'])) :?>
 		<li class="item <?php echo $current_tab;?>">
 			<a href="<?php echo $value['url']; ?>" <?php echo $newtab;?>><?php echo $value['naviname']; ?></a>
 		</li>
-		<?php if (!empty($value['children'])) :?>
+	    <?php endif; ?>
+		<?php if (!empty($value['children']) or !empty($value['childnavi'])) :?>
 		<li class="am-dropdown" data-am-dropdown>
         <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
           <?php echo $value['naviname']; ?><span class="am-icon-caret-down"></span>
         </a>
-        <ul class="am-dropdown-content">
+        <?php if (!empty($value['children'])) : ?>
+       	  <ul class="am-dropdown-content">
           <?php foreach ($value['children'] as $row){
                 echo '<li><a href="'.Url::sort($row['sid']).'">'.$row['sortname'].'</a></li>';
           }?>
-        </ul>
-        </li>
-         <?php endif;?>
-         <?php if (!empty($value['childnavi'])) :?>
-		<li class="am-dropdown" data-am-dropdown>
-        <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-          <?php echo $value['naviname']; ?><span class="am-icon-caret-down"></span>
-        </a>
+          </ul>
+        <?php endif; ?>
+        <?php if (!empty($value['childnavi'])) :?>
         <ul class="am-dropdown-content">
-       <?php foreach ($value['childnavi'] as $row){
+        <?php foreach ($value['childnavi'] as $row){
 	        $newtab = $row['newtab'] == 'y' ? 'target="_blank"' : '';
 	        echo '<li><a href="' . $row['url'] . "\" $newtab >" . $row['naviname'].'</a></li>';
 	    }?>
         </ul>
+        <?php endif; ?>
         </li>
-         <?php endif;?>
+        <?php endif;?>
+       
 		 
 	<?php endforeach; ?>
 	</ul>
