@@ -26,7 +26,7 @@ define('DB_NAME','blog');
 //dadatabase port
 define('DB_PORT','3306');
 //database prefix
-define('DB_PREFIX','flg_');
+define('DB_PREFIX','emlog_');
 
 //auth key
 define('AUTH_KEY','VyZjBTtBd%O5GlFBbMo3gs3)6tTNNin*dbe228e36cad75be403270fab5fb837a');
