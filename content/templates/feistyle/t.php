@@ -51,8 +51,8 @@ if(!defined('__ROOT__')) {exit('error!');}
     </article>
        <hr class="am-article-divider blog-hr">
 <?php endforeach;?>
- <ul class="am-pagination blog-pagination">
-    <li id="pagenavi"><?php echo $pageurl;?><span></span></li>
+ <ul class="am-pagination am-pagination-centered">
+   <?php echo $pageurl;?>
 </ul>
 
 

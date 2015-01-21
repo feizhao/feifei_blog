@@ -107,7 +107,7 @@ function widget_newcomm($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="newcomment">
+	<ul id="newcomment" class='am-list blog-list'>
 	<?php
 	foreach($com_cache as $value):
 	$url = Url::comment($value['gid'], $value['page'], $value['cid']);
@@ -126,7 +126,7 @@ function widget_newlog($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="newlog">
+	<ul id="newlog" class='am-list blog-list'>
 	<?php foreach($newLogs_cache as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -141,7 +141,7 @@ function widget_hotlog($title){
 	$randLogs = $Log_Model->getHotLog($index_hotlognum);?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="hotlog">
+	<ul id="hotlog" class='am-list blog-list'>
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -156,7 +156,7 @@ function widget_random_log($title){
 	$randLogs = $Log_Model->getRandLog($index_randlognum);?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="randlog">
+	<ul id="randlog" class='am-list blog-list'>
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -168,7 +168,7 @@ function widget_random_log($title){
 function widget_search($title){ ?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="logsearch">
+	<ul id="logsearch" class='am-list blog-list'>
 	<form name="keyform" method="get" action="<?php echo BLOG_URL; ?>index.php"  role="search">
       <div class="am-form-group">
       <input name="keyword"   placeholder="搜索文章"  class="am-form-field am-input-sm" type="text" />
@@ -186,7 +186,7 @@ function widget_archive($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="record">
+	<ul id="record" class='am-list blog-list'>
 	<?php foreach($record_cache as $value): ?>
 	<li><a href="<?php echo Url::record($value['date']); ?>"><?php echo $value['record']; ?>(<?php echo $value['lognum']; ?>)</a></li>
 	<?php endforeach; ?>
@@ -198,8 +198,10 @@ function widget_archive($title){
 function widget_custom_text($title, $content){ ?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul>
+	<ul class='am-list blog-list'>
+	<li>
 	<?php echo $content; ?>
+	</li>
 	</ul>
 	</section>
 <?php } ?>
@@ -212,7 +214,7 @@ function widget_link($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="link">
+	<ul id="link" class='am-list blog-list'>
 	<?php foreach($link_cache as $value): ?>
 	<li><a href="<?php echo $value['url']; ?>" title="<?php echo $value['des']; ?>" target="_blank"><?php echo $value['link']; ?></a></li>
 	<?php endforeach; ?>
