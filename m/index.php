@@ -7,7 +7,7 @@
 
 require_once '../init.php';
 
-define ('TEMPLATE_PATH', __ROOT__ . '/m/view/');
+define ('TEMPLATE_PATH', __ROOT__ . '/m/feiview/');
 
 $isgzipenable = 'n'; //手机浏览关闭gzip压缩
 $index_lognum = 5;

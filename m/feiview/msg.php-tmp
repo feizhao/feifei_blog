@@ -1,0 +1,50 @@
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+
+Notice: Use of undefined constant T_YIELD - assumed 'T_YIELD' in D:\Sublime Text 3\Data\Packages\PHPTools\php.tools\codeFormatter.php on line 1125
+<?php if (!defined('__ROOT__')) {exit('error!');}?>
+<div data-am-widget="list_news" class="am-list-news am-list-news-default">
+<!--列表标题-->
+<div class="am-list-news-bd">
+<ul class="am-list">
+<li>
+<?php echo $msg;?>
+</li>
+<li><div><a href="<?php echo $url;?>">返回</a></div></li>
+</ul>
+</div>
+</div>

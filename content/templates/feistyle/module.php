@@ -54,15 +54,22 @@ function widget_sort($title){
 	$sort_cache = $CACHE->readCache('sort'); ?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul class="am-list blog-list" id="blogsort">
+	<ul class="am-list admin-sidebar-list" id="blogsort">
 	<?php
 	foreach($sort_cache as $value):
 		if ($value['pid'] != 0) continue;
 	?>
+ 
+	<?php if (empty($value['children'])): ?>
 	<li>
 	<a href="<?php echo Url::sort($value['sid']); ?>"><?php echo $value['sortname']; ?>(<?php echo $value['lognum'] ?>)</a>
+    </li>
+	<?php endif; ?>
 	<?php if (!empty($value['children'])): ?>
-		<ul>
+	<li class="admin-parent">
+	<!-- href="<?php echo Url::sort($value['sid']); ?>" -->
+     <a  data-am-collapse="{target: '#collapse-nav'}" class="am-cf am-collapsed"><?php echo $value['sortname']; ?>(<?php echo $value['lognum'] ?>) <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+        <ul id="collapse-nav" class="am-list admin-sidebar-sub am-collapse" style="height: 0px;">
 		<?php
 		$children = $value['children'];
 		foreach ($children as $key):
@@ -73,8 +80,8 @@ function widget_sort($title){
 		</li>
 		<?php endforeach; ?>
 		</ul>
-	<?php endif; ?>
 	</li>
+	<?php endif; ?>
 	<?php endforeach; ?>
 	</ul>
 	</section>
@@ -88,15 +95,16 @@ function widget_twitter($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="twitter">
+	<div  class="am-panel-bd" id="twitter">
 	<?php foreach($newtws_cache as $value): ?>
 	<?php $img = empty($value['img']) ? "" : '<a title="查看图片" class="t_img" href="'.BLOG_URL.str_replace('thum-', '', $value['img']).'" target="_blank">&nbsp;</a>';?>
-	<li><?php echo $value['t']; ?><?php echo $img;?><p><?php echo smartDate($value['date']); ?></p></li>
+	<p><?php echo $value['t']; ?><?php echo $img;?> * <?php echo smartDate($value['date']); ?></p>
+	<hr/>
 	<?php endforeach; ?>
     <?php if ($istwitter == 'y') :?>
-	<p><a href="<?php echo BLOG_URL . 't/'; ?>">更多&raquo;</a></p>
+	<p><a class="am-btn am-btn-success am-btn-sm" href="<?php echo BLOG_URL . 't/'; ?>">更多&raquo;</a></p>
 	<?php endif;?>
-	</ul>
+	</div>
 	</section>
 <?php }?>
 <?php
@@ -107,7 +115,7 @@ function widget_newcomm($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="newcomment">
+	<ul id="newcomment" class='am-list blog-list'>
 	<?php
 	foreach($com_cache as $value):
 	$url = Url::comment($value['gid'], $value['page'], $value['cid']);
@@ -126,7 +134,7 @@ function widget_newlog($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="newlog">
+	<ul id="newlog" class='am-list blog-list'>
 	<?php foreach($newLogs_cache as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -141,7 +149,7 @@ function widget_hotlog($title){
 	$randLogs = $Log_Model->getHotLog($index_hotlognum);?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="hotlog">
+	<ul id="hotlog" class='am-list blog-list'>
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -156,7 +164,7 @@ function widget_random_log($title){
 	$randLogs = $Log_Model->getRandLog($index_randlognum);?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="randlog">
+	<ul id="randlog" class='am-list blog-list'>
 	<?php foreach($randLogs as $value): ?>
 	<li><a href="<?php echo Url::log($value['gid']); ?>"><?php echo $value['title']; ?></a></li>
 	<?php endforeach; ?>
@@ -168,7 +176,7 @@ function widget_random_log($title){
 function widget_search($title){ ?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="logsearch">
+	<ul id="logsearch" class='am-list blog-list'>
 	<form name="keyform" method="get" action="<?php echo BLOG_URL; ?>index.php"  role="search">
       <div class="am-form-group">
       <input name="keyword"   placeholder="搜索文章"  class="am-form-field am-input-sm" type="text" />
@@ -186,7 +194,7 @@ function widget_archive($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="record">
+	<ul id="record" class='am-list blog-list'>
 	<?php foreach($record_cache as $value): ?>
 	<li><a href="<?php echo Url::record($value['date']); ?>"><?php echo $value['record']; ?>(<?php echo $value['lognum']; ?>)</a></li>
 	<?php endforeach; ?>
@@ -198,8 +206,10 @@ function widget_archive($title){
 function widget_custom_text($title, $content){ ?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul>
+	<ul class='am-list blog-list'>
+	<li>
 	<?php echo $content; ?>
+	</li>
 	</ul>
 	</section>
 <?php } ?>
@@ -212,7 +222,7 @@ function widget_link($title){
 	?>
 	<section class="am-panel am-panel-default">
 	<div class="am-panel-hd"><?php echo $title; ?></div>
-	<ul id="link">
+	<ul id="link" class='am-list blog-list'>
 	<?php foreach($link_cache as $value): ?>
 	<li><a href="<?php echo $value['url']; ?>" title="<?php echo $value['des']; ?>" target="_blank"><?php echo $value['link']; ?></a></li>
 	<?php endforeach; ?>

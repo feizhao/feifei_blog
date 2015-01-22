@@ -1,0 +1,1 @@
+<?php exit;//a:2:{i:0;a:4:{s:6:"tagurl";s:4:"http";s:7:"tagname";s:4:"http";s:8:"fontsize";d:10;s:6:"usenum";i:2;}i:1;a:4:{s:6:"tagurl";s:27:"%E7%8A%B6%E6%80%81%E7%A0%81";s:7:"tagname";s:9:"状态码";s:8:"fontsize";d:10;s:6:"usenum";i:2;}}

@@ -1,1 +1,1 @@
-<?php exit;//a:1:{i:1;a:0:{}}
+<?php exit;//a:4:{i:1;a:0:{}i:2;a:0:{}i:3;a:2:{i:0;a:3:{s:7:"tagname";s:4:"http";s:3:"tid";i:1;s:6:"tagurl";s:4:"http";}i:1;a:3:{s:7:"tagname";s:9:"状态码";s:3:"tid";i:2;s:6:"tagurl";s:27:"%E7%8A%B6%E6%80%81%E7%A0%81";}}i:4;a:0:{}}

@@ -234,16 +234,16 @@ function pagination($count, $perlogs, $page, $url, $anchor = '') {
 			if ($i == $page) {
 				$re .= " <span>$i</span> ";
 			} elseif ($i == 1) {
-				$re .= " <a href=\"$urlHome$anchor\">$i</a> ";
+				$re .= "<li> <a href=\"$urlHome$anchor\">$i</a> </li>";
 			} else {
-				$re .= " <a href=\"$url$i$anchor\">$i</a> ";
+				$re .= "<li> <a href=\"$url$i$anchor\">$i</a> </li>";
 			}
 		}
 	}
 	if ($page > 6)
-		$re = "<a href=\"{$urlHome}$anchor\" title=\"首页\">&laquo;</a><em>...</em>$re";
+		$re = "<li><a href=\"{$urlHome}$anchor\" title=\"首页\">&laquo;</a><em></em>$re</li>";
 	if ($page + 5 < $pnums)
-		$re .= "<em>...</em> <a href=\"$url$pnums$anchor\" title=\"尾页\">&raquo;</a>";
+		$re .= "<li><em>...</em> <a href=\"$url$pnums$anchor\" title=\"尾页\">&raquo;</a></li>";
 	if ($pnums <= 1)
 		$re = '';
 	return $re;
@@ -288,10 +288,10 @@ function doAction($hook) {
 function breakLog($content, $lid) {
 	$ret = explode('[break]', $content, 2);
 	if (!empty($ret[1])) {
-		$ret[0].='<p class="readmore"><a href="' . Url::log($lid) . '">阅读全文&gt;&gt;</a></p>';
+		$ret[0].='<p class="readmore"><a class="am-btn am-btn-success am-btn-sm" href="' . Url::log($lid) . '">阅读全文&gt;&gt;</a></p>';
         return $ret[0];
 	} elseif(Option::get('isexcerpt') == 'y') {
-        return subString(trim(strip_tags($content)), 0, Option::get('excerpt_subnum')) . '<p class="readmore"><a href="' . Url::log($lid) . '">阅读全文&gt;&gt;</a></p>';
+        return subString(trim(strip_tags($content)), 0, Option::get('excerpt_subnum')) . '<p class="readmore"><a class="am-btn am-btn-success am-btn-sm" href="' . Url::log($lid) . '">阅读全文&gt;&gt;</a></p>';
     } else {
         return $content;
     }

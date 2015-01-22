@@ -32,8 +32,8 @@ foreach($logs as $value):
     </div>
     <div class="am-u-lg-5">
     <p class="count">
-	<a href="<?php echo $value['log_url']; ?>#comments">评论(<?php echo $value['comnum']; ?>)</a>
-	<a href="<?php echo $value['log_url']; ?>">浏览(<?php echo $value['views']; ?>)</a>
+	<a class="am-text-success" href="<?php echo $value['log_url']; ?>#comments">评论(<?php echo $value['comnum']; ?>)</a>
+	<a class="am-text-info" href="<?php echo $value['log_url']; ?>">浏览(<?php echo $value['views']; ?>)</a>
 	</p>
     </div>
   </div>

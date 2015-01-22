@@ -91,7 +91,7 @@ function getBlog($sortid = null) {
 			}else {
 				$re['content'] = extractHtmlData($re['content'], 330);
 			}
-			$re['content'] .= ' <a href="'.Url::log($re['id']).'">阅读全文&gt;&gt;</a>';
+			$re['content'] .= ' <a class="am-btn am-btn-success am-btn-sm" href="'.Url::log($re['id']).'">阅读全文&gt;&gt;</a>';
 		}
 
 		$blog[] = $re;
